@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Heladeria_FMO/1.0.0": {
+        "runtime": {
+          "Heladeria_FMO.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Heladeria_FMO/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

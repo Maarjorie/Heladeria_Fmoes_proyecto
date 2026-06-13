@@ -1,0 +1,17 @@
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\bin\Debug\net8.0-windows\Heladeria_FMO.exe
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\bin\Debug\net8.0-windows\Heladeria_FMO.deps.json
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\bin\Debug\net8.0-windows\Heladeria_FMO.runtimeconfig.json
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\bin\Debug\net8.0-windows\Heladeria_FMO.dll
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\bin\Debug\net8.0-windows\Heladeria_FMO.pdb
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\Heladeria_FMO.Form1.resources
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\Heladeria_FMO.csproj.GenerateResource.cache
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\Heladeria_FMO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\Heladeria_FMO.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\Heladeria_FMO.AssemblyInfo.cs
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\Heladeria_FMO.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\Heladeria_FMO.sourcelink.json
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\Heladeria_FMO.dll
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\refint\Heladeria_FMO.dll
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\Heladeria_FMO.pdb
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\Heladeria_FMO.genruntimeconfig.cache
+C:\Users\User\source\repos\Heladeria\Heladeria_FMO\obj\Debug\net8.0-windows\ref\Heladeria_FMO.dll
