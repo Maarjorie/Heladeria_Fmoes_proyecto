@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Heladeria_FMO.Modelos
 {
-    internal class Cliente_mayorista
+    public class Cliente_mayorista
     {
     }
 }

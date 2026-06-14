@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Heladeria_FMO.Modelos
 {
-    internal class Movimiento_inventario
+    public class Movimiento_inventario
     {
     }
 }

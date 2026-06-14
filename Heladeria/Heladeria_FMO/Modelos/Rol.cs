@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Heladeria_FMO.Modelos
 {
-    internal class Rol
+    public class Rol
     {
     }
 }

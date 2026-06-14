@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Heladeria_FMO.Modelos
 {
-    internal class Arqueo_caja
+    public class Arqueo_caja
     {
     }
 }
