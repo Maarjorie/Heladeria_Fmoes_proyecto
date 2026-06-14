@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Heladeria_FMO.Modelos
 {
-    internal class Liquidacion_ruta
+    public class Liquidacion_ruta
     {
     }
 }

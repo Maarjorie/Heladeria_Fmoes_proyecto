@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Heladeria_FMO.Modelos
 {
-    internal class Notificacion
+    public class Notificacion
     {
     }
 }
