@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Heladeria_FMO.Modelos
 {
-    internal class Detalle_Venta_Sucursal
+    public class Detalle_Venta_Sucursal
     {
     }
 }

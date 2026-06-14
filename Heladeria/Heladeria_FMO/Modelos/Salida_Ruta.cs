@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Heladeria_FMO.Modelos
 {
-    internal class Salida_Ruta
+    public class Salida_Ruta
     {
     }
 }

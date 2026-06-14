@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Heladeria_FMO.Utileria
 {
-    internal class Validaciones
+    public class Validaciones
     {
     }
 }
