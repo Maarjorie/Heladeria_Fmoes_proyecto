@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Heladeria_FMO.Acceso_a_datos_db
 {
-    internal class Venta_sucursalDAO
+    public class Venta_sucursalDAO
     {
     }
 }
