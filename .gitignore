@@ -9,6 +9,7 @@ x86/
 
 # Visual Studio
 .vs/
+**/.vs/
 *.suo
 *.user
 *.userosscache
@@ -49,7 +50,7 @@ TestResults/
 *.sqlite
 *.db
 
-# Local secrets (nunca commitear)
+# Local secrets
 appsettings.local.json
 *.local.config
 secrets.json
