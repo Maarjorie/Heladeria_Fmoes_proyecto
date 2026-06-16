@@ -1,10 +1,5 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Heladeria_FMO.Utileria
 {
@@ -17,7 +12,7 @@ namespace Heladeria_FMO.Utileria
 
         public static async Task Enviar(string destinatario, string asunto, string cuerpoHtml)
         {
-            using (var mensaje =  new MailMessage())
+            using (var mensaje = new MailMessage())
             {
                 mensaje.From = new MailAddress(remitente, "Helados fmo");
                 mensaje.To.Add(destinatario);
