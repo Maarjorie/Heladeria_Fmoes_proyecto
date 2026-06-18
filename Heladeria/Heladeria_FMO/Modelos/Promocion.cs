@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Heladeria_FMO.Modelos
 {
-    public class Promociones
+    public class Promocion
     {
         public int IdPromocion { get; set; }
         public int IdProducto { get; set; }

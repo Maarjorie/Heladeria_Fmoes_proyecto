@@ -22,6 +22,7 @@ namespace Heladeria_FMO.Servicio
         public static Acceso Login(string username, string password, out Usuario usuarioActual)
         {
             usuarioActual = null; //inicializamos el usuario
+            Usuario usuario = new();
 
             try
             {
@@ -30,6 +31,7 @@ namespace Heladeria_FMO.Servicio
                 conn.Open();
 
                 //objeto usuario = usuarioDao.ObtenerPorUsername(username)
+                //usuario = UsuarioDao
                 //demas logica, faltan los dao y modelos
                 
             }

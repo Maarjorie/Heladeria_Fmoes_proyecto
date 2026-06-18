@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Heladeria_FMO.Modelos
 {
-    public class Detalla_pedido_mayorista
+    public class Detalle_pedido_mayorista
     {
         public int IdDetallePedido { get; set; }
         public int IdPedido { get; set; }
