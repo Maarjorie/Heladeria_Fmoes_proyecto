@@ -10,7 +10,8 @@ namespace Heladeria_FMO.Modelos
         public int id_rol { get; set; }
         public string Nombre { get; set; }
         public string Usuario_ { get; set; }
-        public string Contrasenia { get; set; }
+        public string Contrasenia_hash { get; set; }
+        public string Contrasenia_salt { get; set; }
         public string Correo { get; set; }
         public int Activo { get; set; }
     }
