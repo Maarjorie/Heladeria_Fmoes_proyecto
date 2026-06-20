@@ -9,7 +9,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
 {
     public static class RolDAO
     {
-        
+        // Devuelve todos los roles activos
         public static List<Rol> ObtenerRoles()
         {
             List<Rol> roles = [];
