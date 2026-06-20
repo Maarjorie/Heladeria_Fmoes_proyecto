@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Heladeria_FMO.Acceso_a_datos_db
+namespace Heladeria_FMO.Clases_Auxiliares
 {
     public static class Conexion
     {

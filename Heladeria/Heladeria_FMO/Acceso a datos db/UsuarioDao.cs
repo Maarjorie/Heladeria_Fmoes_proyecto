@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Heladeria_FMO.Clases_Auxiliares;
 using Heladeria_FMO.Modelos;
 using Heladeria_FMO.Utileria;
 using MySql.Data.MySqlClient;
