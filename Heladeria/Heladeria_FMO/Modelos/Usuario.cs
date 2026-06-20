@@ -13,7 +13,7 @@ namespace Heladeria_FMO.Modelos
         public string Contrasenia_hash { get; set; }
         public string Contrasenia_salt { get; set; }
         public string Correo { get; set; }
-        public int Activo { get; set; }
+        public bool Activo { get; set; }
         public DateTime fecha_registro {  get; set; }
     }
 }

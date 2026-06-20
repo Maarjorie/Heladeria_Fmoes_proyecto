@@ -1,5 +1,6 @@
 ﻿using Heladeria_FMO.Acceso_a_datos_db;
 using Heladeria_FMO.Modelos;
+using Heladeria_FMO.Utileria;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -21,24 +22,30 @@ namespace Heladeria_FMO.Servicio
     {
         public static Acceso Login(string username, string password, out Usuario usuarioActual)
         {
-            usuarioActual = null; //inicializamos el usuario
-            Usuario usuario = new();
+            usuarioActual = null; //inicializamos el parametro de salida
+            Usuario usuario;
 
-            try
+            try// intentamos obtener el usuario de la base de datos
             {
-                //abrimos conexion con la db
-                using MySqlConnection conn = Conexion.ConexionDb();
-                conn.Open();
-
-                //objeto usuario = usuarioDao.ObtenerPorUsername(username)
-                //usuario = UsuarioDao
-                //demas logica, faltan los dao y modelos
-                
+                usuario = UsuarioDao.ObtenerUsuarioPorNombre(username);   
             }
             catch (Exception ex)
             {
+                //retona en caso falle el acceso a la base de datos
                 return Acceso.ErrorConexionDb;
             }
+
+            // valida la existencia del usuario
+            if (usuario == null) return Acceso.ErrorCredenciales;
+
+            // validacion de seguidad por medio de comparacion hash
+            if (!Seguridad.VerificarHash(password, usuario.Contrasenia_hash, usuario.Contrasenia_salt)) return Acceso.ErrorCredenciales;
+
+            // validacion del estado de la cuenta
+            if (!usuario.Activo) return Acceso.UsuarioInactivo;
+
+            // asignamos el usuairo autenticado al parametro de salida
+            usuarioActual = usuario;
 
             return Acceso.SesionExitosa;
         }
@@ -46,6 +53,7 @@ namespace Heladeria_FMO.Servicio
 
     public static class Sesion
     {
+        // establece la entidad del usuario activo en la sesion actual
         public static Usuario UsuarioActivo { get; set; }
     }
 }
