@@ -15,7 +15,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             using MySqlConnection conexion = Conexion.ConexionDb();//hacemos conexion con la base de datos
             conexion.Open();
 
-            string query = "call p_login_usuario(@p_usuario)";//llamamos el procedimiento
+            string query = "CALL p_login_usuario(@p_usuario)";//llamamos el procedimiento
 
             //configuramos el comando y asignamos el parametro
             using MySqlCommand cmd = new MySqlCommand(query, conexion);
