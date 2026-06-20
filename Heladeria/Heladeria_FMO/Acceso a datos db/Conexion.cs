@@ -11,14 +11,13 @@ namespace Heladeria_FMO.Acceso_a_datos_db
     {
         //parametros para acceder a la base de datos
         const string servidor = "127.0.0.1";
-        const string puerto = "3306";
         const string user = "root";
         const string clave = "";
         const string db = "db";
 
         public static MySqlConnection ConexionDb() //metodo estatico para establecer conexion con la base de datos
         {
-            string cadena = $"Server={servidor};Port={puerto};Database={db};user={user};pwd={clave}";
+            const string cadena = $"Server={servidor};Database={db};user={user};pwd={clave}";
             return new MySqlConnection(cadena);
         }
 
