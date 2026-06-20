@@ -43,5 +43,98 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             //retorna null en caso que no se encuentre ningun registro que coincida
             return null;
         }
+
+        // Inserta un nuevo usuario
+        public static bool InsertarUsuario(Usuario usuario)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consulta = "CALL p_insertar_usuario(" +
+                "@p_id_rol," +
+                "@p_nombre," +
+                "@p_usuario," +
+                "@p_contrasena_hash," +
+                "@p_contrasena_salt," +
+                "@p_correo)";
+
+            using MySqlCommand cmd = new MySqlCommand(consulta, conn);
+            cmd.Parameters.AddWithValue("@p_id_rol", usuario.id_rol);
+            cmd.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
+            cmd.Parameters.AddWithValue("@p_usuario", usuario.Usuario_);
+            cmd.Parameters.AddWithValue("@p_contrasena_hash", usuario.Contrasenia_hash);
+            cmd.Parameters.AddWithValue("@p_contrasena_salt", usuario.Contrasenia_salt);
+            cmd.Parameters.AddWithValue("@p_correo", usuario.Correo);
+
+            int resultado = cmd.ExecuteNonQuery();
+            return resultado > 0;
+        }
+
+        // Edita datos generales del usuario.
+        public static bool EditarUsuario(Usuario usuario)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consulta = "CALL p_editar_usuario(" +
+                "@p_id_usuario," +
+                "@p_nombre," +
+                "@p_correo," +
+                "@p_id_rol)";
+
+            using MySqlCommand cmd = new MySqlCommand(consulta, conn);
+            cmd.Parameters.AddWithValue("@p_id_usuario", usuario.id_Usuario);
+            cmd.Parameters.AddWithValue("@p_nombre", usuario.Nombre);
+            cmd.Parameters.AddWithValue("@p_correo", usuario.Correo);
+            cmd.Parameters.AddWithValue("@p_id_rol", usuario.id_rol);
+
+            int resultado = cmd.ExecuteNonQuery();
+            return resultado > 0;
+        }
+
+        public static bool CambiarEstadoUsuario(int idUsuario, bool activo)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consulta = "CALL p_cambiar_estado_usuario(" +
+                "@p_id_usuario," +
+                "@p_activo)";
+
+            using MySqlCommand cmd = new MySqlCommand(consulta, conn);
+            cmd.Parameters.AddWithValue("@p_id_usuario", idUsuario);
+            cmd.Parameters.AddWithValue("@p_activo", activo);
+
+            int resultado = cmd.ExecuteNonQuery();
+            return resultado > 0;
+        }
+
+        // Lista los usuarios activos con el nombre de su rol
+        public static List<Usuario> ListarUsuariosActivos()
+        {
+            List<Usuario> usuarios = [];
+
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consulta = "CALL p_listar_usuarios_activos()";
+            using MySqlCommand cmd = new MySqlCommand(consulta, conn);
+            using MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Usuario usuario = new()
+                {
+                    id_Usuario = reader.GetInt32(0),
+                    Usuario_ = reader.GetString(1),
+                    Nombre = reader.GetString(2),
+                    Correo = reader.GetString(3),
+                    NombreRol = reader.GetString(4)
+                };
+                usuarios.Add(usuario);
+            }
+
+            return usuarios;
+        }
     }
 }
