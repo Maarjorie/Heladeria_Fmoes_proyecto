@@ -9,8 +9,8 @@ namespace Heladeria_FMO.Modelos
     public class Promocion
     {
         public int IdPromocion { get; set; }
-        public int IdProducto { get; set; }
-        public int IdCategoria { get; set; }
+        public int? IdProducto { get; set; }
+        public int? IdCategoria { get; set; }
         public string Nombre { get; set; } 
         public string Descripcion { get; set; } 
         public string TipoDescuento { get; set; } 

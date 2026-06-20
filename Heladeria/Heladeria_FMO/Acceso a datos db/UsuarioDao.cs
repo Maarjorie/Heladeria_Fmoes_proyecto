@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Heladeria_FMO.Clases_Auxiliares;
 using Heladeria_FMO.Modelos;
 using Heladeria_FMO.Utileria;
 using MySql.Data.MySqlClient;
@@ -14,7 +15,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             using MySqlConnection conexion = Conexion.ConexionDb();//hacemos conexion con la base de datos
             conexion.Open();
 
-            string query = "call p_login_usuario(@p_usuario)";//llamamos el procedimiento
+            string query = "CALL p_login_usuario(@p_usuario)";//llamamos el procedimiento
 
             //configuramos el comando y asignamos el parametro
             using MySqlCommand cmd = new MySqlCommand(query, conexion);
