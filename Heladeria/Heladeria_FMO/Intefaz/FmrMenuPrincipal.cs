@@ -17,11 +17,11 @@ namespace Heladeria_FMO
         public FmrMenuPrincipal()
         {
             InitializeComponent();
-            AplicarDiseno();
+           // AplicarDiseno();
 
         }
 
-        private void AplicarDiseno()
+       /* private void AplicarDiseno()
         {
             Estilos.Formulario(this);
 
@@ -49,7 +49,7 @@ namespace Heladeria_FMO
             Estilos.EfectoBotonMenu(btnReportes);
             Estilos.EfectoBotonMenu(btnCerrarSesion);
         }
-
+       */
 
     }
 }
