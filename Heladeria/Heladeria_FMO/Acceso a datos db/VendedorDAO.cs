@@ -14,7 +14,13 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             using MySqlConnection conn = Conexion.ConexionDb();
             conn.Open();
 
-            string consultaSql = "@CALL p_insertar_vendedor(" + "@p_codigo_empleado" + "@p_nombre" + "@p_fotografia" + "@p_dui" + "@p_telefono" + "@p_direccion)";
+            string consultaSql = "@CALL p_insertar_vendedor(" +
+                "@p_codigo_empleado" +
+                "@p_nombre," +
+                "@p_fotografia," +
+                "@p_dui," +
+                "@p_telefono," +
+                "@p_direccion)";
             using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
 
             cmd.Parameters.AddWithValue("@p_codigo_empleado", v.CodigoEmpleado);
@@ -34,7 +40,14 @@ namespace Heladeria_FMO.Acceso_a_datos_db
         {
             using MySqlConnection conn = Conexion.ConexionDb();
             conn.Open();
-            string consultaSql = "@CALL p_editar_vendedor(" + "@p_id_vendedor" + "@p_codigo_empleado" + "@p_nombre" + "@p_fotografia" + "@p_dui" + "@p_telefono" + "@p_direccion)";
+            string consultaSql = "@CALL p_editar_vendedor(" +
+                "@p_id_vendedor," +
+                "@p_codigo_empleado," +
+                "@p_nombre," +
+                "@p_fotografia," +
+                "@p_dui," +
+                "@p_telefono," +
+                "@p_direccion)";
             using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
 
 
@@ -54,7 +67,9 @@ namespace Heladeria_FMO.Acceso_a_datos_db
         {
             using MySqlConnection conn = Conexion.ConexionDb();
             conn.Open();
-            string consultaSql = "@CALL p_cambiar_estado_vendedor(" + "@p_id_vendedor" + "@p_estado)";
+            string consultaSql = "@CALL p_cambiar_estado_vendedor(" +
+                "@p_id_vendedor," +
+                "@p_estado)";
             using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
 
 

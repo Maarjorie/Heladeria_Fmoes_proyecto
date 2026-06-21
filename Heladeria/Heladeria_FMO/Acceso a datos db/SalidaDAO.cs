@@ -11,12 +11,20 @@ namespace Heladeria_FMO.Acceso_a_datos_db
 {
     public static class SalidaDAO
     {
-        public static bool RegistrarSalida(Salida_Ruta s)
+        public static int RegistrarSalida(Salida_Ruta s)
         {
             using MySqlConnection conn = Conexion.ConexionDb();
             conn.Open();
 
-            string consultaSql = "@p_registrar_salida_ruta(" + "@p_id_vendedor" + "@p_id_ruta" + "@p_id_usuario" + "@p_fecha" + "@p_hora_salida" + "@p_vehiculo" + "@p_comision" + "@p_id_salida)";
+            string consultaSql = "@p_registrar_salida_ruta(" +
+                "@p_id_vendedor," +
+                "@p_id_ruta," +
+                "@p_id_usuario," +
+                "@p_fecha," +
+                "@p_hora_salida," +
+                "@p_vehiculo," +
+                "@p_comision," +
+                "@p_id_salida)";
 
             using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
 
@@ -29,8 +37,13 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             cmd.Parameters.AddWithValue("@p_comision", s.Comision);
             cmd.Parameters.AddWithValue("@p_id_salida", s.HoraSalida);
 
-            int resultado = cmd.ExecuteNonQuery();
-            return resultado > 0;
+            MySqlParameter parametroSalida = new MySqlParameter("@p_id_salida", MySqlDbType.Int32);
+            parametroSalida.Direction = ParameterDirection.Output;
+            cmd.Parameters.Add(parametroSalida);
+            
+            cmd.ExecuteNonQuery();
+
+            return Convert.ToInt32(parametroSalida.Value);
 
         }
     }
