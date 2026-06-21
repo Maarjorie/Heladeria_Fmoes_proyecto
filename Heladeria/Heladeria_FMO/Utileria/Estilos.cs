@@ -45,7 +45,6 @@ namespace Heladeria_FMO.Utileria
 
         public static void BotonDorado(Guna2Button boton)
         {
-<<<<<<< HEAD
             boton.FillColor = Dorado;
             boton.ForeColor = ChocolateOscuro;
             boton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
@@ -64,7 +63,6 @@ namespace Heladeria_FMO.Utileria
 
         public static void BotonOscuro(Guna2Button boton)
         {
-<<<<<<< HEAD
             boton.FillColor = ChocolateOscuro;
             boton.ForeColor = Dorado;
             boton.BorderColor = Dorado;
@@ -179,7 +177,6 @@ namespace Heladeria_FMO.Utileria
             boton.BorderRadius = 0;
 
             boton.HoverState.FillColor = CafeElegante;
->>>>>>> ab54ff87b97c77c76c8fb775facf67563c44696c
             boton.HoverState.ForeColor = DoradoClaro;
         }
 
