@@ -1,4 +1,4 @@
-﻿using Heladeria_FMO.Clases_Auxiliares;
+using Heladeria_FMO.Clases_Auxiliares;
 using Heladeria_FMO.Modelos;
 using MySql.Data.MySqlClient;
 using System;
