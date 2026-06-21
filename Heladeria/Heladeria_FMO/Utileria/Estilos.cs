@@ -45,16 +45,26 @@ namespace Heladeria_FMO.Utileria
 
         public static void BotonDorado(Guna2Button boton)
         {
+<<<<<<< HEAD
             boton.FillColor = Dorado;
             boton.ForeColor = ChocolateOscuro;
             boton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             boton.Cursor = Cursors.Hand;
             boton.Height = 40;
             boton.BorderRadius = 0;
+=======
+            boton.FillColor = Dorado;
+            boton.ForeColor = ChocolateOscuro;
+            boton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            boton.Cursor = Cursors.Hand;
+            boton.Height = 40;
+            boton.BorderRadius = 0;
+>>>>>>> ab54ff87b97c77c76c8fb775facf67563c44696c
         }
 
         public static void BotonOscuro(Guna2Button boton)
         {
+<<<<<<< HEAD
             boton.FillColor = ChocolateOscuro;
             boton.ForeColor = Dorado;
             boton.BorderColor = Dorado;
@@ -62,6 +72,15 @@ namespace Heladeria_FMO.Utileria
             boton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             boton.Cursor = Cursors.Hand;
             boton.Height = 40;
+=======
+            boton.FillColor = ChocolateOscuro;
+            boton.ForeColor = Dorado;
+            boton.BorderColor = Dorado;
+            boton.BorderThickness = 1;
+            boton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            boton.Cursor = Cursors.Hand;
+            boton.Height = 40;
+>>>>>>> ab54ff87b97c77c76c8fb775facf67563c44696c
             boton.BorderRadius = 0;
         }
 
@@ -136,6 +155,7 @@ namespace Heladeria_FMO.Utileria
 
         public static void BotonMenu(Guna2Button boton)
         {
+<<<<<<< HEAD
             boton.Dock = DockStyle.Top;
             boton.Height = 50;
             boton.FillColor = ChocolateOscuro;
@@ -147,6 +167,19 @@ namespace Heladeria_FMO.Utileria
             boton.BorderRadius = 0;
 
             boton.HoverState.FillColor = CafeElegante;
+=======
+            boton.Dock = DockStyle.Top;
+            boton.Height = 50;
+            boton.FillColor = ChocolateOscuro;
+            boton.ForeColor = Dorado;
+            boton.Font = new Font("Segoe UI", 11, FontStyle.Bold);
+            boton.Cursor = Cursors.Hand;
+            boton.TextAlign = HorizontalAlignment.Left;
+            boton.TextOffset = new Point(25, 0); // Reemplaza de forma nativa al Padding izquierdo
+            boton.BorderRadius = 0;
+
+            boton.HoverState.FillColor = CafeElegante;
+>>>>>>> ab54ff87b97c77c76c8fb775facf67563c44696c
             boton.HoverState.ForeColor = DoradoClaro;
         }
 
