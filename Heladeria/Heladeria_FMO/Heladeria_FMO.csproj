@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Intefaz\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.8" />
     <PackageReference Include="MySql.Data" Version="9.7.0" />
   </ItemGroup>
