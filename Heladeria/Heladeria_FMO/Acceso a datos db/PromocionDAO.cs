@@ -91,7 +91,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             return resultado > 0; 
         }
 
-        // Enlista todas las promociones acticas
+        // Enlista todas las promociones activas
         public static List<Promocion> ListarPromocion()
         {
             List<Promocion> promociones = [];
