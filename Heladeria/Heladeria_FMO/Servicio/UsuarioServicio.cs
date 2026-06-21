@@ -18,7 +18,7 @@ namespace Heladeria_FMO.Servicio
         SesionExitosa
     }
 
-    public class UsuarioServicio
+    public static class UsuarioServicio
     {
         public static Acceso Login(string username, string password, out Usuario usuarioActual)
         {
@@ -48,6 +48,51 @@ namespace Heladeria_FMO.Servicio
             usuarioActual = usuario;
 
             return Acceso.SesionExitosa;
+        }
+
+        // Registra un nuevo usuario
+        public static bool RegistrarUsuario(int idRol, string nombre, string username, string contrasena, string correo)
+        {
+            string salt;
+            string hash = Seguridad.GenerarHash(contrasena, out salt);
+
+            Usuario usuario = new()
+            {
+                id_rol = idRol,
+                Nombre = nombre,
+                Usuario_ = username,
+                Contrasenia_hash = hash,
+                Contrasenia_salt = salt,
+                Correo = correo
+            };
+
+            return UsuarioDao.InsertarUsuario(usuario);
+        }
+
+        // Modifica datos generalesd del usuairo
+        public static bool EditarUsuario(int idUsuario, string nombre, string correo, int idRol)
+        {
+            Usuario usuario = new()
+            {
+                id_Usuario = idUsuario,
+                Nombre = nombre,
+                Correo = correo,
+                id_rol = idRol
+            };
+
+            return UsuarioDao.EditarUsuario(usuario);
+        }
+
+        // Activa o desactiva un usuario
+        public static bool CambiarEstadoUsuario(int idUsuario, bool activo)
+        {
+            return UsuarioDao.CambiarEstadoUsuario(idUsuario, activo);
+        }
+
+        //lista los usuarios activos 
+        public static List<Usuario> ListarUsuariosActivos()
+        {
+            return UsuarioDao.ListarUsuariosActivos();
         }
     }
 

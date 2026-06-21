@@ -2,34 +2,34 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="FmrMenuPrincipal.cs">
+    <Compile Update="Intefaz\FmrMenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Form1.cs">
+    <Compile Update="Intefaz\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FrmCaja.cs">
+    <Compile Update="Intefaz\FrmCaja.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FrmClintesMayoristas.cs">
+    <Compile Update="Intefaz\FrmClintesMayoristas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FrmLiquidacionRuta.cs">
+    <Compile Update="Intefaz\FrmLiquidacionRuta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FrmPedidoMayoritas.cs">
+    <Compile Update="Intefaz\FrmPedidoMayoritas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FrmProductos.cs">
+    <Compile Update="Intefaz\FrmProductos.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FrmRutas.cs">
+    <Compile Update="Intefaz\FrmRutas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FrmSalidasRutas.cs">
+    <Compile Update="Intefaz\FrmSalidasRutas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FrmVentasSucursal.cs">
+    <Compile Update="Intefaz\FrmVentasSucursal.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

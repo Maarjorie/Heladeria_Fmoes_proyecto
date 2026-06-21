@@ -41,7 +41,7 @@ namespace Heladeria_FMO.Utileria
               <tr><td align=""center"">
                 <table width=""420"" cellpadding=""0"" cellspacing=""0"" style=""background-color:#ffffff; border-radius:8px; font-family:Arial,sans-serif;"">
                   <tr><td style=""background-color:#e6f1fb; color:#0c447c; padding:16px 20px; font-size:16px; font-weight:bold;"">
-                    Helados La FMO
+                    Helados FMO
                   </td></tr>
                   <tr><td style=""padding:20px;"">
                     <span style=""display:inline-block; background-color:{fondo}; color:{texto}; padding:6px 12px; border-radius:4px; font-size:13px; font-weight:bold;"">{titulo}</span>
