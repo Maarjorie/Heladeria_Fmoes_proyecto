@@ -41,7 +41,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             cmd.Parameters.AddWithValue("@p_fecha_ingreso", producto.FechaIngreso);
             cmd.Parameters.AddWithValue("@p_fecha_vencimiento", producto.FechaVencimiento);
             
-            int resultado = cmd.ExecuteNonQuery();
+            int resultado = cmd.ExecuteNonQuery(); //filas afectadas
 
             return resultado > 0;
         }
@@ -208,6 +208,24 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             }
 
             return productos;
+        }
+
+        // Actualiza solamente el contador de nivel de alerta de vencimiento (0-4) de un producto
+        public static bool ActualizarNivelAlerta(int idProducto, int nivel)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consulta = "CALL p_actualizar_nivel_alerta(" +
+                "@p_id_producto," +
+                "@p_nivel)";
+
+            using MySqlCommand cmd = new MySqlCommand(consulta, conn);
+            cmd.Parameters.AddWithValue("@p_id_producto", idProducto);
+            cmd.Parameters.AddWithValue("@p_nivel", nivel);
+
+            int resultado = cmd.ExecuteNonQuery();
+            return resultado > 0;
         }
     }
 }
