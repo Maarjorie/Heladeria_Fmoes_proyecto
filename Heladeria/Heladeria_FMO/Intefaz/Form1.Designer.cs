@@ -1,6 +1,6 @@
 ﻿namespace Heladeria_FMO
 {
-    partial class Form1
+    partial class FrmLogin
     {
         /// <summary>
         ///  Required designer variable.
@@ -137,7 +137,7 @@
             label1.TabIndex = 8;
             label1.Text = "___________________________________________________________________________";
             // 
-            // Form1
+            // FrmLogin
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -147,7 +147,7 @@
             Controls.Add(lblSubtitulo);
             Controls.Add(lblTitulo);
             Controls.Add(label1);
-            Name = "Form1";
+            Name = "FrmLogin";
             Text = "Form1";
             panelLogin.ResumeLayout(false);
             panelLogin.PerformLayout();
