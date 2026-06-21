@@ -5,7 +5,7 @@
     <Compile Update="Intefaz\FmrMenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Intefaz\Form1.cs">
+    <Compile Update="Intefaz\FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Intefaz\FrmCaja.cs">
