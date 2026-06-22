@@ -1,3 +1,5 @@
+using Heladeria_FMO.Servicio;
+
 namespace Heladeria_FMO
 {
     internal static class Program
