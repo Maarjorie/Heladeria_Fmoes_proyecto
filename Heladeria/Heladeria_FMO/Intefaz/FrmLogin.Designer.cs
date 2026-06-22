@@ -73,16 +73,17 @@
             tlpLogin.ColumnCount = 3;
             tlpLogin.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 28.0912361F));
             tlpLogin.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 71.90876F));
-            tlpLogin.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 85F));
+            tlpLogin.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 108F));
             tlpLogin.Controls.Add(pnlLogin, 1, 1);
             tlpLogin.Dock = DockStyle.Fill;
             tlpLogin.Location = new Point(0, 0);
+            tlpLogin.Margin = new Padding(4);
             tlpLogin.Name = "tlpLogin";
             tlpLogin.RowCount = 3;
             tlpLogin.RowStyles.Add(new RowStyle(SizeType.Percent, 14.9295778F));
             tlpLogin.RowStyles.Add(new RowStyle(SizeType.Percent, 85.07042F));
-            tlpLogin.RowStyles.Add(new RowStyle(SizeType.Absolute, 92F));
-            tlpLogin.Size = new Size(835, 840);
+            tlpLogin.RowStyles.Add(new RowStyle(SizeType.Absolute, 115F));
+            tlpLogin.Size = new Size(1044, 1050);
             tlpLogin.TabIndex = 7;
             // 
             // pnlLogin
@@ -99,10 +100,11 @@
             pnlLogin.Controls.Add(lblTitulo);
             pnlLogin.CustomizableEdges = customizableEdges11;
             pnlLogin.Dock = DockStyle.Fill;
-            pnlLogin.Location = new Point(213, 114);
+            pnlLogin.Location = new Point(266, 143);
+            pnlLogin.Margin = new Padding(4);
             pnlLogin.Name = "pnlLogin";
             pnlLogin.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            pnlLogin.Size = new Size(533, 630);
+            pnlLogin.Size = new Size(665, 787);
             pnlLogin.TabIndex = 8;
             // 
             // LlblRecuperarCredenciales
@@ -110,9 +112,10 @@
             LlblRecuperarCredenciales.AutoSize = true;
             LlblRecuperarCredenciales.Font = new Font("Segoe UI", 10F);
             LlblRecuperarCredenciales.LinkColor = Color.FromArgb(255, 255, 128);
-            LlblRecuperarCredenciales.Location = new Point(93, 400);
+            LlblRecuperarCredenciales.Location = new Point(116, 500);
+            LlblRecuperarCredenciales.Margin = new Padding(4, 0, 4, 0);
             LlblRecuperarCredenciales.Name = "LlblRecuperarCredenciales";
-            LlblRecuperarCredenciales.Size = new Size(303, 23);
+            LlblRecuperarCredenciales.Size = new Size(345, 28);
             LlblRecuperarCredenciales.TabIndex = 3;
             LlblRecuperarCredenciales.TabStop = true;
             LlblRecuperarCredenciales.Text = "¿Olvidaste alguna de tus credenciales?";
@@ -130,17 +133,18 @@
             btnMostrar.Font = new Font("Segoe UI", 9F);
             btnMostrar.ForeColor = Color.White;
             btnMostrar.Image = Properties.Resources.eye;
-            btnMostrar.Location = new Point(402, 334);
+            btnMostrar.Location = new Point(502, 418);
+            btnMostrar.Margin = new Padding(4);
             btnMostrar.Name = "btnMostrar";
             btnMostrar.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            btnMostrar.Size = new Size(46, 44);
+            btnMostrar.Size = new Size(58, 55);
             btnMostrar.TabIndex = 2;
             btnMostrar.Click += btnMostrar_Click;
             // 
             // btnSalir
             // 
             btnSalir.AutoRoundedCorners = true;
-            btnSalir.BorderRadius = 34;
+            btnSalir.BorderRadius = 43;
             btnSalir.CustomizableEdges = customizableEdges3;
             btnSalir.DisabledState.BorderColor = Color.DarkGray;
             btnSalir.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -150,10 +154,11 @@
             btnSalir.Font = new Font("Segoe UI", 17F);
             btnSalir.ForeColor = Color.White;
             btnSalir.HoverState.FillColor = Color.FromArgb(255, 75, 43);
-            btnSalir.Location = new Point(0, 539);
+            btnSalir.Location = new Point(0, 674);
+            btnSalir.Margin = new Padding(4);
             btnSalir.Name = "btnSalir";
             btnSalir.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            btnSalir.Size = new Size(396, 70);
+            btnSalir.Size = new Size(495, 88);
             btnSalir.TabIndex = 5;
             btnSalir.Text = "Salir";
             btnSalir.Click += btnSalir_Click;
@@ -161,7 +166,7 @@
             // btnEntrar
             // 
             btnEntrar.AutoRoundedCorners = true;
-            btnEntrar.BorderRadius = 34;
+            btnEntrar.BorderRadius = 43;
             btnEntrar.CustomizableEdges = customizableEdges5;
             btnEntrar.DisabledState.BorderColor = Color.DarkGray;
             btnEntrar.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -171,10 +176,11 @@
             btnEntrar.Font = new Font("Segoe UI", 17F);
             btnEntrar.ForeColor = Color.White;
             btnEntrar.HoverState.FillColor = Color.FromArgb(255, 75, 43);
-            btnEntrar.Location = new Point(0, 463);
+            btnEntrar.Location = new Point(0, 579);
+            btnEntrar.Margin = new Padding(4);
             btnEntrar.Name = "btnEntrar";
             btnEntrar.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            btnEntrar.Size = new Size(396, 70);
+            btnEntrar.Size = new Size(495, 88);
             btnEntrar.TabIndex = 4;
             btnEntrar.Text = "Entrar";
             btnEntrar.Click += btnEntrar_Click;
@@ -183,7 +189,7 @@
             // 
             txtContraseña.AutoRoundedCorners = true;
             txtContraseña.BorderColor = Color.FromArgb(0, 91, 153);
-            txtContraseña.BorderRadius = 41;
+            txtContraseña.BorderRadius = 51;
             txtContraseña.CustomizableEdges = customizableEdges7;
             txtContraseña.DefaultText = "";
             txtContraseña.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -198,15 +204,15 @@
             txtContraseña.IconLeft = Properties.Resources._lock;
             txtContraseña.IconLeftOffset = new Point(10, 0);
             txtContraseña.IconLeftSize = new Size(25, 25);
-            txtContraseña.Location = new Point(-1, 310);
-            txtContraseña.Margin = new Padding(4, 6, 4, 6);
+            txtContraseña.Location = new Point(-1, 388);
+            txtContraseña.Margin = new Padding(5, 8, 5, 8);
             txtContraseña.Name = "txtContraseña";
             txtContraseña.PasswordChar = '*';
             txtContraseña.PlaceholderForeColor = Color.Gray;
             txtContraseña.PlaceholderText = "Contraseña123";
             txtContraseña.SelectedText = "";
             txtContraseña.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            txtContraseña.Size = new Size(396, 84);
+            txtContraseña.Size = new Size(495, 105);
             txtContraseña.TabIndex = 1;
             // 
             // lblContraseña
@@ -214,9 +220,10 @@
             lblContraseña.BackColor = Color.Transparent;
             lblContraseña.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             lblContraseña.ForeColor = Color.White;
-            lblContraseña.Location = new Point(0, 269);
+            lblContraseña.Location = new Point(0, 336);
+            lblContraseña.Margin = new Padding(4);
             lblContraseña.Name = "lblContraseña";
-            lblContraseña.Size = new Size(120, 32);
+            lblContraseña.Size = new Size(140, 38);
             lblContraseña.TabIndex = 10;
             lblContraseña.Text = "Contraseña";
             // 
@@ -238,14 +245,14 @@
             txtUsuario.IconLeft = Properties.Resources.user;
             txtUsuario.IconLeftOffset = new Point(10, 0);
             txtUsuario.IconLeftSize = new Size(25, 25);
-            txtUsuario.Location = new Point(0, 170);
-            txtUsuario.Margin = new Padding(4, 6, 4, 6);
+            txtUsuario.Location = new Point(0, 212);
+            txtUsuario.Margin = new Padding(5, 8, 5, 8);
             txtUsuario.Name = "txtUsuario";
             txtUsuario.PlaceholderForeColor = Color.Gray;
             txtUsuario.PlaceholderText = "Usuario";
             txtUsuario.SelectedText = "";
             txtUsuario.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            txtUsuario.Size = new Size(396, 85);
+            txtUsuario.Size = new Size(495, 106);
             txtUsuario.TabIndex = 0;
             // 
             // lblUsuario
@@ -253,9 +260,10 @@
             lblUsuario.BackColor = Color.Transparent;
             lblUsuario.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             lblUsuario.ForeColor = Color.White;
-            lblUsuario.Location = new Point(3, 129);
+            lblUsuario.Location = new Point(4, 161);
+            lblUsuario.Margin = new Padding(4);
             lblUsuario.Name = "lblUsuario";
-            lblUsuario.Size = new Size(82, 32);
+            lblUsuario.Size = new Size(96, 38);
             lblUsuario.TabIndex = 11;
             lblUsuario.Text = "Usuario";
             // 
@@ -264,9 +272,10 @@
             lblSubtitulo.BackColor = Color.Transparent;
             lblSubtitulo.Font = new Font("Segoe UI", 14F);
             lblSubtitulo.ForeColor = Color.White;
-            lblSubtitulo.Location = new Point(0, 72);
+            lblSubtitulo.Location = new Point(0, 90);
+            lblSubtitulo.Margin = new Padding(4);
             lblSubtitulo.Name = "lblSubtitulo";
-            lblSubtitulo.Size = new Size(396, 33);
+            lblSubtitulo.Size = new Size(483, 40);
             lblSubtitulo.TabIndex = 12;
             lblSubtitulo.Text = "Bienvenido de nuevo a heladerí\r\na FMO";
             // 
@@ -275,9 +284,10 @@
             lblTitulo.BackColor = Color.Transparent;
             lblTitulo.Font = new Font("Segoe UI", 27F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitulo.ForeColor = Color.White;
-            lblTitulo.Location = new Point(0, 3);
+            lblTitulo.Location = new Point(0, 4);
+            lblTitulo.Margin = new Padding(4);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(277, 63);
+            lblTitulo.Size = new Size(332, 74);
             lblTitulo.TabIndex = 13;
             lblTitulo.Text = "Iniciar sesión";
             // 
@@ -287,10 +297,11 @@
             guna2PictureBox1.CustomizableEdges = customizableEdges13;
             guna2PictureBox1.Image = Properties.Resources.logo_fmo_mono;
             guna2PictureBox1.ImageRotate = 0F;
-            guna2PictureBox1.Location = new Point(3, 3);
+            guna2PictureBox1.Location = new Point(4, 4);
+            guna2PictureBox1.Margin = new Padding(4);
             guna2PictureBox1.Name = "guna2PictureBox1";
             guna2PictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            guna2PictureBox1.Size = new Size(604, 192);
+            guna2PictureBox1.Size = new Size(755, 240);
             guna2PictureBox1.TabIndex = 0;
             guna2PictureBox1.TabStop = false;
             // 
@@ -303,9 +314,10 @@
             PnlFondo.FillColor = Color.FromArgb(0, 51, 102);
             PnlFondo.FillColor2 = Color.FromArgb(10, 25, 47);
             PnlFondo.Location = new Point(0, 0);
+            PnlFondo.Margin = new Padding(4);
             PnlFondo.Name = "PnlFondo";
             PnlFondo.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            PnlFondo.Size = new Size(1230, 840);
+            PnlFondo.Size = new Size(1538, 1050);
             PnlFondo.TabIndex = 14;
             // 
             // GpnlContenedor
@@ -316,20 +328,22 @@
             GpnlContenedor.Dock = DockStyle.Right;
             GpnlContenedor.FillColor = Color.FromArgb(0, 51, 102);
             GpnlContenedor.FillColor2 = Color.FromArgb(0, 150, 225);
-            GpnlContenedor.Location = new Point(395, 0);
+            GpnlContenedor.Location = new Point(494, 0);
+            GpnlContenedor.Margin = new Padding(4);
             GpnlContenedor.Name = "GpnlContenedor";
             GpnlContenedor.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            GpnlContenedor.Size = new Size(835, 840);
+            GpnlContenedor.Size = new Size(1044, 1050);
             GpnlContenedor.TabIndex = 15;
             // 
             // FrmLogin
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(144F, 144F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.Linen;
-            ClientSize = new Size(1230, 840);
+            ClientSize = new Size(1538, 1050);
             Controls.Add(GpnlContenedor);
             Controls.Add(PnlFondo);
+            Margin = new Padding(4);
             Name = "FrmLogin";
             Text = "Helados FMO - Sistema de Gestión";
             WindowState = FormWindowState.Maximized;
