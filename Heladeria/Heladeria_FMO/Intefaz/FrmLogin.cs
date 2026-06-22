@@ -1,6 +1,7 @@
 using Heladeria_FMO.Modelos;
 using Heladeria_FMO.Servicio;
 using Heladeria_FMO.Utileria;
+using Mysqlx.Expect;
 
 namespace Heladeria_FMO
 {
@@ -26,6 +27,8 @@ namespace Heladeria_FMO
             {
                 case Acceso.SesionExitosa:
                     Sesion.UsuarioActivo = usuarioActivo;
+                    this.Hide();
+                    new FmrMenuPrincipal().Show();
                     MessageBox.Show($"Bienvenido, {usuarioActivo.Nombre}.", "Acceso correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
 
@@ -46,6 +49,11 @@ namespace Heladeria_FMO
         private void btnSalir_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnMostrar_Click(object sender, EventArgs e)
+        {
+            txtContraseña.PasswordChar = txtContraseña.PasswordChar == '*' ? '\0' : '*';
         }
 
 
