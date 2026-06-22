@@ -1,7 +1,6 @@
 using Heladeria_FMO.Modelos;
 using Heladeria_FMO.Servicio;
 using Heladeria_FMO.Utileria;
-using Mysqlx.Expect;
 
 namespace Heladeria_FMO
 {
@@ -15,13 +14,13 @@ namespace Heladeria_FMO
 
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtUsuario.Text) || string.IsNullOrWhiteSpace(txtContraseña.Text))
+            if (string.IsNullOrWhiteSpace(txtUsuario.Text) || string.IsNullOrWhiteSpace(txtContraseÃ±a.Text))
             {
-                MessageBox.Show("Ingresa tu usuario y contraseña.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ingresa tu usuario y contraseÃ±a.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            Acceso resultado = UsuarioServicio.Login(txtUsuario.Text, txtContraseña.Text, out Usuario usuarioActivo);
+            Acceso resultado = UsuarioServicio.Login(txtUsuario.Text, txtContraseÃ±a.Text, out Usuario usuarioActivo);
 
             switch (resultado)
             {
@@ -33,15 +32,15 @@ namespace Heladeria_FMO
                     break;
 
                 case Acceso.ErrorCredenciales:
-                    MessageBox.Show("Usuario o contraseña incorrectos.", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Usuario o contraseÃ±a incorrectos.", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
 
                 case Acceso.UsuarioInactivo:
-                    MessageBox.Show("Tu cuenta está desactivada. Contacta al administrador.", "Cuenta inactiva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Tu cuenta estÃ¡ desactivada. Contacta al administrador.", "Cuenta inactiva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     break;
 
                 case Acceso.ErrorConexionDb:
-                    MessageBox.Show("No se pudo conectar con la base de datos. Intenta nuevamente.", "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No se pudo conectar con la base de datos. Intenta nuevamente.", "Error de conexiÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
             }
         }
@@ -53,7 +52,7 @@ namespace Heladeria_FMO
 
         private void btnMostrar_Click(object sender, EventArgs e)
         {
-            txtContraseña.PasswordChar = txtContraseña.PasswordChar == '*' ? '\0' : '*';
+            txtContraseÃ±a.PasswordChar = txtContraseÃ±a.PasswordChar == '*' ? '\0' : '*';
         }
 
 
@@ -70,7 +69,7 @@ Estilos.Subtitulo(lblSubtitulo);
 Estilos.PanelElegante(pnlContenedor);
 
 Estilos.CajaTexto(txtUsuario);
-Estilos.CajaTexto(txtContraseña);
+Estilos.CajaTexto(txtContraseÃ±a);
 
 Estilos.BotonDorado(btnEntrar);
 Estilos.BotonOscuro(btnSalir);

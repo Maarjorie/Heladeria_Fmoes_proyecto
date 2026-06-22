@@ -48,7 +48,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             return resultado > 0;
         }
 
-        // 
+        //  Hace posible el ingreso 
         public static bool EntregarPedidoMayorista(Pedido_mayorista p)
         {
             using MySqlConnection conn = Conexion.ConexionDb();
