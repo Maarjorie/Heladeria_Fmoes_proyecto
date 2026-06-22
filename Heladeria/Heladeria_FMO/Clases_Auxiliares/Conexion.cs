@@ -13,7 +13,7 @@ namespace Heladeria_FMO.Clases_Auxiliares
         const string servidor = "127.0.0.1";
         const string user = "root";
         const string clave = "";
-        const string db = "db";
+        const string db = "db_heladeria";
 
         public static MySqlConnection ConexionDb() //metodo estatico para establecer conexion con la base de datos
         {

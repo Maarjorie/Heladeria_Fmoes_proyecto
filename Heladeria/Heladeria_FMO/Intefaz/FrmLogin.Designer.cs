@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -42,13 +40,16 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            pnlContenedor = new Guna.UI2.WinForms.Guna2Panel();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             tlpLogin = new TableLayoutPanel();
             pnlLogin = new Guna.UI2.WinForms.Guna2Panel();
             LlblRecuperarCredenciales = new LinkLabel();
-            guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            btnMostrar = new Guna.UI2.WinForms.Guna2Button();
             btnSalir = new Guna.UI2.WinForms.Guna2Button();
             btnEntrar = new Guna.UI2.WinForms.Guna2Button();
             txtContraseña = new Guna.UI2.WinForms.Guna2TextBox();
@@ -57,23 +58,15 @@
             lblUsuario = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblSubtitulo = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblTitulo = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             PnlFondo = new Guna.UI2.WinForms.Guna2GradientPanel();
-            pnlContenedor.SuspendLayout();
+            GpnlContenedor = new Guna.UI2.WinForms.Guna2GradientPanel();
             tlpLogin.SuspendLayout();
             pnlLogin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox1).BeginInit();
+            PnlFondo.SuspendLayout();
+            GpnlContenedor.SuspendLayout();
             SuspendLayout();
-            // 
-            // pnlContenedor
-            // 
-            pnlContenedor.BackColor = Color.FromArgb(0, 91, 153);
-            pnlContenedor.Controls.Add(tlpLogin);
-            pnlContenedor.CustomizableEdges = customizableEdges13;
-            pnlContenedor.Dock = DockStyle.Right;
-            pnlContenedor.Location = new Point(311, 0);
-            pnlContenedor.Name = "pnlContenedor";
-            pnlContenedor.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            pnlContenedor.Size = new Size(919, 840);
-            pnlContenedor.TabIndex = 6;
             // 
             // tlpLogin
             // 
@@ -89,13 +82,13 @@
             tlpLogin.RowStyles.Add(new RowStyle(SizeType.Percent, 14.9295778F));
             tlpLogin.RowStyles.Add(new RowStyle(SizeType.Percent, 85.07042F));
             tlpLogin.RowStyles.Add(new RowStyle(SizeType.Absolute, 92F));
-            tlpLogin.Size = new Size(919, 840);
+            tlpLogin.Size = new Size(835, 840);
             tlpLogin.TabIndex = 7;
             // 
             // pnlLogin
             // 
             pnlLogin.Controls.Add(LlblRecuperarCredenciales);
-            pnlLogin.Controls.Add(guna2Button1);
+            pnlLogin.Controls.Add(btnMostrar);
             pnlLogin.Controls.Add(btnSalir);
             pnlLogin.Controls.Add(btnEntrar);
             pnlLogin.Controls.Add(txtContraseña);
@@ -106,10 +99,10 @@
             pnlLogin.Controls.Add(lblTitulo);
             pnlLogin.CustomizableEdges = customizableEdges11;
             pnlLogin.Dock = DockStyle.Fill;
-            pnlLogin.Location = new Point(237, 114);
+            pnlLogin.Location = new Point(213, 114);
             pnlLogin.Name = "pnlLogin";
             pnlLogin.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            pnlLogin.Size = new Size(593, 630);
+            pnlLogin.Size = new Size(533, 630);
             pnlLogin.TabIndex = 8;
             // 
             // LlblRecuperarCredenciales
@@ -124,24 +117,25 @@
             LlblRecuperarCredenciales.TabStop = true;
             LlblRecuperarCredenciales.Text = "¿Olvidaste alguna de tus credenciales?";
             // 
-            // guna2Button1
+            // btnMostrar
             // 
-            guna2Button1.BackColor = Color.Transparent;
-            guna2Button1.BorderRadius = 22;
-            guna2Button1.CustomizableEdges = customizableEdges1;
-            guna2Button1.DisabledState.BorderColor = Color.DarkGray;
-            guna2Button1.DisabledState.CustomBorderColor = Color.DarkGray;
-            guna2Button1.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            guna2Button1.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            guna2Button1.FillColor = Color.FromArgb(168, 218, 220);
-            guna2Button1.Font = new Font("Segoe UI", 9F);
-            guna2Button1.ForeColor = Color.White;
-            guna2Button1.Image = Properties.Resources.eye;
-            guna2Button1.Location = new Point(402, 334);
-            guna2Button1.Name = "guna2Button1";
-            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2Button1.Size = new Size(46, 44);
-            guna2Button1.TabIndex = 2;
+            btnMostrar.BackColor = Color.Transparent;
+            btnMostrar.BorderRadius = 22;
+            btnMostrar.CustomizableEdges = customizableEdges1;
+            btnMostrar.DisabledState.BorderColor = Color.DarkGray;
+            btnMostrar.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnMostrar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnMostrar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnMostrar.FillColor = Color.FromArgb(168, 218, 220);
+            btnMostrar.Font = new Font("Segoe UI", 9F);
+            btnMostrar.ForeColor = Color.White;
+            btnMostrar.Image = Properties.Resources.eye;
+            btnMostrar.Location = new Point(402, 334);
+            btnMostrar.Name = "btnMostrar";
+            btnMostrar.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            btnMostrar.Size = new Size(46, 44);
+            btnMostrar.TabIndex = 2;
+            btnMostrar.Click += btnMostrar_Click;
             // 
             // btnSalir
             // 
@@ -152,9 +146,10 @@
             btnSalir.DisabledState.CustomBorderColor = Color.DarkGray;
             btnSalir.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnSalir.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnSalir.FillColor = Color.FromArgb(0, 51, 102);
+            btnSalir.FillColor = Color.FromArgb(255, 114, 94);
             btnSalir.Font = new Font("Segoe UI", 17F);
             btnSalir.ForeColor = Color.White;
+            btnSalir.HoverState.FillColor = Color.FromArgb(255, 75, 43);
             btnSalir.Location = new Point(0, 539);
             btnSalir.Name = "btnSalir";
             btnSalir.ShadowDecoration.CustomizableEdges = customizableEdges4;
@@ -172,9 +167,10 @@
             btnEntrar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnEntrar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnEntrar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnEntrar.FillColor = Color.FromArgb(0, 51, 102);
+            btnEntrar.FillColor = Color.FromArgb(255, 114, 94);
             btnEntrar.Font = new Font("Segoe UI", 17F);
             btnEntrar.ForeColor = Color.White;
+            btnEntrar.HoverState.FillColor = Color.FromArgb(255, 75, 43);
             btnEntrar.Location = new Point(0, 463);
             btnEntrar.Name = "btnEntrar";
             btnEntrar.ShadowDecoration.CustomizableEdges = customizableEdges6;
@@ -284,16 +280,46 @@
             lblTitulo.TabIndex = 13;
             lblTitulo.Text = "Iniciar sesión";
             // 
+            // guna2PictureBox1
+            // 
+            guna2PictureBox1.BackColor = Color.Transparent;
+            guna2PictureBox1.CustomizableEdges = customizableEdges13;
+            guna2PictureBox1.Image = Properties.Resources.logo_fmo_mono;
+            guna2PictureBox1.ImageRotate = 0F;
+            guna2PictureBox1.Location = new Point(3, 3);
+            guna2PictureBox1.Name = "guna2PictureBox1";
+            guna2PictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            guna2PictureBox1.Size = new Size(604, 192);
+            guna2PictureBox1.TabIndex = 0;
+            guna2PictureBox1.TabStop = false;
+            // 
             // PnlFondo
             // 
             PnlFondo.BackColor = Color.FromArgb(0, 51, 102);
+            PnlFondo.Controls.Add(guna2PictureBox1);
             PnlFondo.CustomizableEdges = customizableEdges15;
             PnlFondo.Dock = DockStyle.Fill;
+            PnlFondo.FillColor = Color.FromArgb(0, 51, 102);
+            PnlFondo.FillColor2 = Color.FromArgb(10, 25, 47);
             PnlFondo.Location = new Point(0, 0);
             PnlFondo.Name = "PnlFondo";
             PnlFondo.ShadowDecoration.CustomizableEdges = customizableEdges16;
             PnlFondo.Size = new Size(1230, 840);
             PnlFondo.TabIndex = 14;
+            // 
+            // GpnlContenedor
+            // 
+            GpnlContenedor.BackColor = Color.FromArgb(0, 51, 102);
+            GpnlContenedor.Controls.Add(tlpLogin);
+            GpnlContenedor.CustomizableEdges = customizableEdges17;
+            GpnlContenedor.Dock = DockStyle.Right;
+            GpnlContenedor.FillColor = Color.FromArgb(0, 51, 102);
+            GpnlContenedor.FillColor2 = Color.FromArgb(0, 150, 225);
+            GpnlContenedor.Location = new Point(395, 0);
+            GpnlContenedor.Name = "GpnlContenedor";
+            GpnlContenedor.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            GpnlContenedor.Size = new Size(835, 840);
+            GpnlContenedor.TabIndex = 15;
             // 
             // FrmLogin
             // 
@@ -301,32 +327,35 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
             ClientSize = new Size(1230, 840);
-            Controls.Add(pnlContenedor);
+            Controls.Add(GpnlContenedor);
             Controls.Add(PnlFondo);
             Name = "FrmLogin";
             Text = "Helados FMO - Sistema de Gestión";
             WindowState = FormWindowState.Maximized;
-            pnlContenedor.ResumeLayout(false);
             tlpLogin.ResumeLayout(false);
             pnlLogin.ResumeLayout(false);
             pnlLogin.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)guna2PictureBox1).EndInit();
+            PnlFondo.ResumeLayout(false);
+            GpnlContenedor.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-        private Guna.UI2.WinForms.Guna2Panel pnlContenedor;
         private TableLayoutPanel tlpLogin;
         private Guna.UI2.WinForms.Guna2Panel pnlLogin;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblTitulo;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblSubtitulo;
-        private Guna.UI2.WinForms.Guna2GradientPanel PnlFondo;
         private Guna.UI2.WinForms.Guna2TextBox txtUsuario;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblUsuario;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblContraseña;
         private Guna.UI2.WinForms.Guna2Button btnEntrar;
         private Guna.UI2.WinForms.Guna2Button btnSalir;
         private Guna.UI2.WinForms.Guna2TextBox txtContraseña;
-        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Button btnMostrar;
         private LinkLabel LlblRecuperarCredenciales;
+        private Guna.UI2.WinForms.Guna2PictureBox guna2PictureBox1;
+        private Guna.UI2.WinForms.Guna2GradientPanel PnlFondo;
+        private Guna.UI2.WinForms.Guna2GradientPanel GpnlContenedor;
     }
 }

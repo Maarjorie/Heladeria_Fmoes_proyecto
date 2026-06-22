@@ -1,3 +1,5 @@
+using Heladeria_FMO.Modelos;
+using Heladeria_FMO.Servicio;
 using Heladeria_FMO.Utileria;
 
 namespace Heladeria_FMO
@@ -12,13 +14,48 @@ namespace Heladeria_FMO
 
         private void btnEntrar_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtUsuario.Text) || string.IsNullOrWhiteSpace(txtContraseÃ±a.Text))
+            {
+                MessageBox.Show("Ingresa tu usuario y contraseÃ±a.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            Acceso resultado = UsuarioServicio.Login(txtUsuario.Text, txtContraseÃ±a.Text, out Usuario usuarioActivo);
+
+            switch (resultado)
+            {
+                case Acceso.SesionExitosa:
+                    Sesion.UsuarioActivo = usuarioActivo;
+                    this.Hide();
+                    new FmrMenuPrincipal().Show();
+                    MessageBox.Show($"Bienvenido, {usuarioActivo.Nombre}.", "Acceso correcto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    break;
+
+                case Acceso.ErrorCredenciales:
+                    MessageBox.Show("Usuario o contraseÃ±a incorrectos.", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+
+                case Acceso.UsuarioInactivo:
+                    MessageBox.Show("Tu cuenta estÃ¡ desactivada. Contacta al administrador.", "Cuenta inactiva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    break;
+
+                case Acceso.ErrorConexionDb:
+                    MessageBox.Show("No se pudo conectar con la base de datos. Intenta nuevamente.", "Error de conexiÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+            }
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            
+            Application.Exit();
         }
+
+        private void btnMostrar_Click(object sender, EventArgs e)
+        {
+            txtContraseÃ±a.PasswordChar = txtContraseÃ±a.PasswordChar == '*' ? '\0' : '*';
+        }
+
+
 
 
         /*
@@ -32,7 +69,7 @@ Estilos.Subtitulo(lblSubtitulo);
 Estilos.PanelElegante(pnlContenedor);
 
 Estilos.CajaTexto(txtUsuario);
-Estilos.CajaTexto(txtContrase�a);
+Estilos.CajaTexto(txtContraseÃ±a);
 
 Estilos.BotonDorado(btnEntrar);
 Estilos.BotonOscuro(btnSalir);
