@@ -33,7 +33,7 @@ namespace Heladeria_FMO.Utileria
             using SHA256 sha256 = SHA256.Create();
             string resultado = Convert.ToBase64String(sha256.ComputeHash(hashBinaria));
 
-            return resultado == saltGuardado;
+            return resultado == hashGuardado;
         }
     }
 }

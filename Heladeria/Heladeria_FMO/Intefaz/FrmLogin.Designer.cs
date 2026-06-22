@@ -230,6 +230,7 @@
             txtUsuario.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
             txtUsuario.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             txtUsuario.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtUsuario.FillColor = Color.FromArgb(254, 250, 224);
             txtUsuario.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtUsuario.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtUsuario.ForeColor = Color.Black;
