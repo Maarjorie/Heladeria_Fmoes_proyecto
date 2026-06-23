@@ -105,6 +105,7 @@
             tableLayoutPanel1.Controls.Add(pnlContenedor, 1, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 7.523511F));
@@ -117,7 +118,8 @@
             guna2Panel1.Controls.Add(guna2PictureBox1);
             guna2Panel1.CustomizableEdges = customizableEdges3;
             guna2Panel1.Dock = DockStyle.Fill;
-            guna2Panel1.Location = new Point(3, 3);
+            guna2Panel1.Location = new Point(4, 4);
+            guna2Panel1.Margin = new Padding(4, 4, 4, 4);
             guna2Panel1.Name = "guna2Panel1";
             guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges4;
             guna2Panel1.Size = new Size(125, 42);
@@ -130,6 +132,7 @@
             guna2PictureBox1.Image = Properties.Resources.logo_fmo;
             guna2PictureBox1.ImageRotate = 0F;
             guna2PictureBox1.Location = new Point(0, 0);
+            guna2PictureBox1.Margin = new Padding(4, 4, 4, 4);
             guna2PictureBox1.Name = "guna2PictureBox1";
             guna2PictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges2;
             guna2PictureBox1.Size = new Size(125, 42);
@@ -154,7 +157,8 @@
             guna2HtmlLabel4.BackColor = Color.Transparent;
             guna2HtmlLabel4.Font = new Font("Segoe UI", 10F);
             guna2HtmlLabel4.ForeColor = SystemColors.ControlDarkDark;
-            guna2HtmlLabel4.Location = new Point(34, 42);
+            guna2HtmlLabel4.Location = new Point(42, 52);
+            guna2HtmlLabel4.Margin = new Padding(4, 4, 4, 4);
             guna2HtmlLabel4.Name = "guna2HtmlLabel4";
             guna2HtmlLabel4.Size = new Size(89, 25);
             guna2HtmlLabel4.TabIndex = 1;
@@ -176,7 +180,8 @@
             guna2Panel3.Controls.Add(guna2Panel4);
             guna2Panel3.CustomizableEdges = customizableEdges28;
             guna2Panel3.Dock = DockStyle.Fill;
-            guna2Panel3.Location = new Point(3, 51);
+            guna2Panel3.Location = new Point(4, 64);
+            guna2Panel3.Margin = new Padding(4, 4, 4, 4);
             guna2Panel3.Name = "guna2Panel3";
             guna2Panel3.ShadowDecoration.CustomizableEdges = customizableEdges29;
             guna2Panel3.Size = new Size(125, 584);
@@ -190,7 +195,8 @@
             guna2Panel5.Controls.Add(guna2CirclePictureBox1);
             guna2Panel5.CustomizableEdges = customizableEdges10;
             guna2Panel5.Dock = DockStyle.Bottom;
-            guna2Panel5.Location = new Point(0, 524);
+            guna2Panel5.Location = new Point(0, 655);
+            guna2Panel5.Margin = new Padding(4, 4, 4, 4);
             guna2Panel5.Name = "guna2Panel5";
             guna2Panel5.ShadowDecoration.CustomizableEdges = customizableEdges11;
             guna2Panel5.Size = new Size(125, 60);
@@ -209,10 +215,11 @@
             btnSalir.ForeColor = Color.White;
             btnSalir.Image = Properties.Resources.log_out;
             btnSalir.ImageAlign = HorizontalAlignment.Left;
-            btnSalir.Location = new Point(149, 10);
+            btnSalir.Location = new Point(186, 12);
+            btnSalir.Margin = new Padding(4, 4, 4, 4);
             btnSalir.Name = "btnSalir";
             btnSalir.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            btnSalir.Size = new Size(38, 41);
+            btnSalir.Size = new Size(48, 51);
             btnSalir.TabIndex = 3;
             btnSalir.Click += btnSalir_Click;
             // 
@@ -222,7 +229,7 @@
             guna2HtmlLabel2.Font = new Font("Segoe UI", 9F);
             guna2HtmlLabel2.Location = new Point(71, 30);
             guna2HtmlLabel2.Name = "guna2HtmlLabel2";
-            guna2HtmlLabel2.Size = new Size(21, 22);
+            guna2HtmlLabel2.Size = new Size(24, 27);
             guna2HtmlLabel2.TabIndex = 2;
             guna2HtmlLabel2.Text = "rol";
             // 
@@ -246,7 +253,7 @@
             guna2CirclePictureBox1.Name = "guna2CirclePictureBox1";
             guna2CirclePictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges9;
             guna2CirclePictureBox1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            guna2CirclePictureBox1.Size = new Size(56, 54);
+            guna2CirclePictureBox1.Size = new Size(70, 68);
             guna2CirclePictureBox1.TabIndex = 0;
             guna2CirclePictureBox1.TabStop = false;
             // 
@@ -256,6 +263,7 @@
             guna2Panel4.CustomizableEdges = customizableEdges26;
             guna2Panel4.Dock = DockStyle.Fill;
             guna2Panel4.Location = new Point(0, 0);
+            guna2Panel4.Margin = new Padding(4, 4, 4, 4);
             guna2Panel4.Name = "guna2Panel4";
             guna2Panel4.ShadowDecoration.CustomizableEdges = customizableEdges27;
             guna2Panel4.Size = new Size(125, 584);
@@ -274,6 +282,7 @@
             flowLayoutPanel1.Controls.Add(btnVendedores);
             flowLayoutPanel1.Controls.Add(btnAutorizacion);
             flowLayoutPanel1.Location = new Point(0, 0);
+            flowLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(125, 584);
             flowLayoutPanel1.TabIndex = 0;
@@ -283,7 +292,8 @@
             guna2HtmlLabel5.BackColor = Color.Transparent;
             guna2HtmlLabel5.Font = new Font("Segoe UI", 12F);
             guna2HtmlLabel5.ForeColor = SystemColors.ControlDarkDark;
-            guna2HtmlLabel5.Location = new Point(3, 3);
+            guna2HtmlLabel5.Location = new Point(4, 4);
+            guna2HtmlLabel5.Margin = new Padding(4, 4, 4, 4);
             guna2HtmlLabel5.Name = "guna2HtmlLabel5";
             guna2HtmlLabel5.Size = new Size(94, 30);
             guna2HtmlLabel5.TabIndex = 0;
@@ -292,7 +302,7 @@
             // btnInicio
             // 
             btnInicio.AutoRoundedCorners = true;
-            btnInicio.BorderRadius = 22;
+            btnInicio.BorderRadius = 28;
             btnInicio.CustomizableEdges = customizableEdges12;
             btnInicio.DisabledState.BorderColor = Color.DarkGray;
             btnInicio.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -306,7 +316,7 @@
             btnInicio.Location = new Point(3, 39);
             btnInicio.Name = "btnInicio";
             btnInicio.ShadowDecoration.CustomizableEdges = customizableEdges13;
-            btnInicio.Size = new Size(200, 46);
+            btnInicio.Size = new Size(250, 58);
             btnInicio.TabIndex = 1;
             btnInicio.Text = "Inicio";
             btnInicio.TextAlign = HorizontalAlignment.Left;
@@ -329,7 +339,7 @@
             btnVenta.Location = new Point(3, 91);
             btnVenta.Name = "btnVenta";
             btnVenta.ShadowDecoration.CustomizableEdges = customizableEdges15;
-            btnVenta.Size = new Size(200, 46);
+            btnVenta.Size = new Size(250, 58);
             btnVenta.TabIndex = 2;
             btnVenta.Text = "Punto de venta";
             btnVenta.TextAlign = HorizontalAlignment.Left;
@@ -352,7 +362,7 @@
             btnInventario.Location = new Point(3, 143);
             btnInventario.Name = "btnInventario";
             btnInventario.ShadowDecoration.CustomizableEdges = customizableEdges17;
-            btnInventario.Size = new Size(200, 46);
+            btnInventario.Size = new Size(250, 58);
             btnInventario.TabIndex = 3;
             btnInventario.Text = "Inventario";
             btnInventario.TextAlign = HorizontalAlignment.Left;
@@ -375,7 +385,7 @@
             btnMayorista.Location = new Point(3, 195);
             btnMayorista.Name = "btnMayorista";
             btnMayorista.ShadowDecoration.CustomizableEdges = customizableEdges19;
-            btnMayorista.Size = new Size(200, 46);
+            btnMayorista.Size = new Size(250, 58);
             btnMayorista.TabIndex = 4;
             btnMayorista.Text = "Mayorista";
             btnMayorista.TextAlign = HorizontalAlignment.Left;
@@ -398,7 +408,7 @@
             btnCaja.Location = new Point(3, 247);
             btnCaja.Name = "btnCaja";
             btnCaja.ShadowDecoration.CustomizableEdges = customizableEdges21;
-            btnCaja.Size = new Size(200, 46);
+            btnCaja.Size = new Size(250, 58);
             btnCaja.TabIndex = 5;
             btnCaja.Text = "Caja";
             btnCaja.TextAlign = HorizontalAlignment.Left;
@@ -432,7 +442,7 @@
             btnVendedores.Location = new Point(3, 335);
             btnVendedores.Name = "btnVendedores";
             btnVendedores.ShadowDecoration.CustomizableEdges = customizableEdges23;
-            btnVendedores.Size = new Size(200, 46);
+            btnVendedores.Size = new Size(250, 58);
             btnVendedores.TabIndex = 6;
             btnVendedores.Text = "Vendedores";
             btnVendedores.TextAlign = HorizontalAlignment.Left;
@@ -455,7 +465,7 @@
             btnAutorizacion.Location = new Point(3, 387);
             btnAutorizacion.Name = "btnAutorizacion";
             btnAutorizacion.ShadowDecoration.CustomizableEdges = customizableEdges25;
-            btnAutorizacion.Size = new Size(200, 46);
+            btnAutorizacion.Size = new Size(250, 58);
             btnAutorizacion.TabIndex = 7;
             btnAutorizacion.Text = "Autorización";
             btnAutorizacion.TextAlign = HorizontalAlignment.Left;
@@ -480,6 +490,7 @@
             ClientSize = new Size(1169, 638);
             ControlBox = false;
             Controls.Add(tableLayoutPanel1);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "FrmMenuPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FmrMenuPrincipal";
