@@ -32,5 +32,20 @@
     <Compile Update="Intefaz\FrmVentasSucursal.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Intefaz\Inventario\FrmAgregarProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Inventario\ucAgregarProducto.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Inventario\ucInventario.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\MenuInicio\ucInicio.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\MenuInicio\ucTarjetaVentas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

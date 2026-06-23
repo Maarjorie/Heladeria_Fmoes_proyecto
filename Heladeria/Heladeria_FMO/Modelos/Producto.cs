@@ -23,5 +23,6 @@ namespace Heladeria_FMO.Modelos
         public int NivelAlertaVencimiento { get; set; }
         public bool Activo { get; set; }
         public DateTime FechaRegistro { get; set; }
+        public string ImagenRuta { get; set; }
     }
 }

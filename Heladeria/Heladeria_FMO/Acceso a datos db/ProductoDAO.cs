@@ -26,7 +26,8 @@ namespace Heladeria_FMO.Acceso_a_datos_db
                 "@p_stock_actual," +
                 "@p_stock_minimo," +
                 "@p_fecha_ingreso," +
-                "@p_fecha_vencimiento)";
+                "@p_fecha_vencimiento," +
+                "@p_imagen_ruta)";
 
             using MySqlCommand cmd = new MySqlCommand(consulta, conn);
             cmd.Parameters.AddWithValue("@p_codigo", producto.Codigo);
@@ -40,7 +41,8 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             cmd.Parameters.AddWithValue("@p_stock_minimo", producto.StockMinimo);
             cmd.Parameters.AddWithValue("@p_fecha_ingreso", producto.FechaIngreso);
             cmd.Parameters.AddWithValue("@p_fecha_vencimiento", producto.FechaVencimiento);
-            
+            cmd.Parameters.AddWithValue("@p_imagen_ruta", producto.ImagenRuta ?? (object)DBNull.Value);
+
             int resultado = cmd.ExecuteNonQuery(); //filas afectadas
 
             return resultado > 0;
@@ -124,7 +126,8 @@ namespace Heladeria_FMO.Acceso_a_datos_db
                     PrecioVenta = reader.GetDecimal(7),
                     StockActual = reader.GetInt32(8),
                     StockMinimo = reader.GetInt32(9),
-                    FechaVencimiento = reader.GetDateTime(10)
+                    FechaVencimiento = reader.GetDateTime(10),
+                    ImagenRuta = reader.IsDBNull(11) ? null : reader.GetString(11)
                 };
                 productos.Add(producto);
             }

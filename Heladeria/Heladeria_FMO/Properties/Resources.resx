@@ -151,6 +151,9 @@
   <data name="chart-no-axes-combined" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\chart-no-axes-combined.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="checked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\checked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="money-bags" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\money-bags.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -160,7 +163,10 @@
   <data name="log-out" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\log-out.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="checked" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\checked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="image-down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\image-down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

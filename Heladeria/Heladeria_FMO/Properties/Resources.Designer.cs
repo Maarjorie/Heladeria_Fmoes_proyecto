@@ -143,6 +143,16 @@ namespace Heladeria_FMO.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap image_down {
+            get {
+                object obj = ResourceManager.GetObject("image-down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap log_out {
             get {
                 object obj = ResourceManager.GetObject("log-out", resourceCulture);
@@ -206,6 +216,16 @@ namespace Heladeria_FMO.Properties {
         internal static System.Drawing.Bitmap user1 {
             get {
                 object obj = ResourceManager.GetObject("user1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap x {
+            get {
+                object obj = ResourceManager.GetObject("x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
