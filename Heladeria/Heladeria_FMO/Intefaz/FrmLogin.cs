@@ -96,6 +96,23 @@ namespace Heladeria_FMO
                     new FrmMenuPrincipal().Show();
                     break;
 
+                case Acceso.RequiereNuevaContrasena:
+                    // Entró con la contraseña temporal: debe crear una nueva
+                    // antes de acceder al sistema.
+                    using (var frm = new FrmEstablecerContrasena(usuarioActivo.id_Usuario))
+                    {
+                        if (frm.ShowDialog(this) != DialogResult.OK)
+                        {
+                            // Si no la cambió, no se le permite entrar.
+                            MensajeFmo.Advertencia("Debes crear una contraseña nueva para ingresar.", "Acción requerida");
+                            return;
+                        }
+                    }
+                    Sesion.UsuarioActivo = usuarioActivo;
+                    this.Hide();
+                    new FrmMenuPrincipal().Show();
+                    break;
+
                 case Acceso.ErrorCredenciales:
                     MensajeFmo.Error("Usuario o contraseña incorrectos.", "Acceso denegado");
                     break;

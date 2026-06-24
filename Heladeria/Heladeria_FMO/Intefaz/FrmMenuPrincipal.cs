@@ -29,7 +29,6 @@ namespace Heladeria_FMO
             InitializeComponent();
             MostrarDatosUsuario();
             AplicarPermisosPorRol();
-            CrearBotonReportes();
             HabilitarDoubleBuffer(pnlContenedor);
             AplicarTemaShell();
 
@@ -59,32 +58,18 @@ namespace Heladeria_FMO
         // separar el chrome de la zona de trabajo).
         private static readonly Color ColorSidebar = EstilosFmo.Superficie;
 
-        private Guna2Button btnReportes;
-
         private Guna2Button[] BotonesNav()
         {
-            var lista = new List<Guna2Button>
+            return new[]
             {
-                btnInicio, btnVenta, btnInventario, btnMayorista, btnCaja, btnVendedores, btnAutorizacion
+                btnInicio, btnVenta, btnInventario, btnMayorista, btnCaja, btnVendedores, btnAutorizacion, btnReportes
             };
-            if (btnReportes != null) lista.Add(btnReportes);
-            return lista.ToArray();
         }
 
-        // Agrega el botón "Reportes" al sidebar (solo administrador).
-        private void CrearBotonReportes()
+        // Navega al módulo de reportes (botón del sidebar, solo administrador).
+        private void btnReportes_Click(object sender, EventArgs e)
         {
-            btnReportes = new Guna2Button
-            {
-                Text = "Reportes",
-                Size = new Size(200, 46),
-                TextAlign = HorizontalAlignment.Left,
-                TextOffset = new Point(10, 0),
-                AutoRoundedCorners = true,
-                Visible = Sesion.UsuarioActivo?.id_rol == 1
-            };
-            btnReportes.Click += (s, e) => CargarVista(new ucReportes());
-            flowLayoutPanel1.Controls.Add(btnReportes);
+            CargarVista(new ucReportes());
         }
 
         // Aplica el tema oscuro al "shell" (sidebar + topbar + contenedor) para que
@@ -194,6 +179,9 @@ namespace Heladeria_FMO
 
             // Autorización — Supervisor y Admin
             btnAutorizacion.Visible = esSupervisor || esAdmin;
+
+            // Reportes — Admin
+            btnReportes.Visible = esAdmin;
         }
 
         // Carga un UserControl en el panel de contenido

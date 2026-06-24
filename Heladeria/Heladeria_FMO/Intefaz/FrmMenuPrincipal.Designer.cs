@@ -82,6 +82,7 @@
             guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             btnVendedores = new Guna.UI2.WinForms.Guna2Button();
             btnAutorizacion = new Guna.UI2.WinForms.Guna2Button();
+            btnReportes = new Guna.UI2.WinForms.Guna2Button();
             pnlContenedor = new Guna.UI2.WinForms.Guna2Panel();
             tableLayoutPanel1.SuspendLayout();
             guna2Panel1.SuspendLayout();
@@ -281,6 +282,7 @@
             flowLayoutPanel1.Controls.Add(guna2HtmlLabel6);
             flowLayoutPanel1.Controls.Add(btnVendedores);
             flowLayoutPanel1.Controls.Add(btnAutorizacion);
+            flowLayoutPanel1.Controls.Add(btnReportes);
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Margin = new Padding(4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -471,7 +473,29 @@
             btnAutorizacion.TextAlign = HorizontalAlignment.Left;
             btnAutorizacion.TextOffset = new Point(10, 0);
             btnAutorizacion.Click += btnAutorizacion_Click;
-            // 
+            //
+            // btnReportes
+            //
+            btnReportes.AutoRoundedCorners = true;
+            btnReportes.DisabledState.BorderColor = Color.DarkGray;
+            btnReportes.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnReportes.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnReportes.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnReportes.Font = new Font("Segoe UI", 11F);
+            btnReportes.ForeColor = Color.White;
+            btnReportes.Image = Properties.Resources.growth;
+            btnReportes.ImageAlign = HorizontalAlignment.Left;
+            btnReportes.ImageOffset = new Point(10, 0);
+            btnReportes.Location = new Point(3, 525);
+            btnReportes.Name = "btnReportes";
+            btnReportes.Size = new Size(250, 58);
+            btnReportes.TabIndex = 8;
+            btnReportes.Text = "Reportes";
+            btnReportes.TextAlign = HorizontalAlignment.Left;
+            btnReportes.TextOffset = new Point(10, 0);
+            btnReportes.Visible = false;
+            btnReportes.Click += btnReportes_Click;
+            //
             // pnlContenedor
             // 
             pnlContenedor.BackColor = SystemColors.ControlDark;
@@ -534,6 +558,7 @@
         private Guna.UI2.WinForms.Guna2Button btnCaja;
         private Guna.UI2.WinForms.Guna2Button btnVendedores;
         private Guna.UI2.WinForms.Guna2Button btnAutorizacion;
+        private Guna.UI2.WinForms.Guna2Button btnReportes;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;
         private Guna.UI2.WinForms.Guna2Panel pnlContenedor;
     }

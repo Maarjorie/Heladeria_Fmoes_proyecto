@@ -36,6 +36,9 @@ namespace Heladeria_FMO.Acceso_a_datos_db
                     Contrasenia_salt = reader.GetString(5),
                     Correo = reader.GetString(6),
                     Activo = reader.GetBoolean(7),
+                    Contrasenia_temp_hash = reader.IsDBNull(8) ? null : reader.GetString(8),
+                    Contrasenia_temp_salt = reader.IsDBNull(9) ? null : reader.GetString(9),
+                    Contrasenia_temp_expira = reader.IsDBNull(10) ? null : reader.GetDateTime(10),
                 };
 
                 return usuario;
@@ -74,7 +77,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             return null;
         }
 
-        // Actualiza el hash y salt de la contraseña de un usuario
+        // Fija una nueva contraseña permanente y limpia la temporal pendiente.
         public static bool ActualizarContrasena(int idUsuario, string hash, string salt)
         {
             using MySqlConnection conn = Conexion.ConexionDb();
@@ -89,6 +92,28 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             cmd.Parameters.AddWithValue("@p_id_usuario", idUsuario);
             cmd.Parameters.AddWithValue("@p_hash", hash);
             cmd.Parameters.AddWithValue("@p_salt", salt);
+
+            int resultado = cmd.ExecuteNonQuery();
+            return resultado > 0;
+        }
+
+        // Guarda una contraseña temporal (con expiración) SIN tocar la real.
+        public static bool GuardarContrasenaTemporal(int idUsuario, string hash, string salt, DateTime expira)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consulta = "CALL p_guardar_contrasena_temporal(" +
+                "@p_id_usuario," +
+                "@p_hash," +
+                "@p_salt," +
+                "@p_expira)";
+
+            using MySqlCommand cmd = new MySqlCommand(consulta, conn);
+            cmd.Parameters.AddWithValue("@p_id_usuario", idUsuario);
+            cmd.Parameters.AddWithValue("@p_hash", hash);
+            cmd.Parameters.AddWithValue("@p_salt", salt);
+            cmd.Parameters.AddWithValue("@p_expira", expira);
 
             int resultado = cmd.ExecuteNonQuery();
             return resultado > 0;

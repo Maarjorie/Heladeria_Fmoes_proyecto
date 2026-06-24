@@ -12,10 +12,6 @@ namespace Heladeria_FMO.Intefaz.Inventario
 {
     public partial class ucInventario : UserControl
     {
-        private Guna2Button btnEditar;
-        private Guna2Button btnDesactivar;
-        private Guna2Button btnPromos;
-
         // Catálogo completo en memoria, para filtrar la búsqueda sin recargar.
         private List<Producto> _todos = new();
 
@@ -23,7 +19,6 @@ namespace Heladeria_FMO.Intefaz.Inventario
         {
             InitializeComponent();
             AplicarTema();
-            CrearBotonesCrud();
             guna2TextBox1.TextChanged += (s, e) => AplicarFiltro();
             dgvProductos.SelectionChanged += (s, e) => ActualizarBotonEstado();
             CargarProductos();
@@ -36,45 +31,18 @@ namespace Heladeria_FMO.Intefaz.Inventario
             EstilosFmo.CajaTexto(guna2TextBox1);
             EstilosFmo.BotonPrimario(btnAgregarProducto);
             EstilosFmo.Tabla(dgvProductos);
-        }
 
-        private void CrearBotonesCrud()
-        {
-            btnEditar = new Guna2Button
-            {
-                Text = "Editar",
-                Size = new Size(125, 56),
-                Location = new Point(575, 27)
-            };
+            // Los botones existen en el Designer; aquí solo se les aplica el tema.
             EstilosFmo.BotonContorno(btnEditar);
-            btnEditar.Click += btnEditar_Click;
-
-            btnDesactivar = new Guna2Button
-            {
-                Text = "Dar de baja",
-                Size = new Size(150, 56),
-                Location = new Point(712, 27)
-            };
             EstilosFmo.BotonContorno(btnDesactivar);
             btnDesactivar.ForeColor = EstilosFmo.Cereza;
-            btnDesactivar.Click += btnDesactivar_Click;
-
-            btnPromos = new Guna2Button
-            {
-                Text = "Promociones",
-                Size = new Size(150, 56),
-                Location = new Point(877, 27)
-            };
             EstilosFmo.BotonContorno(btnPromos);
-            btnPromos.Click += (s, e) =>
-            {
-                using var d = new FrmPromociones();
-                d.ShowDialog(this.FindForm());
-            };
+        }
 
-            guna2Panel1.Controls.Add(btnEditar);
-            guna2Panel1.Controls.Add(btnDesactivar);
-            guna2Panel1.Controls.Add(btnPromos);
+        private void btnPromos_Click(object sender, EventArgs e)
+        {
+            using var d = new FrmPromociones();
+            d.ShowDialog(this.FindForm());
         }
 
         private void CargarProductos()

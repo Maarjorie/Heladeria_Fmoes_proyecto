@@ -83,7 +83,9 @@ namespace Heladeria_FMO.Intefaz.Autorizaciones
                 Text = "Usuarios",
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 Location = new Point(950, 10),
-                Size = new Size(120, 36)
+                Size = new Size(120, 36),
+                // Solo el administrador gestiona (alta/edición/baja) de usuarios.
+                Visible = Sesion.EsAdministrador
             };
             EstilosFmo.BotonContorno(btnUsuarios);
             btnUsuarios.Click += (s, e) => { using var d = new FrmUsuarios(); d.ShowDialog(this.FindForm()); };

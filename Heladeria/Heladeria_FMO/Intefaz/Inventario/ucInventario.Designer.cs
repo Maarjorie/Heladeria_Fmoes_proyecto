@@ -39,6 +39,9 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             btnAgregarProducto = new Guna.UI2.WinForms.Guna2Button();
+            btnEditar = new Guna.UI2.WinForms.Guna2Button();
+            btnDesactivar = new Guna.UI2.WinForms.Guna2Button();
+            btnPromos = new Guna.UI2.WinForms.Guna2Button();
             guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             dgvProductos = new Guna.UI2.WinForms.Guna2DataGridView();
             guna2Panel1.SuspendLayout();
@@ -48,6 +51,9 @@
             // guna2Panel1
             // 
             guna2Panel1.Controls.Add(btnAgregarProducto);
+            guna2Panel1.Controls.Add(btnEditar);
+            guna2Panel1.Controls.Add(btnDesactivar);
+            guna2Panel1.Controls.Add(btnPromos);
             guna2Panel1.Controls.Add(guna2TextBox1);
             guna2Panel1.CustomizableEdges = customizableEdges5;
             guna2Panel1.Dock = DockStyle.Top;
@@ -74,7 +80,34 @@
             btnAgregarProducto.TabIndex = 1;
             btnAgregarProducto.Text = "+ Nuevo Producto";
             btnAgregarProducto.Click += btnAgregarProducto_Click;
-            // 
+            //
+            // btnEditar
+            //
+            btnEditar.Location = new Point(575, 27);
+            btnEditar.Name = "btnEditar";
+            btnEditar.Size = new Size(125, 56);
+            btnEditar.TabIndex = 2;
+            btnEditar.Text = "Editar";
+            btnEditar.Click += btnEditar_Click;
+            //
+            // btnDesactivar
+            //
+            btnDesactivar.Location = new Point(712, 27);
+            btnDesactivar.Name = "btnDesactivar";
+            btnDesactivar.Size = new Size(150, 56);
+            btnDesactivar.TabIndex = 3;
+            btnDesactivar.Text = "Dar de baja";
+            btnDesactivar.Click += btnDesactivar_Click;
+            //
+            // btnPromos
+            //
+            btnPromos.Location = new Point(877, 27);
+            btnPromos.Name = "btnPromos";
+            btnPromos.Size = new Size(150, 56);
+            btnPromos.TabIndex = 4;
+            btnPromos.Text = "Promociones";
+            btnPromos.Click += btnPromos_Click;
+            //
             // guna2TextBox1
             // 
             guna2TextBox1.BorderRadius = 16;
@@ -152,6 +185,9 @@
 
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2Button btnAgregarProducto;
+        private Guna.UI2.WinForms.Guna2Button btnEditar;
+        private Guna.UI2.WinForms.Guna2Button btnDesactivar;
+        private Guna.UI2.WinForms.Guna2Button btnPromos;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
         private Guna.UI2.WinForms.Guna2DataGridView dgvProductos;
     }

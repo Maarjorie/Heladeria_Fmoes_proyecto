@@ -33,7 +33,9 @@ namespace Heladeria_FMO.Intefaz.Mayorista
                 Text = "Clientes",
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 Location = new System.Drawing.Point(390, 12),
-                Size = new System.Drawing.Size(120, 42)
+                Size = new System.Drawing.Size(120, 42),
+                // Solo el administrador gestiona (alta/edición) de clientes mayoristas.
+                Visible = Sesion.EsAdministrador
             };
             EstilosFmo.BotonContorno(btnClientes);
             btnClientes.Click += (s, e) =>
