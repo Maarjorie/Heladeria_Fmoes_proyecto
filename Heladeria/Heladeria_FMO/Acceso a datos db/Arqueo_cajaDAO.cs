@@ -32,6 +32,33 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             return resultado > 0;
         }
 
+        // Lista los arqueos pendientes de autorización (con el nombre de quien lo realizó).
+        public static DataTable ListarPendientes()
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand("CALL p_listar_arqueos_pendientes()", conn);
+            using MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+
+        // Autoriza un arqueo.
+        public static bool AutorizarArqueo(int idArqueo, int idAutorizadoPor)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand("CALL p_autorizar_arqueo(@p_id_arqueo, @p_id_autorizado_por)", conn);
+            cmd.Parameters.AddWithValue("@p_id_arqueo", idArqueo);
+            cmd.Parameters.AddWithValue("@p_id_autorizado_por", idAutorizadoPor);
+
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
         // Lista los arqueos realizados sobre una caja especifica.
         public static List<Arqueo_caja> ListarPorCaja(int idCaja)
         {

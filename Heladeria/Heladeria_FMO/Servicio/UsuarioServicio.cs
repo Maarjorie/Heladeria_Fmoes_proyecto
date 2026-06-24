@@ -89,10 +89,16 @@ namespace Heladeria_FMO.Servicio
             return UsuarioDao.CambiarEstadoUsuario(idUsuario, activo);
         }
 
-        //lista los usuarios activos 
+        //lista los usuarios activos
         public static List<Usuario> ListarUsuariosActivos()
         {
             return UsuarioDao.ListarUsuariosActivos();
+        }
+
+        //lista todos los usuarios (activos e inactivos)
+        public static List<Usuario> ListarUsuarios()
+        {
+            return UsuarioDao.ListarUsuarios();
         }
     }
 
@@ -100,5 +106,16 @@ namespace Heladeria_FMO.Servicio
     {
         // establece la entidad del usuario activo en la sesion actual
         public static Usuario UsuarioActivo { get; set; }
+
+        // ---- Caja abierta en la sesion actual --------------------------------
+        // IdCajaActiva = 0 significa que no hay ninguna caja abierta.
+        public static int IdCajaActiva { get; set; }
+        public static decimal FondoCajaActiva { get; set; }
+
+        // Total vendido acumulado desde que se abrio la caja (alimenta el
+        // "monto esperado" del arqueo). Lo incrementa el punto de venta al cobrar.
+        public static decimal TotalVendidoCaja { get; set; }
+
+        public static bool HayCajaAbierta => IdCajaActiva > 0;
     }
 }

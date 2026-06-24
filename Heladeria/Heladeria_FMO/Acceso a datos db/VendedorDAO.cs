@@ -14,8 +14,8 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             using MySqlConnection conn = Conexion.ConexionDb();
             conn.Open();
 
-            string consultaSql = "@CALL p_insertar_vendedor(" +
-                "@p_codigo_empleado" +
+            string consultaSql = "CALL p_insertar_vendedor(" +
+                "@p_codigo_empleado," +
                 "@p_nombre," +
                 "@p_fotografia," +
                 "@p_dui," +
@@ -40,7 +40,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
         {
             using MySqlConnection conn = Conexion.ConexionDb();
             conn.Open();
-            string consultaSql = "@CALL p_editar_vendedor(" +
+            string consultaSql = "CALL p_editar_vendedor(" +
                 "@p_id_vendedor," +
                 "@p_codigo_empleado," +
                 "@p_nombre," +
@@ -67,7 +67,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
         {
             using MySqlConnection conn = Conexion.ConexionDb();
             conn.Open();
-            string consultaSql = "@CALL p_cambiar_estado_vendedor(" +
+            string consultaSql = "CALL p_cambiar_estado_vendedor(" +
                 "@p_id_vendedor," +
                 "@p_estado)";
             using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
@@ -79,6 +79,35 @@ namespace Heladeria_FMO.Acceso_a_datos_db
 
             int respuesta = cmd.ExecuteNonQuery();
             return respuesta > 0;
+        }
+
+        // Lista los vendedores (para combos y administración).
+        public static List<Vendedor> ListarVendedores()
+        {
+            List<Vendedor> vendedores = new();
+
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consultaSql = "CALL p_listar_vendedores()";
+
+            using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
+            using MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                vendedores.Add(new Vendedor
+                {
+                    IdVendedor = reader.GetInt32(0),
+                    CodigoEmpleado = reader.GetString(1),
+                    Nombre = reader.GetString(2),
+                    Dui = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                    Telefono = reader.IsDBNull(4) ? "" : reader.GetString(4),
+                    Estado = !reader.IsDBNull(5) && reader.GetString(5) == "activo"
+                });
+            }
+
+            return vendedores;
         }
     }
 }

@@ -11,8 +11,9 @@ namespace Heladeria_FMO.Servicio
 {
     public static class ClienteMayoristaServicio
     {
-        //Validación de campos necesarios para evitar erroes de valores nulos o vacios
-        public static bool ValidarCliente(Cliente_mayorista cliente)
+        //Validación de campos necesarios para evitar errores de valores nulos o vacios.
+        //Solo valida (no toca la base de datos).
+        private static void ValidarCampos(Cliente_mayorista cliente)
         {
             if (string.IsNullOrWhiteSpace(cliente.NombreComercial))
                 throw new Exception("El nombre comercial es obligatorio.");
@@ -25,18 +26,22 @@ namespace Heladeria_FMO.Servicio
 
             if (string.IsNullOrWhiteSpace(cliente.Telefono))
                 throw new Exception("Debe ingresar un teléfono.");
+        }
 
+        //Valida e inserta un nuevo cliente.
+        public static bool RegistrarCliente(Cliente_mayorista cliente)
+        {
+            ValidarCampos(cliente);
             return Cliente_mayoristaDAO.InsertarClienteMayorista(cliente);
         }
 
-
-        //Verificar que un dato de fila o columna está seleccionado
+        //Verificar que un dato de fila o columna está seleccionado y edita.
         public static bool EditarCliente(Cliente_mayorista cliente)
         {
             if (cliente.IdCliente <= 0)
                 throw new Exception("Debe seleccionar un cliente.");
 
-            ValidarCliente(cliente);
+            ValidarCampos(cliente);
 
             return Cliente_mayoristaDAO.EditarClienteMayorista(cliente);
         }

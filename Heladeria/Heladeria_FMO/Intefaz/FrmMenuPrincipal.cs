@@ -1,8 +1,13 @@
-﻿using Guna.UI2.WinForms;
+using Guna.UI2.WinForms;
+using Heladeria_FMO.Intefaz.Autorizaciones;
+using Heladeria_FMO.Intefaz.Caja;
 using Heladeria_FMO.Intefaz.Inventario;
+using Heladeria_FMO.Intefaz.Mayorista;
+using Heladeria_FMO.Intefaz.PuntoVenta;
+using Heladeria_FMO.Intefaz.Reportes;
+using Heladeria_FMO.Intefaz.Vendedores;
 using Heladeria_FMO.Intefaz.ucMenuInicio;
 using Heladeria_FMO.Servicio;
-using Heladeria_FMO.Utileria;
 using Heladeria_FMO.Utileria;
 using System;
 using System.Collections.Generic;
@@ -24,9 +29,115 @@ namespace Heladeria_FMO
             InitializeComponent();
             MostrarDatosUsuario();
             AplicarPermisosPorRol();
+            CrearBotonReportes();
             HabilitarDoubleBuffer(pnlContenedor);
+            AplicarTemaShell();
 
-            // AplicarDiseno();
+            // Vista inicial: el dashboard.
+            CargarVista(new ucInicio());
+            MarcarNavActivo(btnInicio);
+
+            IniciarNotificacionesAutomaticas();
+        }
+
+        private System.Windows.Forms.Timer _timerNotificaciones;
+
+        // Arranca el sistema de notificaciones automáticas: corre una vez al entrar
+        // y luego periódicamente. El propio sistema detecta los eventos (stock bajo,
+        // productos por vencer) y envía las notificaciones pendientes por correo.
+        private void IniciarNotificacionesAutomaticas()
+        {
+            _timerNotificaciones = new System.Windows.Forms.Timer { Interval = 5 * 60 * 1000 };
+            _timerNotificaciones.Tick += (s, e) => _ = NotificacionServicio.ProcesarAsync();
+            _timerNotificaciones.Start();
+
+            // Corrida inicial (no bloquea la UI).
+            _ = NotificacionServicio.ProcesarAsync();
+        }
+
+        // Color base del sidebar/topbar (un poco más claro que el contenido para
+        // separar el chrome de la zona de trabajo).
+        private static readonly Color ColorSidebar = EstilosFmo.Superficie;
+
+        private Guna2Button btnReportes;
+
+        private Guna2Button[] BotonesNav()
+        {
+            var lista = new List<Guna2Button>
+            {
+                btnInicio, btnVenta, btnInventario, btnMayorista, btnCaja, btnVendedores, btnAutorizacion
+            };
+            if (btnReportes != null) lista.Add(btnReportes);
+            return lista.ToArray();
+        }
+
+        // Agrega el botón "Reportes" al sidebar (solo administrador).
+        private void CrearBotonReportes()
+        {
+            btnReportes = new Guna2Button
+            {
+                Text = "Reportes",
+                Size = new Size(200, 46),
+                TextAlign = HorizontalAlignment.Left,
+                TextOffset = new Point(10, 0),
+                AutoRoundedCorners = true,
+                Visible = Sesion.UsuarioActivo?.id_rol == 1
+            };
+            btnReportes.Click += (s, e) => CargarVista(new ucReportes());
+            flowLayoutPanel1.Controls.Add(btnReportes);
+        }
+
+        // Aplica el tema oscuro al "shell" (sidebar + topbar + contenedor) para que
+        // combine con las pantallas nuevas, sin rehacer el diseñador.
+        private void AplicarTemaShell()
+        {
+            BackColor = EstilosFmo.Fondo;
+
+            foreach (var p in new[] { guna2Panel1, guna2Panel2, guna2Panel3, guna2Panel4, guna2Panel5 })
+                p.FillColor = ColorSidebar;
+            flowLayoutPanel1.BackColor = ColorSidebar;
+            pnlContenedor.FillColor = EstilosFmo.Fondo;
+
+            // Topbar.
+            guna2HtmlLabel3.ForeColor = EstilosFmo.TextoFuerte;
+            guna2HtmlLabel3.Font = EstilosFmo.Fuente(16F, FontStyle.Bold);
+            guna2HtmlLabel4.ForeColor = EstilosFmo.TextoTenue;
+
+            // Etiquetas de sección del sidebar.
+            foreach (var lbl in new[] { guna2HtmlLabel5, guna2HtmlLabel6 })
+            {
+                lbl.ForeColor = EstilosFmo.TextoTenue;
+                lbl.Font = EstilosFmo.Fuente(10F, FontStyle.Bold);
+            }
+
+            // Pie de usuario.
+            guna2HtmlLabel1.ForeColor = EstilosFmo.TextoFuerte;
+            guna2HtmlLabel2.ForeColor = EstilosFmo.TextoTenue;
+            btnSalir.FillColor = Color.Transparent;
+            btnSalir.ForeColor = EstilosFmo.TextoTenue;
+
+            // Botones de navegación: transparentes sobre el sidebar; al pasar el
+            // mouse se oscurecen y el activo se pinta de fresa.
+            foreach (var b in BotonesNav())
+            {
+                b.FillColor = ColorSidebar;
+                b.ForeColor = EstilosFmo.TextoCuerpo;
+                b.Font = EstilosFmo.Fuente(11F);
+                b.HoverState.FillColor = EstilosFmo.SuperficieHundida;
+                b.Click += (s, e) => MarcarNavActivo((Guna2Button)s);
+            }
+        }
+
+        // Resalta el botón de navegación activo y restablece los demás.
+        private void MarcarNavActivo(Guna2Button activo)
+        {
+            foreach (var b in BotonesNav())
+            {
+                bool on = b == activo;
+                b.FillColor = on ? EstilosFmo.Fresa : ColorSidebar;
+                b.ForeColor = on ? Color.White : EstilosFmo.TextoCuerpo;
+                b.HoverState.FillColor = on ? EstilosFmo.FresaHover : EstilosFmo.SuperficieHundida;
+            }
         }
 
         // El panel contenedor no tiene doble buffer por defecto, lo que provoca
@@ -82,7 +193,7 @@ namespace Heladeria_FMO
             btnVendedores.Visible = esAdmin || esSupervisor;
 
             // Autorización — Supervisor y Admin
-            btnVendedores.Visible = esSupervisor || esAdmin;
+            btnAutorizacion.Visible = esSupervisor || esAdmin;
         }
 
         // Carga un UserControl en el panel de contenido
@@ -99,9 +210,23 @@ namespace Heladeria_FMO
             pnlContenedor.Visible = true;
 
             // Actualiza el titulo y descripcion del header
-            guna2HtmlLabel3.Text = vista.Name;
+            guna2HtmlLabel3.Text = TituloDeVista(vista);
             guna2HtmlLabel4.Text = string.Empty;
         }
+
+        // Título legible para el topbar según el UserControl cargado.
+        private static string TituloDeVista(Control vista) => vista switch
+        {
+            ucInicio => "Inicio",
+            ucPuntoVenta => "Punto de venta",
+            ucInventario => "Inventario",
+            ucCaja => "Caja",
+            ucMayorista => "Mayorista",
+            ucVendedores => "Vendedores ambulantes",
+            ucAutorizaciones => "Autorizaciones",
+            ucReportes => "Reportes",
+            _ => vista.Name
+        };
 
         private void btnInicio_Click(object sender, EventArgs e)
         {
@@ -110,7 +235,7 @@ namespace Heladeria_FMO
 
         private void btnVenta_Click(object sender, EventArgs e)
         {
-
+            CargarVista(new ucPuntoVenta());
         }
         private void btnInventario_Click(object sender, EventArgs e)
         {
@@ -118,28 +243,25 @@ namespace Heladeria_FMO
         }
         private void btnMayorista_Click(object sender, EventArgs e)
         {
-
+            CargarVista(new ucMayorista());
         }
         private void btnCaja_Click(object sender, EventArgs e)
         {
-
+            CargarVista(new ucCaja());
         }
         private void btnVendedores_Click(object sender, EventArgs e)
         {
-
+            CargarVista(new ucVendedores());
         }
         private void btnAutorizacion_Click(object sender, EventArgs e)
         {
-
+            CargarVista(new ucAutorizaciones());
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            var confirm = MessageBox.Show(
-                "¿Seguro que deseas cerrar sesión?",
-                "Cerrar sesión",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+            var confirm = (MensajeFmo.Confirmar("¿Seguro que deseas cerrar sesión?",
+                "Cerrar sesión") ? DialogResult.Yes : DialogResult.No);
 
             if (confirm == DialogResult.Yes)
             {

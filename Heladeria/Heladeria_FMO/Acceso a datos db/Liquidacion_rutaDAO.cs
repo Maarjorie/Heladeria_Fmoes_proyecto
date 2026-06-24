@@ -55,5 +55,22 @@ namespace Heladeria_FMO.Acceso_a_datos_db
 
             return resultado > 0;
         }
+
+        // Lista las liquidaciones que aún no han sido validadas por un supervisor.
+        public static DataTable ListarLiquidacionesPendientes()
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consultaSql = "CALL p_listar_liquidaciones_pendientes()";
+
+            using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
+            using MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            return dt;
+        }
     }
 }

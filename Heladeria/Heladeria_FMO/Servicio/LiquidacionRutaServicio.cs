@@ -35,5 +35,11 @@ namespace Heladeria_FMO.Servicio
                 idLiquidacion,
                 idValidadoPor);
         }
+
+        //Lista las liquidaciones pendientes de validación
+        public static System.Data.DataTable ListarPendientes()
+        {
+            return Liquidacion_rutaDAO.ListarLiquidacionesPendientes();
+        }
     }
 }

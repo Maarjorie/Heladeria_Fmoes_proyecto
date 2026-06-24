@@ -109,6 +109,35 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             return resultado > 0;
         }
 
+        // Lista TODOS los usuarios (activos e inactivos) con el nombre de su rol
+        public static List<Usuario> ListarUsuarios()
+        {
+            List<Usuario> usuarios = [];
+
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consulta = "CALL p_listar_usuarios()";
+            using MySqlCommand cmd = new MySqlCommand(consulta, conn);
+            using MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                usuarios.Add(new Usuario
+                {
+                    id_Usuario = reader.GetInt32(0),
+                    Usuario_ = reader.GetString(1),
+                    Nombre = reader.GetString(2),
+                    Correo = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                    NombreRol = reader.GetString(4),
+                    id_rol = reader.GetInt32(5),
+                    Activo = reader.GetBoolean(6)
+                });
+            }
+
+            return usuarios;
+        }
+
         // Lista los usuarios activos con el nombre de su rol
         public static List<Usuario> ListarUsuariosActivos()
         {

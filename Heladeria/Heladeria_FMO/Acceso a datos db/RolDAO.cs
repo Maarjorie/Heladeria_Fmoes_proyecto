@@ -30,7 +30,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
                 {
                     Id_Rol = reader.GetInt32(0),
                     Nombre = reader.GetString(1),
-                    Descipcion = reader.GetString(2),
+                    Descipcion = reader.IsDBNull(2) ? null : reader.GetString(2),
                     Activo = reader.GetBoolean(3)
                 };
                 roles.Add(rol);

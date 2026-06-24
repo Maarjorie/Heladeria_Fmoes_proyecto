@@ -2,6 +2,15 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="Intefaz\Autorizaciones\FrmUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Autorizaciones\ucAutorizaciones.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Caja\ucCaja.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Intefaz\FrmMenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -35,16 +44,49 @@
     <Compile Update="Intefaz\Inventario\FrmAgregarProducto.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Intefaz\Inventario\FrmProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Inventario\FrmPromociones.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Intefaz\Inventario\ucAgregarProducto.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Intefaz\Inventario\ucInventario.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Intefaz\Mayorista\Dialogos\FrmClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Mayorista\Dialogos\FrmNuevoPedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Mayorista\ucMayorista.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Intefaz\MenuInicio\ucInicio.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Intefaz\MenuInicio\ucTarjetaVentas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\PuntoVenta\ucPuntoVenta.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Reportes\ucReportes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Vendedores\Dialogos\FrmNuevaFicha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Vendedores\Dialogos\FrmRutas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Vendedores\Dialogos\FrmVendedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Vendedores\ucVendedores.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

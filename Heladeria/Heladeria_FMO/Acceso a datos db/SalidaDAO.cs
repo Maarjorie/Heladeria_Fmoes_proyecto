@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +16,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             using MySqlConnection conn = Conexion.ConexionDb();
             conn.Open();
 
-            string consultaSql = "@p_registrar_salida_ruta(" +
+            string consultaSql = "CALL p_registrar_salida_ruta(" +
                 "@p_id_vendedor," +
                 "@p_id_ruta," +
                 "@p_id_usuario," +
@@ -35,16 +35,34 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             cmd.Parameters.AddWithValue("@p_hora_salida", s.HoraSalida);
             cmd.Parameters.AddWithValue("@p_vehiculo", s.Vehiculo);
             cmd.Parameters.AddWithValue("@p_comision", s.Comision);
-            cmd.Parameters.AddWithValue("@p_id_salida", s.HoraSalida);
 
-            MySqlParameter parametroSalida = new MySqlParameter("@p_id_salida", MySqlDbType.Int32);
-            parametroSalida.Direction = ParameterDirection.Output;
+            // Parámetro de salida: el procedimiento devuelve el id_salida generado.
+            MySqlParameter parametroSalida = new MySqlParameter("@p_id_salida", MySqlDbType.Int32)
+            {
+                Direction = ParameterDirection.Output
+            };
             cmd.Parameters.Add(parametroSalida);
-            
+
             cmd.ExecuteNonQuery();
 
             return Convert.ToInt32(parametroSalida.Value);
+        }
 
+        // Lista las fichas de salida con el nombre del vendedor y de la ruta.
+        public static DataTable ListarSalidasRuta()
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consultaSql = "CALL p_listar_salidas_ruta()";
+
+            using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
+            using MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            return dt;
         }
     }
 }

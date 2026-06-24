@@ -24,5 +24,8 @@ namespace Heladeria_FMO.Modelos
         public bool Activo { get; set; }
         public DateTime FechaRegistro { get; set; }
         public string ImagenRuta { get; set; }
+
+        // Texto legible del estado (para mostrar en tablas sin checkbox).
+        public string EstadoTexto => Activo ? "Activo" : "Inactivo";
     }
 }
