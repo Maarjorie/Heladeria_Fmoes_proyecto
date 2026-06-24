@@ -44,6 +44,56 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             return null;
         }
 
+        // Busca un usuario por su correo (usado en recuperación de credenciales)
+        public static Usuario ObtenerUsuarioPorCorreo(string correo)
+        {
+            using MySqlConnection conexion = Conexion.ConexionDb();
+            conexion.Open();
+
+            string query = "CALL p_obtener_usuario_por_correo(@p_correo)";
+
+            using MySqlCommand cmd = new MySqlCommand(query, conexion);
+            cmd.Parameters.AddWithValue("@p_correo", correo);
+
+            using MySqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                return new Usuario
+                {
+                    id_Usuario = reader.GetInt32(0),
+                    id_rol = reader.GetInt32(1),
+                    Nombre = reader.GetString(2),
+                    Usuario_ = reader.GetString(3),
+                    Contrasenia_hash = reader.GetString(4),
+                    Contrasenia_salt = reader.GetString(5),
+                    Correo = reader.GetString(6),
+                    Activo = reader.GetBoolean(7),
+                };
+            }
+            return null;
+        }
+
+        // Actualiza el hash y salt de la contraseña de un usuario
+        public static bool ActualizarContrasena(int idUsuario, string hash, string salt)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consulta = "CALL p_actualizar_contrasena(" +
+                "@p_id_usuario," +
+                "@p_hash," +
+                "@p_salt)";
+
+            using MySqlCommand cmd = new MySqlCommand(consulta, conn);
+            cmd.Parameters.AddWithValue("@p_id_usuario", idUsuario);
+            cmd.Parameters.AddWithValue("@p_hash", hash);
+            cmd.Parameters.AddWithValue("@p_salt", salt);
+
+            int resultado = cmd.ExecuteNonQuery();
+            return resultado > 0;
+        }
+
         // Inserta un nuevo usuario
         public static bool InsertarUsuario(Usuario usuario)
         {

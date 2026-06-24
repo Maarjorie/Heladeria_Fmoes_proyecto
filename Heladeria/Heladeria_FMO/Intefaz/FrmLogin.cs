@@ -1,4 +1,5 @@
 using System.Drawing;
+using Heladeria_FMO.Intefaz;
 using Heladeria_FMO.Modelos;
 using Heladeria_FMO.Servicio;
 using Heladeria_FMO.Utileria;
@@ -19,6 +20,13 @@ namespace Heladeria_FMO
         {
             InitializeComponent();
             AplicarTemaLogin();
+            LlblRecuperarCredenciales.LinkClicked += LlblRecuperarCredenciales_LinkClicked;
+        }
+
+        private void LlblRecuperarCredenciales_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            using var frm = new FrmRecuperarCredenciales();
+            frm.ShowDialog(this);
         }
 
         // Reskin a la paleta del diseño: hero izquierdo con degradado fresa y el

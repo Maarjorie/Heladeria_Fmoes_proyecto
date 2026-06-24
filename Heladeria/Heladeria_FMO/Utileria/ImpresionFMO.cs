@@ -1,8 +1,10 @@
-﻿//using BarcodeStandard;
+﻿using BarcodeStandard;
+using SkiaSharp;
 using QRCoder;
 using System;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.IO;
 using System.Text;
 using Heladeria_FMO.Modelos;
 using System.Collections.Generic;
@@ -75,9 +77,11 @@ namespace Heladeria_FMO.Utileria
             if (string.IsNullOrWhiteSpace(codigoBarras))
                 throw new ArgumentException("El codigo de barras no puede estar vacio.");
 
-            //var barcode = new Barcode();
-            //return (Bitmap)barcode.Encode(TYPE.CODE128, codigoBarras, Color.Black, Color.White, 300, 100);
-            return (Bitmap)null;
+            var barcode = new Barcode();
+            using SKImage imagen = barcode.Encode(BarcodeStandard.Type.Code128, codigoBarras, SKColors.Black, SKColors.White, 300, 100);
+            using SKData datos = imagen.Encode(SKEncodedImageFormat.Png, 100);
+            using var flujo = new MemoryStream(datos.ToArray());
+            return new Bitmap(flujo);
         }
 
         

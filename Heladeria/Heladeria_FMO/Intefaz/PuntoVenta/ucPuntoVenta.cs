@@ -350,13 +350,13 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
                 BackColor = Color.Transparent
             };
 
-            var quitar = CrearMiniBoton("✕", EstilosFmo.Borde);
+            var quitar = CrearMiniBoton("✕", EstilosFmo.Borde,
+                () => CambiarCantidad(linea.Producto.IdProducto, -linea.Cantidad));
             quitar.Location = new Point(268, 6);
-            quitar.Click += (s, e) => CambiarCantidad(linea.Producto.IdProducto, -linea.Cantidad);
 
-            var menos = CrearMiniBoton("−", EstilosFmo.Superficie);
+            var menos = CrearMiniBoton("−", EstilosFmo.Superficie,
+                () => CambiarCantidad(linea.Producto.IdProducto, -1));
             menos.Location = new Point(10, 31);
-            menos.Click += (s, e) => CambiarCantidad(linea.Producto.IdProducto, -1);
 
             var cant = new Guna2HtmlLabel
             {
@@ -369,9 +369,9 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
                 TextAlignment = ContentAlignment.MiddleCenter
             };
 
-            var mas = CrearMiniBoton("+", EstilosFmo.Superficie);
+            var mas = CrearMiniBoton("+", EstilosFmo.Superficie,
+                () => CambiarCantidad(linea.Producto.IdProducto, +1));
             mas.Location = new Point(70, 31);
-            mas.Click += (s, e) => CambiarCantidad(linea.Producto.IdProducto, +1);
 
             var totalLinea = new Guna2HtmlLabel
             {
@@ -388,18 +388,32 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
             return fila;
         }
 
-        private Guna2Button CrearMiniBoton(string texto, Color fondo)
+        private Guna2Panel CrearMiniBoton(string texto, Color fondo, Action alHacerClick)
         {
-            return new Guna2Button
+            var panel = new Guna2Panel
             {
-                Text = texto,
                 Size = new Size(26, 22),
                 BorderRadius = 6,
                 FillColor = fondo,
-                ForeColor = EstilosFmo.TextoFuerte,
-                Font = EstilosFmo.Fuente(10F, FontStyle.Bold),
                 Cursor = Cursors.Hand
             };
+
+            var etiqueta = new Guna2HtmlLabel
+            {
+                Text = texto,
+                Dock = DockStyle.Fill,
+                TextAlignment = ContentAlignment.MiddleCenter,
+                Font = EstilosFmo.Fuente(10F, FontStyle.Bold),
+                ForeColor = EstilosFmo.TextoFuerte,
+                BackColor = Color.Transparent,
+                Cursor = Cursors.Hand
+            };
+            panel.Controls.Add(etiqueta);
+
+            panel.Click += (s, e) => alHacerClick();
+            etiqueta.Click += (s, e) => alHacerClick();
+
+            return panel;
         }
 
         private void RecalcularTotales()
