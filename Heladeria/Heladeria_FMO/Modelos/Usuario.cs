@@ -16,5 +16,8 @@ namespace Heladeria_FMO.Modelos
         public string NombreRol {  get; set; }
         public bool Activo { get; set; }
         public DateTime fecha_registro {  get; set; }
+
+        // Texto legible del estado (para mostrar en tablas sin checkbox).
+        public string EstadoTexto => Activo ? "Activo" : "Inactivo";
     }
 }

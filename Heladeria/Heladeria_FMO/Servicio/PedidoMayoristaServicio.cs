@@ -49,5 +49,14 @@ namespace Heladeria_FMO.Servicio
         {
             return Pedido_mayoristaDAO.ListarPedidosMayoristas();
         }
+
+        //Rechaza (cancela) un pedido pendiente
+        public static bool CancelarPedido(int idPedido)
+        {
+            if (idPedido <= 0)
+                throw new Exception("Debe seleccionar un pedido.");
+
+            return Pedido_mayoristaDAO.CancelarPedidoMayorista(idPedido);
+        }
     }
 }

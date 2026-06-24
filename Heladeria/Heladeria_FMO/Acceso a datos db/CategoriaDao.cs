@@ -30,7 +30,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
                 {
                     IdCategoria = reader.GetInt32(0),
                     Nombre = reader.GetString(1),
-                    Descripcion = reader.GetString(2),
+                    Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2),
                     Activo = reader.GetBoolean(3)
                 };
                 categorias.Add(categoria);

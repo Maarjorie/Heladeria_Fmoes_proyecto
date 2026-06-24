@@ -19,5 +19,14 @@ namespace Heladeria_FMO.Modelos
         public DateTime FechaFin { get; set; }
         public bool Activo { get; set; }
         public DateTime FechaRegistro { get; set; }
+        public string Estado { get; set; }
+        public string NombreProducto { get; set; }
+        public string NombreCategoria { get; set; }
+
+        // Objetivo legible (producto o categoría) y descuento para mostrar en tablas.
+        public string Objetivo => NombreProducto ?? NombreCategoria ?? "—";
+        public string DescuentoTexto => TipoDescuento == "porcentaje"
+            ? $"{ValorDescuento:0.##}%"
+            : $"${ValorDescuento:0.00}";
     }
 }

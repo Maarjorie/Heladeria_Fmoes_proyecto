@@ -39,5 +39,19 @@ namespace Heladeria_FMO.Servicio
         {
             return Movimiento_cajaDAO.InsertarMovimiento(idCaja, idUsuario, tipo, concepto, monto);
         }
+
+        // Arqueos pendientes de autorización por un supervisor/admin.
+        public static System.Data.DataTable ListarArqueosPendientes()
+        {
+            return Arqueo_cajaDAO.ListarPendientes();
+        }
+
+        public static bool AutorizarArqueo(int idArqueo, int idAutorizadoPor)
+        {
+            if (idAutorizadoPor <= 0)
+                throw new Exception("No hay un usuario autorizado en sesión.");
+
+            return Arqueo_cajaDAO.AutorizarArqueo(idArqueo, idAutorizadoPor);
+        }
     }
 }

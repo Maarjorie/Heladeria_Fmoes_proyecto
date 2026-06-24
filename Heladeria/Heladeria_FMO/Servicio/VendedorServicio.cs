@@ -45,5 +45,11 @@ namespace Heladeria_FMO.Servicio
 
             return VendedorDAO.CambiarEstadoVendedor(vendedor);
         }
+
+        //Lista los vendedores registrados
+        public static List<Vendedor> ListarVendedores()
+        {
+            return VendedorDAO.ListarVendedores();
+        }
     }
 }

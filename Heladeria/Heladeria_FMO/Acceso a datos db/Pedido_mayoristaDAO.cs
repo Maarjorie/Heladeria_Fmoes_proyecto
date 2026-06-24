@@ -64,6 +64,18 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             int resultado = cmd.ExecuteNonQuery();
             return resultado > 0;
         }
+        //Rechaza (cancela) un pedido mayorista pendiente
+        public static bool CancelarPedidoMayorista(int idPedido)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand("CALL p_cancelar_pedido_mayorista(@p_id_pedido)", conn);
+            cmd.Parameters.AddWithValue("@p_id_pedido", idPedido);
+
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
         //Muestra los pedidos de la tabla pedidos_mayoristas
         public static DataTable ListarPedidosMayoristas()
         {

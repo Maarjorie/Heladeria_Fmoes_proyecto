@@ -27,10 +27,10 @@ namespace Heladeria_FMO.Acceso_a_datos_db
                 "@p_fecha_fin)";
 
             using MySqlCommand cmd = new MySqlCommand(consulta, conn);
-            cmd.Parameters.AddWithValue("@p_id_producto", promocion.IdProducto);
-            cmd.Parameters.AddWithValue("@p_id_categoria", promocion.IdCategoria);
+            cmd.Parameters.AddWithValue("@p_id_producto", (object)promocion.IdProducto ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@p_id_categoria", (object)promocion.IdCategoria ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@p_nombre", promocion.Nombre);
-            cmd.Parameters.AddWithValue("@p_descripcion", promocion.Descripcion);
+            cmd.Parameters.AddWithValue("@p_descripcion", promocion.Descripcion ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@p_tipo_descuento", promocion.TipoDescuento);
             cmd.Parameters.AddWithValue("@p_valor_descuento", promocion.ValorDescuento);
             cmd.Parameters.AddWithValue("@p_fecha_inicio", promocion.FechaInicio);
@@ -91,6 +91,42 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             return resultado > 0; 
         }
 
+        // Promociones pendientes de aprobación (para Autorizaciones).
+        public static System.Data.DataTable ListarPendientes()
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand("CALL p_listar_promociones_pendientes()", conn);
+            using MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+
+            System.Data.DataTable dt = new System.Data.DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+
+        public static bool AprobarPromocion(int idPromocion, int idAprobadoPor)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand("CALL p_aprobar_promocion(@p_id_promocion, @p_id_aprobado_por)", conn);
+            cmd.Parameters.AddWithValue("@p_id_promocion", idPromocion);
+            cmd.Parameters.AddWithValue("@p_id_aprobado_por", idAprobadoPor);
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
+        public static bool RechazarPromocion(int idPromocion, int idAprobadoPor)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand("CALL p_rechazar_promocion(@p_id_promocion, @p_id_aprobado_por)", conn);
+            cmd.Parameters.AddWithValue("@p_id_promocion", idPromocion);
+            cmd.Parameters.AddWithValue("@p_id_aprobado_por", idAprobadoPor);
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
         // Enlista todas las promociones activas
         public static List<Promocion> ListarPromocion()
         {
@@ -111,13 +147,16 @@ namespace Heladeria_FMO.Acceso_a_datos_db
                     IdProducto = reader.IsDBNull(1) ? null : reader.GetInt32(1),
                     IdCategoria = reader.IsDBNull(2) ? null : reader.GetInt32(2),
                     Nombre = reader.GetString(3),
-                    Descripcion = reader.GetString(4),
+                    Descripcion = reader.IsDBNull(4) ? "" : reader.GetString(4),
                     TipoDescuento = reader.GetString(5),
                     ValorDescuento = reader.GetDecimal(6),
                     FechaInicio = reader.GetDateTime(7),
                     FechaFin = reader.GetDateTime(8),
                     Activo = reader.GetBoolean(9),
-                    FechaRegistro = reader.GetDateTime(10)
+                    FechaRegistro = reader.GetDateTime(10),
+                    Estado = reader.FieldCount > 11 && !reader.IsDBNull(11) ? reader.GetString(11) : "",
+                    NombreProducto = reader.FieldCount > 12 && !reader.IsDBNull(12) ? reader.GetString(12) : null,
+                    NombreCategoria = reader.FieldCount > 13 && !reader.IsDBNull(13) ? reader.GetString(13) : null
                 };
                 promociones.Add(promocion);
             }
