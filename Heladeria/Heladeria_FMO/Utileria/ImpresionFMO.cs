@@ -1,4 +1,4 @@
-﻿using BarcodeStandard;
+﻿//using BarcodeStandard;
 using QRCoder;
 using System;
 using System.Drawing;
@@ -75,8 +75,9 @@ namespace Heladeria_FMO.Utileria
             if (string.IsNullOrWhiteSpace(codigoBarras))
                 throw new ArgumentException("El codigo de barras no puede estar vacio.");
 
-            var barcode = new Barcode();
-            return (Bitmap)barcode.Encode(TYPE.CODE128, codigoBarras, Color.Black, Color.White, 300, 100);
+            //var barcode = new Barcode();
+            //return (Bitmap)barcode.Encode(TYPE.CODE128, codigoBarras, Color.Black, Color.White, 300, 100);
+            return (Bitmap)null;
         }
 
         
