@@ -40,6 +40,12 @@ namespace Heladeria_FMO.Servicio
             return Movimiento_cajaDAO.InsertarMovimiento(idCaja, idUsuario, tipo, concepto, monto);
         }
 
+        // Movimientos (ingresos/egresos extraordinarios) de una caja.
+        public static List<Modelos.Movimiento_caja> ListarMovimientos(int idCaja)
+        {
+            return Movimiento_cajaDAO.ListarPorCaja(idCaja);
+        }
+
         // Arqueos pendientes de autorización por un supervisor/admin.
         public static System.Data.DataTable ListarArqueosPendientes()
         {
