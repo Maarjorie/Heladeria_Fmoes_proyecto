@@ -82,8 +82,8 @@
             tlpLogin.RowCount = 3;
             tlpLogin.RowStyles.Add(new RowStyle(SizeType.Percent, 14.9295778F));
             tlpLogin.RowStyles.Add(new RowStyle(SizeType.Percent, 85.07042F));
-            tlpLogin.RowStyles.Add(new RowStyle(SizeType.Absolute, 92F));
-            tlpLogin.Size = new Size(835, 840);
+            tlpLogin.RowStyles.Add(new RowStyle(SizeType.Absolute, 115F));
+            tlpLogin.Size = new Size(1044, 1050);
             tlpLogin.TabIndex = 7;
             // 
             // pnlLogin
@@ -337,10 +337,10 @@
             // 
             // FrmLogin
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(144F, 144F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.Linen;
-            ClientSize = new Size(1230, 840);
+            ClientSize = new Size(1538, 1050);
             Controls.Add(GpnlContenedor);
             Controls.Add(PnlFondo);
             Margin = new Padding(2);
