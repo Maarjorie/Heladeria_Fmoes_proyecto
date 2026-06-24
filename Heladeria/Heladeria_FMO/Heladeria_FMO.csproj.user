@@ -32,6 +32,9 @@
     <Compile Update="Intefaz\FrmProductos.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Intefaz\FrmRecuperarCredenciales.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Intefaz\FrmRutas.cs">
       <SubType>Form</SubType>
     </Compile>

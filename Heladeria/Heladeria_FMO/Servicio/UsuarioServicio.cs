@@ -100,6 +100,47 @@ namespace Heladeria_FMO.Servicio
         {
             return UsuarioDao.ListarUsuarios();
         }
+
+        // Genera una contraseña temporal, la asigna al usuario que tiene
+        // registrado ese correo y se la envía por correo electrónico.
+        // Devuelve true si el correo coincide con un usuario activo (sin
+        // revelar el motivo exacto en caso contrario, por seguridad).
+        public static async Task<bool> RecuperarContrasena(string correo)
+        {
+            Usuario usuario = UsuarioDao.ObtenerUsuarioPorCorreo(correo);
+            if (usuario == null || !usuario.Activo) return false;
+
+            string contrasenaTemporal = GenerarContrasenaTemporal();
+            string hash = Seguridad.GenerarHash(contrasenaTemporal, out string salt);
+
+            bool actualizado = UsuarioDao.ActualizarContrasena(usuario.id_Usuario, hash, salt);
+            if (!actualizado) return false;
+
+            var datos = new Dictionary<string, string>
+            {
+                ["Usuario"] = usuario.Usuario_,
+                ["Contraseña temporal"] = contrasenaTemporal
+            };
+
+            string cuerpo = PlantillaCorreo.Generar(
+                TipoAlerta.Advertencia,
+                "Recuperación de credenciales",
+                "Se generó una nueva contraseña temporal para tu cuenta. Inicia sesión con ella y cámbiala lo antes posible.",
+                datos);
+
+            await EnvioCorreo.Enviar(usuario.Correo, "Recuperación de credenciales - Helados FMO", cuerpo);
+            return true;
+        }
+
+        private static string GenerarContrasenaTemporal()
+        {
+            const string caracteres = "ABCDEFGHJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+            byte[] aleatorio = System.Security.Cryptography.RandomNumberGenerator.GetBytes(10);
+            var sb = new StringBuilder();
+            foreach (byte b in aleatorio)
+                sb.Append(caracteres[b % caracteres.Length]);
+            return sb.ToString();
+        }
     }
 
     public static class Sesion
