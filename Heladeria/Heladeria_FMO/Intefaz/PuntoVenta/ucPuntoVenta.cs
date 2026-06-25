@@ -40,6 +40,31 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
             AplicarTema();
             CargarProductos();
             RecalcularTotales();
+
+            // El buscador funciona también como entrada del lector de código de
+            // barras: al presionar Enter, si el texto coincide exactamente con el
+            // código (de barras o interno) de un producto, lo agrega al ticket.
+            txtBuscar.KeyDown += TxtBuscar_KeyDown;
+        }
+
+        private void TxtBuscar_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter) return;
+
+            string codigo = txtBuscar.Text.Trim();
+            if (codigo.Length == 0) return;
+
+            var producto = _productos.FirstOrDefault(p =>
+                string.Equals(p.CodigoBarras, codigo, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(p.Codigo, codigo, StringComparison.OrdinalIgnoreCase));
+
+            if (producto != null)
+            {
+                AgregarAlTicket(producto);
+                txtBuscar.Clear();
+                txtBuscar.Focus();
+                e.SuppressKeyPress = true;
+            }
         }
 
         // ───────────────────────── Tema oscuro ─────────────────────────
@@ -450,17 +475,15 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
             }
 
             decimal subtotal = _ticket.Values.Sum(l => l.Producto.PrecioVenta * l.Cantidad);
-            decimal total = subtotal + Math.Round(subtotal * IvaTasa, 2);
-            int unidades = _ticket.Values.Sum(l => l.Cantidad);
 
-            var confirmar = (MensajeFmo.Confirmar($"Cobrar {unidades} unidad(es) por un total de ${total:N2}?",
-                "Confirmar venta") ? DialogResult.Yes : DialogResult.No);
+            // Diálogo de cobro: descuento (con supervisor), efectivo y cambio.
+            using var cobro = new FrmCobro(subtotal, IvaTasa);
+            if (cobro.ShowDialog(this.FindForm()) != DialogResult.OK) return;
 
-            if (confirmar != DialogResult.Yes) return;
-
+            int idVenta;
             try
             {
-                RegistrarVenta(total);
+                idVenta = RegistrarVenta(cobro.Total, cobro.Descuento, cobro.IdAutorizadoDescuento);
             }
             catch (Exception ex)
             {
@@ -468,7 +491,18 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
                 return;
             }
 
-            MensajeFmo.Info($"Venta registrada por ${total:N2}.", "Venta completada");
+            // Impresión del ticket (no bloquea el cierre de la venta si falla).
+            try
+            {
+                ImprimirTicket(idVenta, cobro.Total, cobro.Efectivo, cobro.Cambio);
+            }
+            catch (Exception ex)
+            {
+                MensajeFmo.Advertencia($"La venta se registró, pero no se pudo imprimir el ticket.\n{ex.Message}",
+                    "Impresión");
+            }
+
+            MensajeFmo.Info($"Venta registrada por ${cobro.Total:N2}. Cambio: ${cobro.Cambio:N2}.", "Venta completada");
 
             _ticket.Clear();
             CargarProductos();   // refresca stock tras descontar existencias
@@ -477,7 +511,8 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
         }
 
         // Persiste la venta y su detalle contra la caja abierta en sesión.
-        private void RegistrarVenta(decimal total)
+        // Devuelve el id de la venta creada.
+        private int RegistrarVenta(decimal total, decimal descuento, int idAutorizadoDescuento)
         {
             int idUsuario = Sesion.UsuarioActivo.id_Usuario;
 
@@ -502,8 +537,29 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
                 VentaSucursalServicio.AgregarDetalleVentaSucursal(detalle, idUsuario);
             }
 
+            // Si un supervisor autorizó un descuento, se aplica sobre la venta.
+            if (descuento > 0 && idAutorizadoDescuento > 0)
+                VentaSucursalServicio.RegistrarDescuentoAutorizado(idVenta, descuento, idAutorizadoDescuento);
+
             // Alimenta el monto esperado del arqueo de caja.
             Sesion.TotalVendidoCaja += total;
+            return idVenta;
+        }
+
+        // Arma e imprime el ticket de la venta en la impresora térmica.
+        private void ImprimirTicket(int idVenta, decimal total, decimal efectivo, decimal cambio)
+        {
+            var lineas = _ticket.Values
+                .Select(l => (l.Producto.Nombre, l.Cantidad, l.Producto.PrecioVenta))
+                .ToList();
+
+            ImpresionFMO.ImprimirTicketVenta(
+                idVenta,
+                Sesion.UsuarioActivo?.Nombre ?? "—",
+                lineas,
+                total,
+                efectivo,
+                cambio);
         }
     }
 }

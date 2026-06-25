@@ -45,6 +45,19 @@ namespace Heladeria_FMO.Servicio
             return Detalle_Venta_SucursalDAO.AgregarDetalleVentaSucursal(detalle, idUsuario);
         }
 
+        // Aplica un descuento autorizado por supervisor sobre una venta ya creada.
+        public static bool RegistrarDescuentoAutorizado(int idVenta, decimal descuento, int idAutorizadoPor)
+        {
+            if (idVenta <= 0)
+                throw new Exception("Venta inválida.");
+            if (descuento < 0)
+                throw new Exception("El descuento no puede ser negativo.");
+            if (idAutorizadoPor <= 0)
+                throw new Exception("No se identificó al supervisor que autoriza.");
+
+            return Venta_sucursalDAO.RegistrarDescuentoAutorizado(idVenta, descuento, idAutorizadoPor);
+        }
+
         public static bool AnularVentaSucursal(Venta_sucursal venta, int idUsuario, string motivo)
         {
             if (venta.IdVenta <= 0)
