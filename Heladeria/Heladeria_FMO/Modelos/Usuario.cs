@@ -17,6 +17,12 @@ namespace Heladeria_FMO.Modelos
         public bool Activo { get; set; }
         public DateTime fecha_registro {  get; set; }
 
+        // Contrasena temporal de recuperacion (no destruye la real). Valida
+        // unicamente mientras ContraseniaTempExpira sea futura.
+        public string Contrasenia_temp_hash { get; set; }
+        public string Contrasenia_temp_salt { get; set; }
+        public DateTime? Contrasenia_temp_expira { get; set; }
+
         // Texto legible del estado (para mostrar en tablas sin checkbox).
         public string EstadoTexto => Activo ? "Activo" : "Inactivo";
     }

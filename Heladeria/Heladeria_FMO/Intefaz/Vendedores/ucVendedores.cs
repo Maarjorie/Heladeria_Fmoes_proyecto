@@ -48,7 +48,9 @@ namespace Heladeria_FMO.Intefaz.Vendedores
                 Text = "Vendedores",
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 Location = new System.Drawing.Point(480, 12),
-                Size = new System.Drawing.Size(120, 42)
+                Size = new System.Drawing.Size(120, 42),
+                // Solo el administrador gestiona (alta/edición) de empleados.
+                Visible = Sesion.EsAdministrador
             };
             EstilosFmo.BotonContorno(btnGestionVendedores);
             btnGestionVendedores.Click += (s, e) =>

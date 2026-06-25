@@ -88,11 +88,11 @@
             flowLayoutPanel1.Controls.Add(guna2Panel3);
             flowLayoutPanel1.Controls.Add(guna2Panel5);
             flowLayoutPanel1.Controls.Add(guna2Panel7);
-            flowLayoutPanel1.Controls.Add(guna2Panel2);
-            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.AutoScroll = true;
+            flowLayoutPanel1.Dock = DockStyle.Top;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1707, 686);
+            flowLayoutPanel1.Size = new Size(1707, 380);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // guna2Panel1
@@ -100,9 +100,10 @@
             guna2Panel1.Controls.Add(guna2CustomGradientPanel1);
             guna2Panel1.CustomizableEdges = customizableEdges3;
             guna2Panel1.Location = new Point(3, 3);
+            guna2Panel1.Margin = new Padding(0);
             guna2Panel1.Name = "guna2Panel1";
             guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            guna2Panel1.Size = new Size(417, 180);
+            guna2Panel1.Size = new Size(216, 166);
             guna2Panel1.TabIndex = 0;
             // 
             // guna2CustomGradientPanel1
@@ -113,10 +114,10 @@
             guna2CustomGradientPanel1.Controls.Add(guna2HtmlLabel2);
             guna2CustomGradientPanel1.Controls.Add(guna2HtmlLabel3);
             guna2CustomGradientPanel1.CustomizableEdges = customizableEdges1;
-            guna2CustomGradientPanel1.Location = new Point(13, 25);
+            guna2CustomGradientPanel1.Location = new Point(8, 8);
             guna2CustomGradientPanel1.Name = "guna2CustomGradientPanel1";
             guna2CustomGradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            guna2CustomGradientPanel1.Size = new Size(397, 138);
+            guna2CustomGradientPanel1.Size = new Size(200, 150);
             guna2CustomGradientPanel1.TabIndex = 1;
             // 
             // guna2HtmlLabel4
@@ -143,9 +144,9 @@
             // 
             guna2HtmlLabel2.BackColor = Color.Transparent;
             guna2HtmlLabel2.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
-            guna2HtmlLabel2.Location = new Point(26, 41);
+            guna2HtmlLabel2.Location = new Point(16, 66);
             guna2HtmlLabel2.Name = "guna2HtmlLabel2";
-            guna2HtmlLabel2.Size = new Size(66, 37);
+            guna2HtmlLabel2.Size = new Size(168, 50);
             guna2HtmlLabel2.TabIndex = 9;
             guna2HtmlLabel2.Text = "$0.00";
             // 
@@ -153,9 +154,9 @@
             // 
             guna2HtmlLabel3.BackColor = Color.Transparent;
             guna2HtmlLabel3.ForeColor = SystemColors.ControlDarkDark;
-            guna2HtmlLabel3.Location = new Point(26, 13);
+            guna2HtmlLabel3.Location = new Point(16, 16);
             guna2HtmlLabel3.Name = "guna2HtmlLabel3";
-            guna2HtmlLabel3.Size = new Size(114, 22);
+            guna2HtmlLabel3.Size = new Size(168, 40);
             guna2HtmlLabel3.TabIndex = 8;
             guna2HtmlLabel3.Text = "VENTAS DE HOY";
             // 
@@ -164,9 +165,10 @@
             guna2Panel3.Controls.Add(guna2CustomGradientPanel2);
             guna2Panel3.CustomizableEdges = customizableEdges7;
             guna2Panel3.Location = new Point(426, 3);
+            guna2Panel3.Margin = new Padding(0);
             guna2Panel3.Name = "guna2Panel3";
             guna2Panel3.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            guna2Panel3.Size = new Size(417, 180);
+            guna2Panel3.Size = new Size(216, 166);
             guna2Panel3.TabIndex = 1;
             // 
             // guna2CustomGradientPanel2
@@ -176,19 +178,19 @@
             guna2CustomGradientPanel2.Controls.Add(guna2HtmlLabel8);
             guna2CustomGradientPanel2.Controls.Add(guna2HtmlLabel14);
             guna2CustomGradientPanel2.CustomizableEdges = customizableEdges5;
-            guna2CustomGradientPanel2.Location = new Point(12, 25);
+            guna2CustomGradientPanel2.Location = new Point(8, 8);
             guna2CustomGradientPanel2.Name = "guna2CustomGradientPanel2";
             guna2CustomGradientPanel2.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            guna2CustomGradientPanel2.Size = new Size(397, 138);
+            guna2CustomGradientPanel2.Size = new Size(200, 150);
             guna2CustomGradientPanel2.TabIndex = 2;
             // 
             // guna2HtmlLabel7
             // 
             guna2HtmlLabel7.BackColor = Color.Transparent;
             guna2HtmlLabel7.ForeColor = SystemColors.ControlDarkDark;
-            guna2HtmlLabel7.Location = new Point(26, 100);
+            guna2HtmlLabel7.Location = new Point(16, 118);
             guna2HtmlLabel7.Name = "guna2HtmlLabel7";
-            guna2HtmlLabel7.Size = new Size(30, 22);
+            guna2HtmlLabel7.Size = new Size(168, 22);
             guna2HtmlLabel7.TabIndex = 10;
             guna2HtmlLabel7.Text = "Hoy";
             // 
@@ -196,9 +198,9 @@
             // 
             guna2HtmlLabel8.BackColor = Color.Transparent;
             guna2HtmlLabel8.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
-            guna2HtmlLabel8.Location = new Point(26, 41);
+            guna2HtmlLabel8.Location = new Point(16, 66);
             guna2HtmlLabel8.Name = "guna2HtmlLabel8";
-            guna2HtmlLabel8.Size = new Size(17, 37);
+            guna2HtmlLabel8.Size = new Size(168, 50);
             guna2HtmlLabel8.TabIndex = 9;
             guna2HtmlLabel8.Text = "0";
             // 
@@ -206,9 +208,9 @@
             // 
             guna2HtmlLabel14.BackColor = Color.Transparent;
             guna2HtmlLabel14.ForeColor = SystemColors.ControlDarkDark;
-            guna2HtmlLabel14.Location = new Point(26, 13);
+            guna2HtmlLabel14.Location = new Point(16, 16);
             guna2HtmlLabel14.Name = "guna2HtmlLabel14";
-            guna2HtmlLabel14.Size = new Size(57, 22);
+            guna2HtmlLabel14.Size = new Size(168, 40);
             guna2HtmlLabel14.TabIndex = 8;
             guna2HtmlLabel14.Text = "TICKETS";
             // 
@@ -217,9 +219,10 @@
             guna2Panel5.Controls.Add(guna2CustomGradientPanel3);
             guna2Panel5.CustomizableEdges = customizableEdges11;
             guna2Panel5.Location = new Point(849, 3);
+            guna2Panel5.Margin = new Padding(0);
             guna2Panel5.Name = "guna2Panel5";
             guna2Panel5.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            guna2Panel5.Size = new Size(417, 180);
+            guna2Panel5.Size = new Size(216, 166);
             guna2Panel5.TabIndex = 2;
             // 
             // guna2CustomGradientPanel3
@@ -229,19 +232,19 @@
             guna2CustomGradientPanel3.Controls.Add(guna2HtmlLabel10);
             guna2CustomGradientPanel3.Controls.Add(guna2HtmlLabel15);
             guna2CustomGradientPanel3.CustomizableEdges = customizableEdges9;
-            guna2CustomGradientPanel3.Location = new Point(13, 25);
+            guna2CustomGradientPanel3.Location = new Point(8, 8);
             guna2CustomGradientPanel3.Name = "guna2CustomGradientPanel3";
             guna2CustomGradientPanel3.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            guna2CustomGradientPanel3.Size = new Size(397, 138);
+            guna2CustomGradientPanel3.Size = new Size(200, 150);
             guna2CustomGradientPanel3.TabIndex = 2;
             // 
             // guna2HtmlLabel9
             // 
             guna2HtmlLabel9.BackColor = Color.Transparent;
             guna2HtmlLabel9.ForeColor = SystemColors.ControlDarkDark;
-            guna2HtmlLabel9.Location = new Point(26, 100);
+            guna2HtmlLabel9.Location = new Point(16, 118);
             guna2HtmlLabel9.Name = "guna2HtmlLabel9";
-            guna2HtmlLabel9.Size = new Size(78, 22);
+            guna2HtmlLabel9.Size = new Size(168, 22);
             guna2HtmlLabel9.TabIndex = 10;
             guna2HtmlLabel9.Text = "Próx. 5 días";
             // 
@@ -249,9 +252,9 @@
             // 
             guna2HtmlLabel10.BackColor = Color.Transparent;
             guna2HtmlLabel10.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
-            guna2HtmlLabel10.Location = new Point(26, 41);
+            guna2HtmlLabel10.Location = new Point(16, 66);
             guna2HtmlLabel10.Name = "guna2HtmlLabel10";
-            guna2HtmlLabel10.Size = new Size(17, 37);
+            guna2HtmlLabel10.Size = new Size(168, 50);
             guna2HtmlLabel10.TabIndex = 9;
             guna2HtmlLabel10.Text = "0";
             // 
@@ -259,9 +262,9 @@
             // 
             guna2HtmlLabel15.BackColor = Color.Transparent;
             guna2HtmlLabel15.ForeColor = SystemColors.ControlDarkDark;
-            guna2HtmlLabel15.Location = new Point(26, 13);
+            guna2HtmlLabel15.Location = new Point(16, 16);
             guna2HtmlLabel15.Name = "guna2HtmlLabel15";
-            guna2HtmlLabel15.Size = new Size(140, 22);
+            guna2HtmlLabel15.Size = new Size(168, 40);
             guna2HtmlLabel15.TabIndex = 8;
             guna2HtmlLabel15.Text = "PROXIMO A VENCER";
             // 
@@ -270,9 +273,10 @@
             guna2Panel7.Controls.Add(guna2CustomGradientPanel4);
             guna2Panel7.CustomizableEdges = customizableEdges15;
             guna2Panel7.Location = new Point(1272, 3);
+            guna2Panel7.Margin = new Padding(0);
             guna2Panel7.Name = "guna2Panel7";
             guna2Panel7.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            guna2Panel7.Size = new Size(417, 180);
+            guna2Panel7.Size = new Size(216, 166);
             guna2Panel7.TabIndex = 3;
             // 
             // guna2CustomGradientPanel4
@@ -281,19 +285,19 @@
             guna2CustomGradientPanel4.Controls.Add(guna2HtmlLabel13);
             guna2CustomGradientPanel4.Controls.Add(guna2HtmlLabel16);
             guna2CustomGradientPanel4.CustomizableEdges = customizableEdges13;
-            guna2CustomGradientPanel4.Location = new Point(13, 25);
+            guna2CustomGradientPanel4.Location = new Point(8, 8);
             guna2CustomGradientPanel4.Name = "guna2CustomGradientPanel4";
             guna2CustomGradientPanel4.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            guna2CustomGradientPanel4.Size = new Size(397, 138);
+            guna2CustomGradientPanel4.Size = new Size(200, 150);
             guna2CustomGradientPanel4.TabIndex = 2;
             // 
             // guna2HtmlLabel13
             // 
             guna2HtmlLabel13.BackColor = Color.Transparent;
             guna2HtmlLabel13.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
-            guna2HtmlLabel13.Location = new Point(26, 41);
+            guna2HtmlLabel13.Location = new Point(16, 66);
             guna2HtmlLabel13.Name = "guna2HtmlLabel13";
-            guna2HtmlLabel13.Size = new Size(17, 37);
+            guna2HtmlLabel13.Size = new Size(168, 50);
             guna2HtmlLabel13.TabIndex = 9;
             guna2HtmlLabel13.Text = "0";
             // 
@@ -301,9 +305,9 @@
             // 
             guna2HtmlLabel16.BackColor = Color.Transparent;
             guna2HtmlLabel16.ForeColor = SystemColors.ControlDarkDark;
-            guna2HtmlLabel16.Location = new Point(26, 13);
+            guna2HtmlLabel16.Location = new Point(16, 16);
             guna2HtmlLabel16.Name = "guna2HtmlLabel16";
-            guna2HtmlLabel16.Size = new Size(87, 22);
+            guna2HtmlLabel16.Size = new Size(168, 40);
             guna2HtmlLabel16.TabIndex = 8;
             guna2HtmlLabel16.Text = "STOCK BAJO";
             // 
@@ -311,10 +315,12 @@
             // 
             guna2Panel2.Controls.Add(ucTarjetas_de_Inicio1);
             guna2Panel2.CustomizableEdges = customizableEdges17;
-            guna2Panel2.Location = new Point(3, 189);
+            guna2Panel2.Dock = DockStyle.Fill;
+            guna2Panel2.Location = new Point(0, 380);
             guna2Panel2.Name = "guna2Panel2";
+            guna2Panel2.Padding = new Padding(3);
             guna2Panel2.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            guna2Panel2.Size = new Size(840, 494);
+            guna2Panel2.Size = new Size(1707, 306);
             guna2Panel2.TabIndex = 4;
             // 
             // ucTarjetas_de_Inicio1
@@ -329,6 +335,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(guna2Panel2);
             Controls.Add(flowLayoutPanel1);
             Name = "ucInicio";
             Size = new Size(1707, 686);

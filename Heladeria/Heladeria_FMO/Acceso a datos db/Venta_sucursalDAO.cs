@@ -30,6 +30,26 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             return Convert.ToInt32(parametroSalida.Value);
         }
 
+        // Registra un descuento autorizado por un supervisor sobre una venta ya
+        // creada: actualiza descuento, recalcula total y guarda quién autorizó.
+        public static bool RegistrarDescuentoAutorizado(int idVenta, decimal descuento, int idAutorizadoPor)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            string consultaSql = "CALL p_registrar_descuento_venta(" +
+                "@p_id_venta," +
+                "@p_descuento," +
+                "@p_id_autorizado_por)";
+
+            using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
+            cmd.Parameters.AddWithValue("@p_id_venta", idVenta);
+            cmd.Parameters.AddWithValue("@p_descuento", descuento);
+            cmd.Parameters.AddWithValue("@p_id_autorizado_por", idAutorizadoPor);
+
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
         //Si el cliente desea anular la solicitud de compra se añade un mensaje de motivo
         public static bool AnularVentaSucursal(Venta_sucursal v, int idUsuario, string motivo)
         {

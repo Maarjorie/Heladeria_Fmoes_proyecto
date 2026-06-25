@@ -16,7 +16,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             using MySqlConnection conn = Conexion.ConexionDb();
             conn.Open();
 
-            string consultaSql ="CALL p_insertar_cliente_mayorista(" +"@p_nombre_comercial," +"@p_nit," +"@p_encargado," +"@p_direccion," +"@p_telefono," +"@p_correo)";
+            string consultaSql ="CALL p_insertar_cliente_mayorista(" +"@p_nombre_comercial," +"@p_nit," +"@p_encargado," +"@p_direccion," +"@p_telefono," +"@p_correo," +"@p_descuento_porcentaje)";
 
             using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
 
@@ -26,6 +26,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             cmd.Parameters.AddWithValue("@p_direccion", c.Direccion);
             cmd.Parameters.AddWithValue("@p_telefono", c.Telefono);
             cmd.Parameters.AddWithValue("@p_correo", c.Correo);
+            cmd.Parameters.AddWithValue("@p_descuento_porcentaje", c.DescuentoPorcentaje);
 
             int resultado = cmd.ExecuteNonQuery();
 
@@ -46,7 +47,8 @@ namespace Heladeria_FMO.Acceso_a_datos_db
                 "@p_encargado," +
                 "@p_direccion," +
                 "@p_telefono," +
-                "@p_correo)";
+                "@p_correo," +
+                "@p_descuento_porcentaje)";
 
             using MySqlCommand cmd = new MySqlCommand(consultaSql, conn);
 
@@ -57,6 +59,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
             cmd.Parameters.AddWithValue("@p_direccion", c.Direccion);
             cmd.Parameters.AddWithValue("@p_telefono", c.Telefono);
             cmd.Parameters.AddWithValue("@p_correo", c.Correo);
+            cmd.Parameters.AddWithValue("@p_descuento_porcentaje", c.DescuentoPorcentaje);
 
             int resultado = cmd.ExecuteNonQuery();
 

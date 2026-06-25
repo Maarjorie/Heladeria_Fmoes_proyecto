@@ -19,7 +19,13 @@ namespace Heladeria_FMO.Servicio
             if (liquidacion.DineroEntregado < 0)
                 throw new Exception("El dinero entregado no puede ser negativo.");
 
-            return Liquidacion_rutaDAO.LiquidarRuta(liquidacion);
+            int idLiquidacion = Liquidacion_rutaDAO.LiquidarRuta(liquidacion);
+
+            // Si la liquidación presenta diferencia, se alerta a supervisión.
+            if (idLiquidacion > 0 && liquidacion.Diferencia != 0)
+                NotificacionServicio.NotificarDiferenciaLiquidacion(idLiquidacion, liquidacion.Diferencia);
+
+            return idLiquidacion;
         }
 
         //Evita que la clase dao genere error al querer recuperar esos dos datos y sean negativos o 0, al ser indices si son 0 es porque no están seleccionados o no existen

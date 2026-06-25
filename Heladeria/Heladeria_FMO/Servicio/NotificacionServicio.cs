@@ -46,6 +46,50 @@ namespace Heladeria_FMO.Servicio
         // Marca una notificación como leída dentro del sistema.
         public static bool MarcarLeida(int idNotificacion) => NotificacionDAO.MarcarLeida(idNotificacion);
 
+        // ──────────── Eventos de negocio (registran y despachan envío) ────────────
+        // Los siguientes métodos los invocan los servicios cuando ocurre el evento;
+        // registran la notificación y disparan el envío inmediato en segundo plano
+        // (sin esperar al temporizador periódico).
+
+        // Diferencia detectada en un arqueo de caja.
+        public static void NotificarArqueoInconsistente(int idCaja, decimal diferencia)
+        {
+            string mensaje = $"El arqueo de la caja #{idCaja} presenta una diferencia de {diferencia:0.00}.";
+            RegistrarYDespachar("arqueo_inconsistente", idCaja, mensaje);
+        }
+
+        // Diferencia entre lo esperado y lo entregado en una liquidación de ruta.
+        public static void NotificarDiferenciaLiquidacion(int idLiquidacion, decimal diferencia)
+        {
+            string mensaje = $"La liquidación #{idLiquidacion} presenta una diferencia de {diferencia:0.00}.";
+            RegistrarYDespachar("diferencia_liq", idLiquidacion, mensaje);
+        }
+
+        // Pedido mayorista confirmado y listo para retiro (incluye su código).
+        public static void NotificarPedidoListo(int idPedido, string codigoRetiro)
+        {
+            string codigo = string.IsNullOrWhiteSpace(codigoRetiro) ? "(sin código)" : codigoRetiro;
+            string mensaje = $"El pedido mayorista #{idPedido} está listo para retiro. Código: {codigo}.";
+            RegistrarYDespachar("pedido_listo", idPedido, mensaje);
+        }
+
+        // Registra la notificación (evitando repetir la misma seguido) y dispara el
+        // envío en segundo plano. Nunca propaga errores al flujo de negocio.
+        private static void RegistrarYDespachar(string tipo, int idReferencia, string mensaje)
+        {
+            try
+            {
+                if (!NotificacionDAO.ExisteReciente(tipo, idReferencia, VentanaDedupHoras))
+                    NotificacionDAO.InsertarNotificacion(tipo, idReferencia, mensaje);
+            }
+            catch (Exception)
+            {
+                // Registrar la alerta no debe interrumpir la operación principal.
+            }
+
+            _ = ProcesarAsync();
+        }
+
         // ───────────────────────── Detección ─────────────────────────
         private static void DetectarEventos()
         {

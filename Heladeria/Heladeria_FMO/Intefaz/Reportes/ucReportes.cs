@@ -53,7 +53,9 @@ namespace Heladeria_FMO.Intefaz.Reportes
                 "Ventas por ruta",
                 "Productos más vendidos",
                 "Productos dañados",
-                "Comisiones de vendedores"
+                "Comisiones de vendedores",
+                "Ranking de vendedores",
+                "Rentabilidad por ruta"
             });
             cboReporte.SelectedIndex = 0;
             cboReporte.SelectedIndexChanged += (s, e) => AjustarFechas();
@@ -90,6 +92,8 @@ namespace Heladeria_FMO.Intefaz.Reportes
                     3 => ReporteServicio.ProductosMasVendidos(inicio, fin),
                     4 => ReporteServicio.ProductosDanados(inicio, fin),
                     5 => ReporteServicio.ComisionesVendedores(inicio, fin),
+                    6 => ReporteServicio.RankingVendedores(inicio, fin),
+                    7 => ReporteServicio.RentabilidadRuta(inicio, fin),
                     _ => null
                 };
 

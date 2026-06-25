@@ -2,7 +2,6 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 using Heladeria_FMO.Modelos;
 using Heladeria_FMO.Servicio;
 using Heladeria_FMO.Utileria;
@@ -11,118 +10,56 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
 {
     // Gestión de clientes mayoristas (master-detail): lista a la izquierda y
     // formulario de alta/edición a la derecha, con baja de estado.
-    public class FrmClientes : Form
+    public partial class FrmClientes : Form
     {
-        private readonly Guna2DataGridView dgv = new();
-        private readonly Guna2TextBox txtNombre = new();
-        private readonly Guna2TextBox txtNit = new();
-        private readonly Guna2TextBox txtTelefono = new();
-        private readonly Guna2TextBox txtEncargado = new();
-        private readonly Guna2TextBox txtCorreo = new();
-        private readonly Guna2TextBox txtDireccion = new();
-        private readonly Guna2Button btnNuevo = new();
-        private readonly Guna2Button btnGuardar = new();
-        private readonly Guna2Button btnDesactivar = new();
-
         private int _idSeleccionado;
         private bool _activoSeleccionado;
-        private string _cId, _cNombre, _cNit, _cTel, _cEncargado, _cCorreo, _cActivo;
+        private string _cId, _cNombre, _cNit, _cTel, _cEncargado, _cCorreo, _cActivo, _cDescuento, _cDireccion;
 
         public FrmClientes()
         {
-            ConstruirUi();
+            InitializeComponent();
+            AplicarTema();
             CargarClientes();
         }
 
-        private void ConstruirUi()
+        // El Diseñador maneja el layout; aquí se aplica el tema oscuro de la app.
+        private void AplicarTema()
         {
-            FormBorderStyle = FormBorderStyle.None;
-            StartPosition = FormStartPosition.CenterScreen;
-            ShowInTaskbar = false;
-            ClientSize = new Size(900, 560);
             BackColor = EstilosFmo.Superficie;
-
-            var marco = new Guna2Panel { Dock = DockStyle.Fill };
             EstilosFmo.Tarjeta(marco);
-            Controls.Add(marco);
 
-            var titulo = new Guna2HtmlLabel
-            {
-                Text = "Clientes mayoristas",
-                Location = new Point(24, 18),
-                Size = new Size(420, 30),
-                Font = EstilosFmo.Fuente(16F, FontStyle.Bold),
-                ForeColor = EstilosFmo.TextoFuerte,
-                BackColor = Color.Transparent
-            };
-            var btnCerrar = new Guna2Button { Text = "✕", Size = new Size(32, 32), Location = new Point(844, 14), Font = EstilosFmo.Fuente(10F, FontStyle.Bold) };
+            titulo.Font = EstilosFmo.Fuente(16F, FontStyle.Bold);
+            titulo.ForeColor = EstilosFmo.TextoFuerte;
+
+            btnCerrar.Font = EstilosFmo.Fuente(10F, FontStyle.Bold);
             EstilosFmo.BotonContorno(btnCerrar);
-            btnCerrar.Click += (s, e) => Close();
 
             EstilosFmo.Tabla(dgv);
-            dgv.Location = new Point(24, 60);
-            dgv.Size = new Size(430, 430);
-            dgv.SelectionChanged += dgv_SelectionChanged;
-            dgv.CellClick += (s, e) => { if (e.RowIndex >= 0) dgv_SelectionChanged(s, EventArgs.Empty); };
-
-            btnNuevo.Text = "+ Nuevo";
             EstilosFmo.BotonContorno(btnNuevo);
-            btnNuevo.Location = new Point(24, 500);
-            btnNuevo.Size = new Size(130, 40);
-            btnNuevo.Click += (s, e) => LimpiarFormulario();
 
-            // Formulario (detalle)
-            int x = 482;
-            var lblNombre = Caption("Nombre comercial", x, 60);
-            Input(txtNombre, x, 82, 388);
-            var lblNit = Caption("NIT", x, 126);
-            Input(txtNit, x, 148, 185);
-            var lblTel = Caption("Teléfono", x + 203, 126);
-            Input(txtTelefono, x + 203, 148, 185);
-            var lblEncargado = Caption("Encargado", x, 192);
-            Input(txtEncargado, x, 214, 388);
-            var lblCorreo = Caption("Correo", x, 258);
-            Input(txtCorreo, x, 280, 388);
-            var lblDireccion = Caption("Dirección", x, 324);
-            Input(txtDireccion, x, 346, 388);
+            foreach (var lbl in new[] { lblNombre, lblNit, lblTel, lblEncargado, lblCorreo, lblDireccion, lblDescuento })
+            {
+                lbl.Font = EstilosFmo.Fuente(9.5F);
+                lbl.ForeColor = EstilosFmo.TextoTenue;
+            }
 
-            btnGuardar.Text = "Guardar";
+            foreach (var txt in new[] { txtNombre, txtNit, txtTelefono, txtEncargado, txtCorreo, txtDireccion, txtDescuento })
+                EstilosFmo.CajaTexto(txt);
+
+            EstilosFmo.BotonContorno(btnHistorial);
             EstilosFmo.BotonPrimario(btnGuardar);
-            btnGuardar.Location = new Point(x, 440);
-            btnGuardar.Size = new Size(185, 44);
-            btnGuardar.Click += btnGuardar_Click;
-
-            btnDesactivar.Text = "Dar de baja";
             EstilosFmo.BotonContorno(btnDesactivar);
             btnDesactivar.ForeColor = EstilosFmo.Cereza;
-            btnDesactivar.Location = new Point(x + 203, 440);
-            btnDesactivar.Size = new Size(185, 44);
-            btnDesactivar.Click += btnDesactivar_Click;
-
-            marco.Controls.AddRange(new Control[]
-            {
-                titulo, btnCerrar, dgv, btnNuevo,
-                lblNombre, txtNombre, lblNit, txtNit, lblTel, txtTelefono,
-                lblEncargado, txtEncargado, lblCorreo, txtCorreo, lblDireccion, txtDireccion,
-                btnGuardar, btnDesactivar
-            });
         }
 
-        private static Guna2HtmlLabel Caption(string texto, int x, int y) => new()
-        {
-            Text = texto,
-            Location = new Point(x, y),
-            Size = new Size(190, 20),
-            Font = EstilosFmo.Fuente(9.5F),
-            ForeColor = EstilosFmo.TextoTenue,
-            BackColor = Color.Transparent
-        };
+        private void BtnCerrar_Click(object sender, EventArgs e) => Close();
 
-        private static void Input(Guna2TextBox txt, int x, int y, int w)
+        private void BtnNuevo_Click(object sender, EventArgs e) => LimpiarFormulario();
+
+        private void Dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            EstilosFmo.CajaTexto(txt);
-            txt.Location = new Point(x, y);
-            txt.Size = new Size(w, 34);
+            if (e.RowIndex >= 0) dgv_SelectionChanged(sender, EventArgs.Empty);
         }
 
         // ───────────────────────── Datos ─────────────────────────
@@ -140,6 +77,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
                 _cEncargado = EstilosFmo.ColumnaPorCandidatos(tabla, "encargado");
                 _cCorreo = EstilosFmo.ColumnaPorCandidatos(tabla, "correo");
                 _cActivo = EstilosFmo.ColumnaPorCandidatos(tabla, "activo", "estado");
+                _cDescuento = EstilosFmo.ColumnaPorCandidatos(tabla, "descuento_porcentaje", "descuento");
+                _cDireccion = EstilosFmo.ColumnaPorCandidatos(tabla, "direccion");
 
                 var cols = new System.Collections.Generic.List<(string, string)>();
                 void Add(string c, string h) { if (c != null) cols.Add((c, h)); }
@@ -170,8 +109,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
             txtTelefono.Text = Celda(_cTel);
             txtEncargado.Text = Celda(_cEncargado);
             txtCorreo.Text = Celda(_cCorreo);
-            // La dirección no viene en el listado; se conserva en blanco al editar.
-            txtDireccion.Text = "";
+            txtDireccion.Text = Celda(_cDireccion);
+            txtDescuento.Text = Celda(_cDescuento);
             _activoSeleccionado = ParseActivo(_cActivo);
             ActualizarBotonEstado();
         }
@@ -211,7 +150,7 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
         {
             _idSeleccionado = 0;
             _activoSeleccionado = false;
-            foreach (var t in new[] { txtNombre, txtNit, txtTelefono, txtEncargado, txtCorreo, txtDireccion })
+            foreach (var t in new[] { txtNombre, txtNit, txtTelefono, txtEncargado, txtCorreo, txtDireccion, txtDescuento })
                 t.Clear();
             ActualizarBotonEstado();
             txtNombre.Focus();
@@ -220,6 +159,15 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
         // ───────────────────────── Acciones ─────────────────────────
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            decimal descuento = 0m;
+            string descTexto = (txtDescuento.Text ?? "").Trim().Replace(",", ".");
+            if (descTexto.Length > 0 &&
+                (!decimal.TryParse(descTexto, System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out descuento) || descuento < 0 || descuento > 100))
+            {
+                MensajeFmo.Advertencia("El descuento debe ser un porcentaje entre 0 y 100.", "Clientes");
+                return;
+            }
+
             var cliente = new Cliente_mayorista
             {
                 IdCliente = _idSeleccionado,
@@ -228,7 +176,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
                 Encargado = txtEncargado.Text.Trim(),
                 Telefono = txtTelefono.Text.Trim(),
                 Correo = txtCorreo.Text.Trim(),
-                Direccion = txtDireccion.Text.Trim()
+                Direccion = txtDireccion.Text.Trim(),
+                DescuentoPorcentaje = descuento
             };
 
             try
@@ -271,6 +220,18 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
             {
                 MensajeFmo.Error(ex.Message, "Clientes");
             }
+        }
+
+        private void btnHistorial_Click(object sender, EventArgs e)
+        {
+            if (_idSeleccionado <= 0)
+            {
+                MensajeFmo.Info("Selecciona un cliente de la lista.", "Clientes");
+                return;
+            }
+
+            using var frm = new FrmHistorialCliente(_idSeleccionado, txtNombre.Text);
+            frm.ShowDialog(this);
         }
     }
 }

@@ -23,8 +23,10 @@ namespace Heladeria_FMO.Intefaz.Mayorista
             pnlHeader = new Guna.UI2.WinForms.Guna2Panel();
             btnNuevoPedido = new Guna.UI2.WinForms.Guna2Button();
             btnEntregar = new Guna.UI2.WinForms.Guna2Button();
+            txtCodigoEntrega = new Guna.UI2.WinForms.Guna2TextBox();
             btnConfirmar = new Guna.UI2.WinForms.Guna2Button();
             btnRefrescar = new Guna.UI2.WinForms.Guna2Button();
+            btnClientes = new Guna.UI2.WinForms.Guna2Button();
             lblTitulo = new Guna.UI2.WinForms.Guna2HtmlLabel();
             pnlCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPedidos).BeginInit();
@@ -56,8 +58,10 @@ namespace Heladeria_FMO.Intefaz.Mayorista
             //
             pnlHeader.Controls.Add(btnNuevoPedido);
             pnlHeader.Controls.Add(btnEntregar);
+            pnlHeader.Controls.Add(txtCodigoEntrega);
             pnlHeader.Controls.Add(btnConfirmar);
             pnlHeader.Controls.Add(btnRefrescar);
+            pnlHeader.Controls.Add(btnClientes);
             pnlHeader.Controls.Add(lblTitulo);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(20, 20);
@@ -85,10 +89,19 @@ namespace Heladeria_FMO.Intefaz.Mayorista
             btnEntregar.Text = "Entregar";
             btnEntregar.Click += btnEntregar_Click;
             //
+            // txtCodigoEntrega
+            //
+            txtCodigoEntrega.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtCodigoEntrega.Location = new Point(590, 12);
+            txtCodigoEntrega.Name = "txtCodigoEntrega";
+            txtCodigoEntrega.PlaceholderText = "Código de retiro…";
+            txtCodigoEntrega.Size = new Size(170, 42);
+            txtCodigoEntrega.TabIndex = 5;
+            //
             // btnConfirmar
             //
             btnConfirmar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnConfirmar.Location = new Point(640, 12);
+            btnConfirmar.Location = new Point(460, 12);
             btnConfirmar.Name = "btnConfirmar";
             btnConfirmar.Size = new Size(120, 42);
             btnConfirmar.TabIndex = 2;
@@ -98,19 +111,29 @@ namespace Heladeria_FMO.Intefaz.Mayorista
             // btnRefrescar
             //
             btnRefrescar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnRefrescar.Location = new Point(520, 12);
+            btnRefrescar.Location = new Point(350, 12);
             btnRefrescar.Name = "btnRefrescar";
-            btnRefrescar.Size = new Size(110, 42);
+            btnRefrescar.Size = new Size(100, 42);
             btnRefrescar.TabIndex = 1;
             btnRefrescar.Text = "Refrescar";
             btnRefrescar.Click += btnRefrescar_Click;
+            //
+            // btnClientes
+            //
+            btnClientes.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnClientes.Location = new Point(220, 12);
+            btnClientes.Name = "btnClientes";
+            btnClientes.Size = new Size(120, 42);
+            btnClientes.TabIndex = 6;
+            btnClientes.Text = "Clientes";
+            btnClientes.Click += btnClientes_Click;
             //
             // lblTitulo
             //
             lblTitulo.BackColor = Color.Transparent;
             lblTitulo.Location = new Point(4, 16);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(360, 30);
+            lblTitulo.Size = new Size(200, 30);
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "Pedidos mayoristas";
             //
@@ -137,6 +160,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista
         private Guna.UI2.WinForms.Guna2Button btnConfirmar;
         private Guna.UI2.WinForms.Guna2Button btnEntregar;
         private Guna.UI2.WinForms.Guna2Button btnNuevoPedido;
+        private Guna.UI2.WinForms.Guna2TextBox txtCodigoEntrega;
+        private Guna.UI2.WinForms.Guna2Button btnClientes;
         private Guna.UI2.WinForms.Guna2Panel pnlCard;
         private Guna.UI2.WinForms.Guna2DataGridView dgvPedidos;
     }

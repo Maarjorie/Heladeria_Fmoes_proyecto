@@ -37,15 +37,22 @@ namespace Heladeria_FMO.Intefaz.Caja
             lblEsperadoVal = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblEsperadoCap = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblArqueoTitulo = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            pnlMovimientos = new Guna.UI2.WinForms.Guna2Panel();
+            lblMovTitulo = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            btnNuevoMovimiento = new Guna.UI2.WinForms.Guna2Button();
+            dgvMovimientos = new Guna.UI2.WinForms.Guna2DataGridView();
             flpCajas.SuspendLayout();
             pnlAbrir.SuspendLayout();
             pnlArqueo.SuspendLayout();
+            pnlMovimientos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvMovimientos).BeginInit();
             SuspendLayout();
             //
             // flpCajas
             //
             flpCajas.Controls.Add(pnlAbrir);
             flpCajas.Controls.Add(pnlArqueo);
+            flpCajas.Controls.Add(pnlMovimientos);
             flpCajas.Dock = DockStyle.Fill;
             flpCajas.Location = new Point(0, 0);
             flpCajas.Name = "flpCajas";
@@ -228,6 +235,48 @@ namespace Heladeria_FMO.Intefaz.Caja
             lblArqueoTitulo.TabIndex = 0;
             lblArqueoTitulo.Text = "Arqueo de caja";
             //
+            // pnlMovimientos
+            //
+            pnlMovimientos.Controls.Add(dgvMovimientos);
+            pnlMovimientos.Controls.Add(btnNuevoMovimiento);
+            pnlMovimientos.Controls.Add(lblMovTitulo);
+            pnlMovimientos.Location = new Point(27, 363);
+            pnlMovimientos.Margin = new Padding(3, 3, 3, 3);
+            pnlMovimientos.Name = "pnlMovimientos";
+            pnlMovimientos.Size = new Size(824, 260);
+            pnlMovimientos.TabIndex = 2;
+            //
+            // lblMovTitulo
+            //
+            lblMovTitulo.BackColor = Color.Transparent;
+            lblMovTitulo.Location = new Point(20, 18);
+            lblMovTitulo.Name = "lblMovTitulo";
+            lblMovTitulo.Size = new Size(300, 30);
+            lblMovTitulo.TabIndex = 0;
+            lblMovTitulo.Text = "Movimientos de caja";
+            //
+            // btnNuevoMovimiento
+            //
+            btnNuevoMovimiento.Location = new Point(574, 14);
+            btnNuevoMovimiento.Name = "btnNuevoMovimiento";
+            btnNuevoMovimiento.Size = new Size(230, 40);
+            btnNuevoMovimiento.TabIndex = 1;
+            btnNuevoMovimiento.Text = "+ Registrar gasto / ingreso";
+            btnNuevoMovimiento.Click += btnNuevoMovimiento_Click;
+            //
+            // dgvMovimientos
+            //
+            dgvMovimientos.AllowUserToAddRows = false;
+            dgvMovimientos.AllowUserToDeleteRows = false;
+            dgvMovimientos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvMovimientos.Location = new Point(20, 64);
+            dgvMovimientos.Name = "dgvMovimientos";
+            dgvMovimientos.ReadOnly = true;
+            dgvMovimientos.RowHeadersVisible = false;
+            dgvMovimientos.RowHeadersWidth = 51;
+            dgvMovimientos.Size = new Size(784, 180);
+            dgvMovimientos.TabIndex = 2;
+            //
             // ucCaja
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -238,6 +287,8 @@ namespace Heladeria_FMO.Intefaz.Caja
             flpCajas.ResumeLayout(false);
             pnlAbrir.ResumeLayout(false);
             pnlArqueo.ResumeLayout(false);
+            pnlMovimientos.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvMovimientos).EndInit();
             ResumeLayout(false);
         }
 
@@ -262,5 +313,9 @@ namespace Heladeria_FMO.Intefaz.Caja
         private Guna.UI2.WinForms.Guna2HtmlLabel lblDiferenciaVal;
         private Guna.UI2.WinForms.Guna2Button btnCerrar;
         private Guna.UI2.WinForms.Guna2Button btnArqueo;
+        private Guna.UI2.WinForms.Guna2Panel pnlMovimientos;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblMovTitulo;
+        private Guna.UI2.WinForms.Guna2Button btnNuevoMovimiento;
+        private Guna.UI2.WinForms.Guna2DataGridView dgvMovimientos;
     }
 }

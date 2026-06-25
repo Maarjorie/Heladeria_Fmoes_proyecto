@@ -15,33 +15,32 @@ namespace Heladeria_FMO.Intefaz.Mayorista
     {
         // Nombre real de la columna que contiene el id del pedido en el DataTable.
         private string _colIdPedido;
-        private Guna.UI2.WinForms.Guna2Button btnClientes;
+        private string _colCodRetiro;
 
         public ucMayorista()
         {
             InitializeComponent();
             AplicarTema();
-            CrearBotonClientes();
+
+            // El lector de código de retiro escribe el código y envía Enter.
+            txtCodigoEntrega.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode != Keys.Enter) return;
+                e.SuppressKeyPress = true;
+                IntentarEntregar(txtCodigoEntrega.Text.Trim());
+            };
+
+            // Solo el administrador gestiona (alta/edición) de clientes mayoristas.
+            btnClientes.Visible = Sesion.EsAdministrador;
+
             CargarPedidos();
         }
 
-        // Botón para abrir la gestión de clientes mayoristas (catálogo).
-        private void CrearBotonClientes()
+        // Abre la gestión de clientes mayoristas (catálogo).
+        private void btnClientes_Click(object sender, EventArgs e)
         {
-            btnClientes = new Guna.UI2.WinForms.Guna2Button
-            {
-                Text = "Clientes",
-                Anchor = AnchorStyles.Top | AnchorStyles.Right,
-                Location = new System.Drawing.Point(390, 12),
-                Size = new System.Drawing.Size(120, 42)
-            };
-            EstilosFmo.BotonContorno(btnClientes);
-            btnClientes.Click += (s, e) =>
-            {
-                using var dialogo = new Dialogos.FrmClientes();
-                dialogo.ShowDialog(this.FindForm());
-            };
-            pnlHeader.Controls.Add(btnClientes);
+            using var dialogo = new Dialogos.FrmClientes();
+            dialogo.ShowDialog(this.FindForm());
         }
 
         private void AplicarTema()
@@ -58,6 +57,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista
             EstilosFmo.BotonSecundario(btnConfirmar);
             EstilosFmo.BotonContorno(btnEntregar);
             EstilosFmo.BotonContorno(btnRefrescar);
+            EstilosFmo.BotonContorno(btnClientes);
+            EstilosFmo.CajaTexto(txtCodigoEntrega);
         }
 
         private void CargarPedidos()
@@ -67,6 +68,7 @@ namespace Heladeria_FMO.Intefaz.Mayorista
                 DataTable pedidos = PedidoMayoristaServicio.ListarPedidos();
                 dgvPedidos.DataSource = pedidos;
                 _colIdPedido = EstilosFmo.ColumnaPorCandidatos(pedidos, "id_pedido", "idpedido", "id");
+                _colCodRetiro = EstilosFmo.ColumnaPorCandidatos(pedidos, "codigo_retiro", "codigoretiro");
             }
             catch (Exception)
             {
@@ -105,7 +107,11 @@ namespace Heladeria_FMO.Intefaz.Mayorista
 
             try
             {
-                bool ok = PedidoMayoristaServicio.ConfirmarPedido(new Pedido_mayorista { IdPedido = id });
+                bool ok = PedidoMayoristaServicio.ConfirmarPedido(new Pedido_mayorista
+                {
+                    IdPedido = id,
+                    CodigoRetiro = CodigoRetiroSeleccionado()
+                });
                 if (ok) MensajeFmo.Exito("Pedido confirmado.", "Mayorista"); else MensajeFmo.Advertencia("No se pudo confirmar el pedido.", "Mayorista");
                 CargarPedidos();
             }
@@ -117,10 +123,30 @@ namespace Heladeria_FMO.Intefaz.Mayorista
 
         private void btnEntregar_Click(object sender, EventArgs e)
         {
+            IntentarEntregar(txtCodigoEntrega?.Text?.Trim() ?? "");
+        }
+
+        // Entrega el pedido seleccionado solo si el código presentado coincide
+        // con el código de retiro del pedido (validación por escaneo/QR).
+        private void IntentarEntregar(string codigoPresentado)
+        {
             int id = ObtenerIdPedidoSeleccionado();
             if (id <= 0)
             {
                 MensajeFmo.Info("Selecciona un pedido de la tabla.", "Mayorista");
+                return;
+            }
+
+            string codigoPedido = CodigoRetiroSeleccionado();
+            if (string.IsNullOrWhiteSpace(codigoPresentado))
+            {
+                MensajeFmo.Advertencia("Ingresa o escanea el código de retiro del cliente.", "Mayorista");
+                return;
+            }
+
+            if (!string.Equals(codigoPresentado, codigoPedido, StringComparison.OrdinalIgnoreCase))
+            {
+                MensajeFmo.Error("El código presentado no coincide con el del pedido seleccionado.", "Código inválido");
                 return;
             }
 
@@ -133,12 +159,21 @@ namespace Heladeria_FMO.Intefaz.Mayorista
                 };
                 bool ok = PedidoMayoristaServicio.EntregarPedido(pedido);
                 if (ok) MensajeFmo.Exito("Pedido entregado.", "Mayorista"); else MensajeFmo.Advertencia("No se pudo entregar el pedido.", "Mayorista");
+                if (txtCodigoEntrega != null) txtCodigoEntrega.Clear();
                 CargarPedidos();
             }
             catch (Exception ex)
             {
                 MensajeFmo.Error(ex.Message, "Mayorista");
             }
+        }
+
+        // Código de retiro del pedido seleccionado en la tabla.
+        private string CodigoRetiroSeleccionado()
+        {
+            if (dgvPedidos.CurrentRow == null || _colCodRetiro == null) return "";
+            object v = dgvPedidos.CurrentRow.Cells[_colCodRetiro].Value;
+            return v?.ToString() ?? "";
         }
 
         private void btnRefrescar_Click(object sender, EventArgs e) => CargarPedidos();

@@ -8,8 +8,14 @@
     <Compile Update="Intefaz\Autorizaciones\ucAutorizaciones.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Intefaz\Caja\FrmMovimientoCaja.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Intefaz\Caja\ucCaja.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\FrmEstablecerContrasena.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Intefaz\FrmMenuPrincipal.cs">
       <SubType>Form</SubType>
@@ -17,34 +23,10 @@
     <Compile Update="Intefaz\FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Intefaz\FrmCaja.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Intefaz\FrmClintesMayoristas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Intefaz\FrmLiquidacionRuta.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Intefaz\FrmPedidoMayoritas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Intefaz\FrmProductos.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Intefaz\FrmRecuperarCredenciales.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Intefaz\FrmRutas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Intefaz\FrmSalidasRutas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Intefaz\FrmVentasSucursal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Intefaz\Inventario\FrmAgregarProducto.cs">
+    <Compile Update="Intefaz\Inventario\FrmAjusteInventario.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Intefaz\Inventario\FrmProducto.cs">
@@ -53,13 +35,13 @@
     <Compile Update="Intefaz\Inventario\FrmPromociones.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Intefaz\Inventario\ucAgregarProducto.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Update="Intefaz\Inventario\ucInventario.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Intefaz\Mayorista\Dialogos\FrmClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\Mayorista\Dialogos\FrmHistorialCliente.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Intefaz\Mayorista\Dialogos\FrmNuevoPedido.cs">
@@ -73,6 +55,12 @@
     </Compile>
     <Compile Update="Intefaz\MenuInicio\ucTarjetaVentas.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\PuntoVenta\FrmAutorizarDescuento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\PuntoVenta\FrmCobro.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Intefaz\PuntoVenta\ucPuntoVenta.cs">
       <SubType>UserControl</SubType>

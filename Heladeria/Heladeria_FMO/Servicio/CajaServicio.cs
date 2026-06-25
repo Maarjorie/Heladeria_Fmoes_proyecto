@@ -27,10 +27,7 @@ namespace Heladeria_FMO.Servicio
 
             decimal diferencia = montoContado - montoEsperado;
             if (resultado && diferencia != 0)
-            {
-                string mensaje = $"El arqueo de la caja #{idCaja} presenta una diferencia de {diferencia:0.00}.";
-                NotificacionDAO.InsertarNotificacion("arqueo_inconsistente", idCaja, mensaje);
-            }
+                NotificacionServicio.NotificarArqueoInconsistente(idCaja, diferencia);
 
             return resultado;
         }
@@ -38,6 +35,12 @@ namespace Heladeria_FMO.Servicio
         public static bool RegistrarMovimiento(int idCaja, int idUsuario, string tipo, string concepto, decimal monto)
         {
             return Movimiento_cajaDAO.InsertarMovimiento(idCaja, idUsuario, tipo, concepto, monto);
+        }
+
+        // Movimientos (ingresos/egresos extraordinarios) de una caja.
+        public static List<Modelos.Movimiento_caja> ListarMovimientos(int idCaja)
+        {
+            return Movimiento_cajaDAO.ListarPorCaja(idCaja);
         }
 
         // Arqueos pendientes de autorización por un supervisor/admin.

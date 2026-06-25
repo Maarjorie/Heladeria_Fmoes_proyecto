@@ -58,6 +58,13 @@ namespace Heladeria_FMO.Intefaz.Caja
             EstilosFmo.BotonPrimario(btnAbrir);
             EstilosFmo.BotonSecundario(btnCerrar);
             EstilosFmo.BotonContorno(btnArqueo);
+
+            // Tarjeta de movimientos (gastos/ingresos extraordinarios).
+            EstilosFmo.Tarjeta(pnlMovimientos);
+            lblMovTitulo.Font = EstilosFmo.Fuente(16F, FontStyle.Bold);
+            lblMovTitulo.ForeColor = EstilosFmo.TextoFuerte;
+            EstilosFmo.BotonContorno(btnNuevoMovimiento);
+            EstilosFmo.Tabla(dgvMovimientos);
         }
 
         // ───────────────────────── Estado UI ─────────────────────────
@@ -73,12 +80,14 @@ namespace Heladeria_FMO.Intefaz.Caja
             txtContado.Enabled = abierta;
             btnCerrar.Enabled = abierta;
             btnArqueo.Enabled = abierta;
+            btnNuevoMovimiento.Enabled = abierta;
 
             if (abierta)
             {
                 lblEstado.Text = $"Caja #{Sesion.IdCajaActiva} abierta · fondo ${Sesion.FondoCajaActiva:N2}";
                 lblEstado.ForeColor = EstilosFmo.MentaClaro;
                 lblEsperadoVal.Text = "$" + MontoEsperado.ToString("N2");
+                CargarMovimientos();
             }
             else
             {
@@ -86,9 +95,42 @@ namespace Heladeria_FMO.Intefaz.Caja
                 lblEstado.ForeColor = EstilosFmo.TextoTenue;
                 lblEsperadoVal.Text = "$0.00";
                 txtContado.Clear();
+                dgvMovimientos.DataSource = null;
             }
 
             ActualizarDiferencia();
+        }
+
+        private void CargarMovimientos()
+        {
+            try
+            {
+                dgvMovimientos.DataSource = CajaServicio.ListarMovimientos(Sesion.IdCajaActiva);
+                EstilosFmo.MostrarSoloColumnas(dgvMovimientos,
+                    ("Tipo", "Tipo"),
+                    ("Concepto", "Concepto"),
+                    ("Monto", "Monto"),
+                    ("FechaRegistro", "Fecha"));
+            }
+            catch (Exception)
+            {
+                MensajeFmo.Advertencia("No se pudieron cargar los movimientos de caja.", "Caja");
+            }
+        }
+
+        private void btnNuevoMovimiento_Click(object sender, EventArgs e)
+        {
+            if (!Sesion.HayCajaAbierta)
+            {
+                MensajeFmo.Info("Primero abre una caja.", "Caja");
+                return;
+            }
+
+            using (var dialogo = new FrmMovimientoCaja())
+            {
+                dialogo.ShowDialog(this.FindForm());
+            }
+            CargarMovimientos();
         }
 
         private void ActualizarDiferencia()

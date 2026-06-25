@@ -14,13 +14,13 @@ namespace Heladeria_FMO.Intefaz.Autorizaciones
     // Arqueos de caja (autorizar) y Notificaciones del sistema (marcar leídas).
     public partial class ucAutorizaciones : UserControl
     {
-        private enum Seccion { Pedidos, Arqueos, Promociones, Notificaciones }
+        private enum Seccion { Pedidos, Arqueos, Promociones, Ajustes, Notificaciones }
 
         private Seccion _seccion = Seccion.Pedidos;
         private string _colId;
 
         private Guna2Button btnUsuarios;
-        private Guna2Button btnSecPedidos, btnSecArqueos, btnSecPromos, btnSecNotif;
+        private Guna2Button btnSecPedidos, btnSecArqueos, btnSecPromos, btnSecAjustes, btnSecNotif;
         private Guna2Button btnAprobar, btnRechazar, btnAutorizar;
 
         public ucAutorizaciones()
@@ -53,13 +53,15 @@ namespace Heladeria_FMO.Intefaz.Autorizaciones
         private void ConstruirControles()
         {
             // Botones de sección (izquierda).
-            btnSecPedidos = CrearSeccionBtn("Pedidos", 4, 74, 140);
-            btnSecArqueos = CrearSeccionBtn("Arqueos", 150, 74, 140);
-            btnSecPromos = CrearSeccionBtn("Promociones", 296, 74, 150);
-            btnSecNotif = CrearSeccionBtn("Notificaciones", 452, 74, 160);
+            btnSecPedidos = CrearSeccionBtn("Pedidos", 4, 74, 120);
+            btnSecArqueos = CrearSeccionBtn("Arqueos", 130, 74, 120);
+            btnSecPromos = CrearSeccionBtn("Promociones", 256, 74, 140);
+            btnSecAjustes = CrearSeccionBtn("Ajustes", 402, 74, 120);
+            btnSecNotif = CrearSeccionBtn("Notificaciones", 528, 74, 160);
             btnSecPedidos.Click += (s, e) => CargarSeccion(Seccion.Pedidos);
             btnSecArqueos.Click += (s, e) => CargarSeccion(Seccion.Arqueos);
             btnSecPromos.Click += (s, e) => CargarSeccion(Seccion.Promociones);
+            btnSecAjustes.Click += (s, e) => CargarSeccion(Seccion.Ajustes);
             btnSecNotif.Click += (s, e) => CargarSeccion(Seccion.Notificaciones);
 
             // Acciones (derecha, ancladas).
@@ -83,7 +85,9 @@ namespace Heladeria_FMO.Intefaz.Autorizaciones
                 Text = "Usuarios",
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 Location = new Point(950, 10),
-                Size = new Size(120, 36)
+                Size = new Size(120, 36),
+                // Solo el administrador gestiona (alta/edición/baja) de usuarios.
+                Visible = Sesion.EsAdministrador
             };
             EstilosFmo.BotonContorno(btnUsuarios);
             btnUsuarios.Click += (s, e) => { using var d = new FrmUsuarios(); d.ShowDialog(this.FindForm()); };
@@ -119,14 +123,14 @@ namespace Heladeria_FMO.Intefaz.Autorizaciones
             _seccion = seccion;
 
             // Resalta la sección activa.
-            foreach (var (b, sec) in new[] { (btnSecPedidos, Seccion.Pedidos), (btnSecArqueos, Seccion.Arqueos), (btnSecPromos, Seccion.Promociones), (btnSecNotif, Seccion.Notificaciones) })
+            foreach (var (b, sec) in new[] { (btnSecPedidos, Seccion.Pedidos), (btnSecArqueos, Seccion.Arqueos), (btnSecPromos, Seccion.Promociones), (btnSecAjustes, Seccion.Ajustes), (btnSecNotif, Seccion.Notificaciones) })
             {
                 bool on = sec == seccion;
                 if (on) EstilosFmo.BotonPrimario(b); else EstilosFmo.BotonContorno(b);
             }
 
             // Botones de acción según la sección.
-            bool aprobables = seccion == Seccion.Pedidos || seccion == Seccion.Promociones;
+            bool aprobables = seccion == Seccion.Pedidos || seccion == Seccion.Promociones || seccion == Seccion.Ajustes;
             btnAprobar.Visible = aprobables;
             btnRechazar.Visible = aprobables;
             btnAutorizar.Visible = seccion == Seccion.Arqueos;
@@ -137,8 +141,30 @@ namespace Heladeria_FMO.Intefaz.Autorizaciones
                 case Seccion.Pedidos: CargarPedidos(); break;
                 case Seccion.Arqueos: CargarArqueos(); break;
                 case Seccion.Promociones: CargarPromos(); break;
+                case Seccion.Ajustes: CargarAjustes(); break;
                 case Seccion.Notificaciones: CargarNotificaciones(); break;
             }
+        }
+
+        private void CargarAjustes()
+        {
+            try
+            {
+                DataTable t = InventarioServicio.ListarAjustesPendientes();
+                dgvNotificaciones.DataSource = t;
+                _colId = EstilosFmo.ColumnaPorCandidatos(t, "id_movimiento", "idmovimiento", "id");
+
+                EstilosFmo.MostrarSoloColumnas(dgvNotificaciones,
+                    ("producto", "Producto"),
+                    ("cantidad", "Ajuste"),
+                    ("observacion", "Motivo"),
+                    ("solicitado_por", "Solicitó"),
+                    ("fecha_registro", "Fecha"));
+
+                lblTitulo.Text = "Autorizaciones · Ajustes de inventario";
+                lblSub.Text = $"{t.Rows.Count} ajuste(s) pendiente(s)";
+            }
+            catch (Exception ex) { MensajeFmo.Error(ex.Message, "Autorizaciones"); }
         }
 
         private void CargarPedidos()
@@ -271,6 +297,13 @@ namespace Heladeria_FMO.Intefaz.Autorizaciones
                     if (ok) MensajeFmo.Exito("Promoción aprobada.", "Autorizaciones"); else MensajeFmo.Advertencia("No se pudo aprobar.", "Autorizaciones");
                     CargarPromos();
                 }
+                else if (_seccion == Seccion.Ajustes)
+                {
+                    if (!MensajeFmo.Confirmar("¿Aprobar el ajuste? Se aplicará al stock.", "Autorizaciones")) return;
+                    bool ok = InventarioServicio.AprobarAjuste(id, IdUsuario);
+                    if (ok) MensajeFmo.Exito("Ajuste aprobado y aplicado al stock.", "Autorizaciones"); else MensajeFmo.Advertencia("No se pudo aprobar.", "Autorizaciones");
+                    CargarAjustes();
+                }
                 else
                 {
                     if (!MensajeFmo.Confirmar("¿Aprobar (confirmar) el pedido seleccionado?", "Autorizaciones")) return;
@@ -295,6 +328,13 @@ namespace Heladeria_FMO.Intefaz.Autorizaciones
                     bool ok = PromocionServicio.RechazarPromocion(id, IdUsuario);
                     if (ok) MensajeFmo.Exito("Promoción rechazada.", "Autorizaciones"); else MensajeFmo.Advertencia("No se pudo rechazar.", "Autorizaciones");
                     CargarPromos();
+                }
+                else if (_seccion == Seccion.Ajustes)
+                {
+                    if (!MensajeFmo.Confirmar("¿Rechazar el ajuste seleccionado?", "Autorizaciones")) return;
+                    bool ok = InventarioServicio.RechazarAjuste(id, IdUsuario);
+                    if (ok) MensajeFmo.Exito("Ajuste rechazado.", "Autorizaciones"); else MensajeFmo.Advertencia("No se pudo rechazar.", "Autorizaciones");
+                    CargarAjustes();
                 }
                 else
                 {

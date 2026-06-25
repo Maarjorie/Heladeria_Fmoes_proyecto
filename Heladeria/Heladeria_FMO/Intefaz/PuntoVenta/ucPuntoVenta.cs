@@ -22,6 +22,9 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
         // Catálogo cargado desde la base de datos.
         private List<Producto> _productos = new();
 
+        // Promociones vigentes (aprobadas y dentro de fechas) aplicables al ticket.
+        private List<Promocion> _promociones = new();
+
         // Líneas del ticket actual, indexadas por id de producto.
         private readonly Dictionary<int, LineaTicket> _ticket = new();
 
@@ -40,6 +43,31 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
             AplicarTema();
             CargarProductos();
             RecalcularTotales();
+
+            // El buscador funciona también como entrada del lector de código de
+            // barras: al presionar Enter, si el texto coincide exactamente con el
+            // código (de barras o interno) de un producto, lo agrega al ticket.
+            txtBuscar.KeyDown += TxtBuscar_KeyDown;
+        }
+
+        private void TxtBuscar_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter) return;
+
+            string codigo = txtBuscar.Text.Trim();
+            if (codigo.Length == 0) return;
+
+            var producto = _productos.FirstOrDefault(p =>
+                string.Equals(p.CodigoBarras, codigo, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(p.Codigo, codigo, StringComparison.OrdinalIgnoreCase));
+
+            if (producto != null)
+            {
+                AgregarAlTicket(producto);
+                txtBuscar.Clear();
+                txtBuscar.Focus();
+                e.SuppressKeyPress = true;
+            }
         }
 
         // ───────────────────────── Tema oscuro ─────────────────────────
@@ -95,6 +123,10 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
                 MensajeFmo.Advertencia("No se pudieron cargar los productos. Verifica la conexión con la base de datos.",
                     "Punto de venta");
             }
+
+            // Promociones vigentes para aplicar precios con descuento en el ticket.
+            try { _promociones = PromocionServicio.ListarVigentes(); }
+            catch (Exception) { _promociones = new List<Promocion>(); }
 
             RenderCategorias();
             RenderProductos();
@@ -222,28 +254,50 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
                 BackColor = Color.Transparent
             };
 
+            bool enPromo = TienePromocion(producto);
             var precio = new Guna2HtmlLabel
             {
-                Text = "$" + producto.PrecioVenta.ToString("N2"),
+                Text = "$" + PrecioUnitario(producto).ToString("N2"),
                 AutoSize = false,
                 Location = new Point(12, 156),
                 Size = new Size(144, 24),
                 Font = EstilosFmo.Fuente(13F, FontStyle.Bold),
-                ForeColor = EstilosFmo.TextoFuerte,
+                // En promoción se resalta el precio con el acento "Mango".
+                ForeColor = enPromo ? EstilosFmo.Mango : EstilosFmo.TextoFuerte,
                 BackColor = Color.Transparent
             };
+
+            // Cuando hay promoción, se muestra el precio original tachado al lado.
+            Guna2HtmlLabel precioAntes = null;
+            if (enPromo)
+            {
+                precio.Size = new Size(74, 24);
+                precioAntes = new Guna2HtmlLabel
+                {
+                    Text = $"<s>${producto.PrecioVenta:N2}</s>",
+                    AutoSize = false,
+                    Location = new Point(86, 160),
+                    Size = new Size(70, 20),
+                    Font = EstilosFmo.Fuente(9F),
+                    ForeColor = EstilosFmo.TextoTenue,
+                    BackColor = Color.Transparent
+                };
+            }
 
             var stock = CrearBadgeStock(producto);
             stock.Location = new Point(12, 184);
 
-            foreach (Control c in new Control[] { pic, nombre, categoria, precio, stock })
+            var controles = new List<Control> { pic, nombre, categoria, precio, stock };
+            if (precioAntes != null) controles.Add(precioAntes);
+
+            foreach (Control c in controles)
             {
                 c.Cursor = Cursors.Hand;
                 c.Click += (s, e) => AgregarAlTicket(producto);
             }
             card.Click += (s, e) => AgregarAlTicket(producto);
 
-            card.Controls.AddRange(new Control[] { pic, nombre, categoria, precio, stock });
+            card.Controls.AddRange(controles.ToArray());
             return card;
         }
 
@@ -375,7 +429,7 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
 
             var totalLinea = new Guna2HtmlLabel
             {
-                Text = "$" + (linea.Producto.PrecioVenta * linea.Cantidad).ToString("N2"),
+                Text = "$" + (PrecioUnitario(linea.Producto) * linea.Cantidad).ToString("N2"),
                 Location = new Point(150, 33),
                 Size = new Size(140, 20),
                 Font = EstilosFmo.Fuente(10F, FontStyle.Bold),
@@ -416,9 +470,37 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
             return panel;
         }
 
+        // ───────────────────────── Promociones ─────────────────────────
+        // Precio unitario efectivo del producto tras aplicar la mejor promoción
+        // vigente (por producto o por su categoría). Si no hay, es el precio normal.
+        private decimal PrecioUnitario(Producto p)
+        {
+            decimal mejor = p.PrecioVenta;
+            foreach (var promo in _promociones)
+            {
+                bool aplica = (promo.IdProducto.HasValue && promo.IdProducto.Value == p.IdProducto)
+                           || (promo.IdCategoria.HasValue && promo.IdCategoria.Value == p.IdCategoria);
+                if (!aplica) continue;
+
+                decimal precio = promo.TipoDescuento == "porcentaje"
+                    ? p.PrecioVenta * (1 - promo.ValorDescuento / 100m)
+                    : p.PrecioVenta - promo.ValorDescuento;
+
+                precio = Math.Max(0m, Math.Round(precio, 2));
+                if (precio < mejor) mejor = precio;
+            }
+            return mejor;
+        }
+
+        // Descuento unitario aplicado por promoción (0 si no hay).
+        private decimal DescuentoUnitario(Producto p) => p.PrecioVenta - PrecioUnitario(p);
+
+        // True si el producto tiene una promoción vigente que reduce su precio.
+        private bool TienePromocion(Producto p) => DescuentoUnitario(p) > 0m;
+
         private void RecalcularTotales()
         {
-            decimal subtotal = _ticket.Values.Sum(l => l.Producto.PrecioVenta * l.Cantidad);
+            decimal subtotal = _ticket.Values.Sum(l => PrecioUnitario(l.Producto) * l.Cantidad);
             decimal iva = Math.Round(subtotal * IvaTasa, 2);
             decimal total = subtotal + iva;
             int unidades = _ticket.Values.Sum(l => l.Cantidad);
@@ -449,18 +531,16 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
                 return;
             }
 
-            decimal subtotal = _ticket.Values.Sum(l => l.Producto.PrecioVenta * l.Cantidad);
-            decimal total = subtotal + Math.Round(subtotal * IvaTasa, 2);
-            int unidades = _ticket.Values.Sum(l => l.Cantidad);
+            decimal subtotal = _ticket.Values.Sum(l => PrecioUnitario(l.Producto) * l.Cantidad);
 
-            var confirmar = (MensajeFmo.Confirmar($"Cobrar {unidades} unidad(es) por un total de ${total:N2}?",
-                "Confirmar venta") ? DialogResult.Yes : DialogResult.No);
+            // Diálogo de cobro: descuento (con supervisor), efectivo y cambio.
+            using var cobro = new FrmCobro(subtotal, IvaTasa);
+            if (cobro.ShowDialog(this.FindForm()) != DialogResult.OK) return;
 
-            if (confirmar != DialogResult.Yes) return;
-
+            int idVenta;
             try
             {
-                RegistrarVenta(total);
+                idVenta = RegistrarVenta(cobro.Total, cobro.Descuento, cobro.IdAutorizadoDescuento);
             }
             catch (Exception ex)
             {
@@ -468,7 +548,18 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
                 return;
             }
 
-            MensajeFmo.Info($"Venta registrada por ${total:N2}.", "Venta completada");
+            // Impresión del ticket (no bloquea el cierre de la venta si falla).
+            try
+            {
+                ImprimirTicket(idVenta, cobro.Total, cobro.Efectivo, cobro.Cambio);
+            }
+            catch (Exception ex)
+            {
+                MensajeFmo.Advertencia($"La venta se registró, pero no se pudo imprimir el ticket.\n{ex.Message}",
+                    "Impresión");
+            }
+
+            MensajeFmo.Info($"Venta registrada por ${cobro.Total:N2}. Cambio: ${cobro.Cambio:N2}.", "Venta completada");
 
             _ticket.Clear();
             CargarProductos();   // refresca stock tras descontar existencias
@@ -477,7 +568,8 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
         }
 
         // Persiste la venta y su detalle contra la caja abierta en sesión.
-        private void RegistrarVenta(decimal total)
+        // Devuelve el id de la venta creada.
+        private int RegistrarVenta(decimal total, decimal descuento, int idAutorizadoDescuento)
         {
             int idUsuario = Sesion.UsuarioActivo.id_Usuario;
 
@@ -497,13 +589,35 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
                     IdVenta = idVenta,
                     IdProducto = linea.Producto.IdProducto,
                     Cantidad = linea.Cantidad,
-                    Descuento = 0m
+                    // El descuento por promoción se registra a nivel de línea.
+                    Descuento = DescuentoUnitario(linea.Producto) * linea.Cantidad
                 };
                 VentaSucursalServicio.AgregarDetalleVentaSucursal(detalle, idUsuario);
             }
 
+            // Si un supervisor autorizó un descuento, se aplica sobre la venta.
+            if (descuento > 0 && idAutorizadoDescuento > 0)
+                VentaSucursalServicio.RegistrarDescuentoAutorizado(idVenta, descuento, idAutorizadoDescuento);
+
             // Alimenta el monto esperado del arqueo de caja.
             Sesion.TotalVendidoCaja += total;
+            return idVenta;
+        }
+
+        // Arma e imprime el ticket de la venta en la impresora térmica.
+        private void ImprimirTicket(int idVenta, decimal total, decimal efectivo, decimal cambio)
+        {
+            var lineas = _ticket.Values
+                .Select(l => (l.Producto.Nombre, l.Cantidad, PrecioUnitario(l.Producto)))
+                .ToList();
+
+            ImpresionFMO.ImprimirTicketVenta(
+                idVenta,
+                Sesion.UsuarioActivo?.Nombre ?? "—",
+                lineas,
+                total,
+                efectivo,
+                cambio);
         }
     }
 }

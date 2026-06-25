@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Heladeria_FMO.Acceso_a_datos_db;
 using Heladeria_FMO.Modelos;
 
@@ -33,6 +34,19 @@ namespace Heladeria_FMO.Servicio
         }
 
         public static List<Promocion> ListarPromociones() => PromocionDao.ListarPromocion();
+
+        // Promociones listas para aplicarse en el punto de venta: aprobadas,
+        // activas y vigentes a la fecha de hoy.
+        public static List<Promocion> ListarVigentes()
+        {
+            DateTime hoy = DateTime.Today;
+            return PromocionDao.ListarPromocion()
+                .Where(p => p.Activo
+                    && string.Equals(p.Estado, "aprobada", StringComparison.OrdinalIgnoreCase)
+                    && p.FechaInicio.Date <= hoy
+                    && hoy <= p.FechaFin.Date)
+                .ToList();
+        }
 
         public static DataTable ListarPendientes() => PromocionDao.ListarPendientes();
 

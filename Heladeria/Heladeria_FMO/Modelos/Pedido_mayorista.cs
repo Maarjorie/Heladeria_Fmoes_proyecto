@@ -19,5 +19,8 @@ namespace Heladeria_FMO.Modelos
         public DateTime FechaPedido { get; set; }
         public DateTime FechaConfirmacion { get; set; }
         public DateTime FechaEntrega { get; set; }
+
+        // Fecha de entrega programada (opcional) acordada con el cliente.
+        public DateTime? FechaEntregaProgramada { get; set; }
     }
 }
