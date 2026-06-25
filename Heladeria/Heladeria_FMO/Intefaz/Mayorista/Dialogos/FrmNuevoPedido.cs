@@ -30,6 +30,7 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
         {
             public int Id { get; init; }
             public string Nombre { get; init; }
+            public decimal Descuento { get; init; } // % fijo del cliente
             public override string ToString() => Nombre;
         }
 
@@ -37,6 +38,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
         private readonly Guna2ComboBox cboProducto = new();
         private readonly Guna2TextBox txtCantidad = new();
         private readonly Guna2Button btnAgregar = new();
+        private readonly Guna2DateTimePicker dtpEntrega = new();
+        private readonly Guna2ToggleSwitch tglProgramar = new();
         private readonly Guna2DataGridView dgvDetalle = new();
         private readonly Guna2HtmlLabel lblTotalVal = new();
         private readonly Guna2Button btnCrear = new();
@@ -94,7 +97,21 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
             var lblCliente = CrearCaption("Cliente mayorista", 24, 84);
             EstilosFmo.Combo(cboCliente);
             cboCliente.Location = new Point(24, 106);
-            cboCliente.Size = new Size(488, 34);
+            cboCliente.Size = new Size(290, 34);
+
+            var lblEntrega = CrearCaption("Entrega programada", 324, 84);
+            tglProgramar.Location = new Point(470, 86);
+            tglProgramar.Size = new Size(42, 22);
+            dtpEntrega.Location = new Point(324, 106);
+            dtpEntrega.Size = new Size(188, 34);
+            dtpEntrega.FillColor = EstilosFmo.SuperficieHundida;
+            dtpEntrega.ForeColor = EstilosFmo.TextoFuerte;
+            dtpEntrega.BorderColor = EstilosFmo.Borde;
+            dtpEntrega.BorderRadius = 8;
+            dtpEntrega.Enabled = false;
+            dtpEntrega.MinDate = DateTime.Today;
+            dtpEntrega.Value = DateTime.Today.AddDays(1);
+            tglProgramar.CheckedChanged += (s, e) => dtpEntrega.Enabled = tglProgramar.Checked;
 
             var lblProducto = CrearCaption("Producto", 24, 152);
             EstilosFmo.Combo(cboProducto);
@@ -151,7 +168,7 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
             marco.Controls.AddRange(new Control[]
             {
                 titulo, subtitulo, btnCerrar,
-                lblCliente, cboCliente,
+                lblCliente, cboCliente, lblEntrega, tglProgramar, dtpEntrega,
                 lblProducto, cboProducto, lblCant, txtCantidad, btnAgregar,
                 dgvDetalle, lblTotalCap, lblTotalVal,
                 btnCancelar, btnCrear
@@ -183,13 +200,16 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
                 DataTable tabla = Cliente_mayoristaDAO.ListarClientesMayoristas();
                 string colId = EstilosFmo.ColumnaPorCandidatos(tabla, "id_cliente", "idcliente", "id");
                 string colNombre = EstilosFmo.ColumnaPorCandidatos(tabla, "nombre_comercial", "nombre", "comercial");
+                string colDesc = EstilosFmo.ColumnaPorCandidatos(tabla, "descuento_porcentaje", "descuento");
 
                 var clientes = new List<ClienteItem>();
                 foreach (DataRow fila in tabla.Rows)
                 {
                     int id = colId != null && int.TryParse(fila[colId]?.ToString(), out int v) ? v : 0;
                     string nombre = colNombre != null ? fila[colNombre]?.ToString() : $"Cliente {id}";
-                    clientes.Add(new ClienteItem { Id = id, Nombre = nombre });
+                    decimal desc = 0m;
+                    if (colDesc != null) decimal.TryParse(fila[colDesc]?.ToString(), out desc);
+                    clientes.Add(new ClienteItem { Id = id, Nombre = nombre, Descuento = desc });
                 }
 
                 cboCliente.DataSource = clientes;
@@ -288,7 +308,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
                 var pedido = new Pedido_mayorista
                 {
                     IdCliente = idCliente,
-                    IdAtendidoPor = Sesion.UsuarioActivo?.id_Usuario ?? 0
+                    IdAtendidoPor = Sesion.UsuarioActivo?.id_Usuario ?? 0,
+                    FechaEntregaProgramada = tglProgramar.Checked ? dtpEntrega.Value : (DateTime?)null
                 };
 
                 int idPedido = PedidoMayoristaServicio.CrearPedido(pedido);
@@ -303,7 +324,14 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
                     });
                 }
 
-                MensajeFmo.Info($"Pedido #{idPedido} creado con {_lineas.Count} producto(s).",
+                // Aplica el descuento fijo del cliente y fija los totales del pedido.
+                decimal subtotal = _lineas.Sum(l => l.Precio * l.Cantidad);
+                decimal pct = (cboCliente.SelectedItem as ClienteItem)?.Descuento ?? 0m;
+                decimal descuento = Math.Round(subtotal * (pct / 100m), 2);
+                PedidoMayoristaServicio.FijarTotales(idPedido, subtotal, descuento);
+
+                string detalleDesc = descuento > 0 ? $" Descuento del cliente: ${descuento:N2}." : "";
+                MensajeFmo.Info($"Pedido #{idPedido} creado con {_lineas.Count} producto(s).{detalleDesc}",
                     "Pedido creado");
 
                 DialogResult = DialogResult.OK;

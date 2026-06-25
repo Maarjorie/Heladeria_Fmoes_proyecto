@@ -58,5 +58,22 @@ namespace Heladeria_FMO.Servicio
 
             return Pedido_mayoristaDAO.CancelarPedidoMayorista(idPedido);
         }
+
+        // Fija los totales del pedido aplicando el descuento (en monto) del cliente.
+        public static bool FijarTotales(int idPedido, decimal subtotal, decimal descuento)
+        {
+            if (idPedido <= 0) throw new Exception("Pedido inválido.");
+            if (descuento < 0) descuento = 0;
+            if (descuento > subtotal) descuento = subtotal;
+            decimal total = subtotal - descuento;
+            return Pedido_mayoristaDAO.ActualizarTotales(idPedido, subtotal, descuento, total);
+        }
+
+        // Historial de pedidos de un cliente.
+        public static DataTable ListarPedidosPorCliente(int idCliente)
+        {
+            if (idCliente <= 0) throw new Exception("Debe seleccionar un cliente.");
+            return Pedido_mayoristaDAO.ListarPedidosPorCliente(idCliente);
+        }
     }
 }

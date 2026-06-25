@@ -15,14 +15,40 @@ namespace Heladeria_FMO.Intefaz.Mayorista
     {
         // Nombre real de la columna que contiene el id del pedido en el DataTable.
         private string _colIdPedido;
+        private string _colCodRetiro;
         private Guna.UI2.WinForms.Guna2Button btnClientes;
+        private Guna.UI2.WinForms.Guna2TextBox txtCodigoEntrega;
 
         public ucMayorista()
         {
             InitializeComponent();
             AplicarTema();
             CrearBotonClientes();
+            CrearControlEntrega();
             CargarPedidos();
+        }
+
+        // Campo para validar la entrega: el cliente presenta su código de retiro
+        // (impreso/QR); se compara con el del pedido seleccionado antes de entregar.
+        private void CrearControlEntrega()
+        {
+            txtCodigoEntrega = new Guna.UI2.WinForms.Guna2TextBox
+            {
+                PlaceholderText = "Código de retiro…",
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Location = new System.Drawing.Point(520, 12),
+                Size = new System.Drawing.Size(180, 42)
+            };
+            EstilosFmo.CajaTexto(txtCodigoEntrega);
+            pnlHeader.Controls.Add(txtCodigoEntrega);
+
+            // Permite escanear: el lector escribe el código y envía Enter.
+            txtCodigoEntrega.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode != Keys.Enter) return;
+                e.SuppressKeyPress = true;
+                IntentarEntregar(txtCodigoEntrega.Text.Trim());
+            };
         }
 
         // Botón para abrir la gestión de clientes mayoristas (catálogo).
@@ -69,6 +95,7 @@ namespace Heladeria_FMO.Intefaz.Mayorista
                 DataTable pedidos = PedidoMayoristaServicio.ListarPedidos();
                 dgvPedidos.DataSource = pedidos;
                 _colIdPedido = EstilosFmo.ColumnaPorCandidatos(pedidos, "id_pedido", "idpedido", "id");
+                _colCodRetiro = EstilosFmo.ColumnaPorCandidatos(pedidos, "codigo_retiro", "codigoretiro");
             }
             catch (Exception)
             {
@@ -119,10 +146,30 @@ namespace Heladeria_FMO.Intefaz.Mayorista
 
         private void btnEntregar_Click(object sender, EventArgs e)
         {
+            IntentarEntregar(txtCodigoEntrega?.Text?.Trim() ?? "");
+        }
+
+        // Entrega el pedido seleccionado solo si el código presentado coincide
+        // con el código de retiro del pedido (validación por escaneo/QR).
+        private void IntentarEntregar(string codigoPresentado)
+        {
             int id = ObtenerIdPedidoSeleccionado();
             if (id <= 0)
             {
                 MensajeFmo.Info("Selecciona un pedido de la tabla.", "Mayorista");
+                return;
+            }
+
+            string codigoPedido = CodigoRetiroSeleccionado();
+            if (string.IsNullOrWhiteSpace(codigoPresentado))
+            {
+                MensajeFmo.Advertencia("Ingresa o escanea el código de retiro del cliente.", "Mayorista");
+                return;
+            }
+
+            if (!string.Equals(codigoPresentado, codigoPedido, StringComparison.OrdinalIgnoreCase))
+            {
+                MensajeFmo.Error("El código presentado no coincide con el del pedido seleccionado.", "Código inválido");
                 return;
             }
 
@@ -135,12 +182,21 @@ namespace Heladeria_FMO.Intefaz.Mayorista
                 };
                 bool ok = PedidoMayoristaServicio.EntregarPedido(pedido);
                 if (ok) MensajeFmo.Exito("Pedido entregado.", "Mayorista"); else MensajeFmo.Advertencia("No se pudo entregar el pedido.", "Mayorista");
+                if (txtCodigoEntrega != null) txtCodigoEntrega.Clear();
                 CargarPedidos();
             }
             catch (Exception ex)
             {
                 MensajeFmo.Error(ex.Message, "Mayorista");
             }
+        }
+
+        // Código de retiro del pedido seleccionado en la tabla.
+        private string CodigoRetiroSeleccionado()
+        {
+            if (dgvPedidos.CurrentRow == null || _colCodRetiro == null) return "";
+            object v = dgvPedidos.CurrentRow.Cells[_colCodRetiro].Value;
+            return v?.ToString() ?? "";
         }
 
         private void btnRefrescar_Click(object sender, EventArgs e) => CargarPedidos();

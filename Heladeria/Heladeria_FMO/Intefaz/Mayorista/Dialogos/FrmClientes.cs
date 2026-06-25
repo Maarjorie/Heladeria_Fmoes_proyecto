@@ -20,13 +20,15 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
         private readonly Guna2TextBox txtEncargado = new();
         private readonly Guna2TextBox txtCorreo = new();
         private readonly Guna2TextBox txtDireccion = new();
+        private readonly Guna2TextBox txtDescuento = new();
         private readonly Guna2Button btnNuevo = new();
         private readonly Guna2Button btnGuardar = new();
         private readonly Guna2Button btnDesactivar = new();
+        private readonly Guna2Button btnHistorial = new();
 
         private int _idSeleccionado;
         private bool _activoSeleccionado;
-        private string _cId, _cNombre, _cNit, _cTel, _cEncargado, _cCorreo, _cActivo;
+        private string _cId, _cNombre, _cNit, _cTel, _cEncargado, _cCorreo, _cActivo, _cDescuento, _cDireccion;
 
         public FrmClientes()
         {
@@ -86,6 +88,16 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
             var lblDireccion = Caption("Dirección", x, 324);
             Input(txtDireccion, x, 346, 388);
 
+            var lblDescuento = Caption("Descuento (%)", x, 388);
+            Input(txtDescuento, x, 410, 185);
+            txtDescuento.PlaceholderText = "0";
+
+            btnHistorial.Text = "Ver historial";
+            EstilosFmo.BotonContorno(btnHistorial);
+            btnHistorial.Location = new Point(x + 203, 410);
+            btnHistorial.Size = new Size(185, 34);
+            btnHistorial.Click += btnHistorial_Click;
+
             btnGuardar.Text = "Guardar";
             EstilosFmo.BotonPrimario(btnGuardar);
             btnGuardar.Location = new Point(x, 440);
@@ -104,6 +116,7 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
                 titulo, btnCerrar, dgv, btnNuevo,
                 lblNombre, txtNombre, lblNit, txtNit, lblTel, txtTelefono,
                 lblEncargado, txtEncargado, lblCorreo, txtCorreo, lblDireccion, txtDireccion,
+                lblDescuento, txtDescuento, btnHistorial,
                 btnGuardar, btnDesactivar
             });
         }
@@ -140,6 +153,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
                 _cEncargado = EstilosFmo.ColumnaPorCandidatos(tabla, "encargado");
                 _cCorreo = EstilosFmo.ColumnaPorCandidatos(tabla, "correo");
                 _cActivo = EstilosFmo.ColumnaPorCandidatos(tabla, "activo", "estado");
+                _cDescuento = EstilosFmo.ColumnaPorCandidatos(tabla, "descuento_porcentaje", "descuento");
+                _cDireccion = EstilosFmo.ColumnaPorCandidatos(tabla, "direccion");
 
                 var cols = new System.Collections.Generic.List<(string, string)>();
                 void Add(string c, string h) { if (c != null) cols.Add((c, h)); }
@@ -170,8 +185,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
             txtTelefono.Text = Celda(_cTel);
             txtEncargado.Text = Celda(_cEncargado);
             txtCorreo.Text = Celda(_cCorreo);
-            // La dirección no viene en el listado; se conserva en blanco al editar.
-            txtDireccion.Text = "";
+            txtDireccion.Text = Celda(_cDireccion);
+            txtDescuento.Text = Celda(_cDescuento);
             _activoSeleccionado = ParseActivo(_cActivo);
             ActualizarBotonEstado();
         }
@@ -211,7 +226,7 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
         {
             _idSeleccionado = 0;
             _activoSeleccionado = false;
-            foreach (var t in new[] { txtNombre, txtNit, txtTelefono, txtEncargado, txtCorreo, txtDireccion })
+            foreach (var t in new[] { txtNombre, txtNit, txtTelefono, txtEncargado, txtCorreo, txtDireccion, txtDescuento })
                 t.Clear();
             ActualizarBotonEstado();
             txtNombre.Focus();
@@ -220,6 +235,15 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
         // ───────────────────────── Acciones ─────────────────────────
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            decimal descuento = 0m;
+            string descTexto = (txtDescuento.Text ?? "").Trim().Replace(",", ".");
+            if (descTexto.Length > 0 &&
+                (!decimal.TryParse(descTexto, System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out descuento) || descuento < 0 || descuento > 100))
+            {
+                MensajeFmo.Advertencia("El descuento debe ser un porcentaje entre 0 y 100.", "Clientes");
+                return;
+            }
+
             var cliente = new Cliente_mayorista
             {
                 IdCliente = _idSeleccionado,
@@ -228,7 +252,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
                 Encargado = txtEncargado.Text.Trim(),
                 Telefono = txtTelefono.Text.Trim(),
                 Correo = txtCorreo.Text.Trim(),
-                Direccion = txtDireccion.Text.Trim()
+                Direccion = txtDireccion.Text.Trim(),
+                DescuentoPorcentaje = descuento
             };
 
             try
@@ -271,6 +296,18 @@ namespace Heladeria_FMO.Intefaz.Mayorista.Dialogos
             {
                 MensajeFmo.Error(ex.Message, "Clientes");
             }
+        }
+
+        private void btnHistorial_Click(object sender, EventArgs e)
+        {
+            if (_idSeleccionado <= 0)
+            {
+                MensajeFmo.Info("Selecciona un cliente de la lista.", "Clientes");
+                return;
+            }
+
+            using var frm = new FrmHistorialCliente(_idSeleccionado, txtNombre.Text);
+            frm.ShowDialog(this);
         }
     }
 }
