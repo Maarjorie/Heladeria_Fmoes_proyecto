@@ -1,7 +1,6 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 using Heladeria_FMO.Servicio;
 using Heladeria_FMO.Utileria;
 
@@ -10,90 +9,32 @@ namespace Heladeria_FMO.Intefaz
     // Se muestra cuando el usuario inició sesión con la contraseña temporal
     // de recuperación: lo obliga a fijar una contraseña nueva permanente
     // antes de entrar al sistema.
-    public class FrmEstablecerContrasena : Form
+    public partial class FrmEstablecerContrasena : Form
     {
         private readonly int _idUsuario;
-        private Guna2TextBox txtNueva;
-        private Guna2TextBox txtConfirmar;
-        private Guna2Button btnGuardar;
 
         public FrmEstablecerContrasena(int idUsuario)
         {
             _idUsuario = idUsuario;
-            ConstruirInterfaz();
+            InitializeComponent();
+            AplicarTema();
         }
 
-        private void ConstruirInterfaz()
+        // El Diseñador maneja el layout; aquí se aplica el tema oscuro de la app.
+        private void AplicarTema()
         {
-            Text = "Crear nueva contraseña";
-            StartPosition = FormStartPosition.CenterParent;
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            ControlBox = false; // no puede cerrarlo sin fijar la contraseña
-            ClientSize = new Size(420, 280);
             BackColor = EstilosFmo.Fondo;
-
-            var tarjeta = new Guna2Panel
-            {
-                Size = new Size(380, 240),
-                Location = new Point(20, 20)
-            };
             EstilosFmo.Tarjeta(tarjeta);
 
-            var titulo = new Guna2HtmlLabel
-            {
-                Text = "Crea tu nueva contraseña",
-                Location = new Point(20, 18),
-                Size = new Size(340, 26),
-                Font = EstilosFmo.Fuente(13F, FontStyle.Bold),
-                ForeColor = EstilosFmo.TextoFuerte,
-                BackColor = Color.Transparent
-            };
+            titulo.Font = EstilosFmo.Fuente(13F, FontStyle.Bold);
+            titulo.ForeColor = EstilosFmo.TextoFuerte;
 
-            var instrucciones = new Guna2HtmlLabel
-            {
-                Text = "Ingresaste con una contraseña temporal. Define una\ncontraseña nueva para tu cuenta.",
-                Location = new Point(20, 48),
-                Size = new Size(340, 40),
-                Font = EstilosFmo.Fuente(9F),
-                ForeColor = EstilosFmo.TextoTenue,
-                BackColor = Color.Transparent
-            };
+            instrucciones.Font = EstilosFmo.Fuente(9F);
+            instrucciones.ForeColor = EstilosFmo.TextoTenue;
 
-            txtNueva = new Guna2TextBox
-            {
-                PlaceholderText = "Nueva contraseña",
-                PasswordChar = '*',
-                Location = new Point(20, 96),
-                Size = new Size(340, 40)
-            };
             EstilosFmo.CajaTexto(txtNueva);
-
-            txtConfirmar = new Guna2TextBox
-            {
-                PlaceholderText = "Confirmar contraseña",
-                PasswordChar = '*',
-                Location = new Point(20, 146),
-                Size = new Size(340, 40)
-            };
             EstilosFmo.CajaTexto(txtConfirmar);
-
-            btnGuardar = new Guna2Button
-            {
-                Text = "Guardar y continuar",
-                Location = new Point(20, 200),
-                Size = new Size(340, 42)
-            };
             EstilosFmo.BotonPrimario(btnGuardar);
-            btnGuardar.Click += BtnGuardar_Click;
-
-            tarjeta.Controls.Add(titulo);
-            tarjeta.Controls.Add(instrucciones);
-            tarjeta.Controls.Add(txtNueva);
-            tarjeta.Controls.Add(txtConfirmar);
-            tarjeta.Controls.Add(btnGuardar);
-            Controls.Add(tarjeta);
         }
 
         private void BtnGuardar_Click(object sender, EventArgs e)
