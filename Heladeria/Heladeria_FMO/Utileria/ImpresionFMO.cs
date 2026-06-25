@@ -84,6 +84,15 @@ namespace Heladeria_FMO.Utileria
             return new Bitmap(flujo);
         }
 
+        public static string GuardarCodigoBarras(string codigoBarras, string nombreProducto = null)
+        {
+            using Bitmap bitmap = GenerarCodigoBarras(codigoBarras);
+            string nombreArchivo = string.IsNullOrWhiteSpace(nombreProducto)
+                ? codigoBarras
+                : $"{nombreProducto}_{codigoBarras}";
+            return AlmacenImagenes.GuardarBitmap(bitmap, AlmacenImagenes.CodigosBarras, nombreArchivo);
+        }
+
         
         public static void ActivarEscaner(
             System.Windows.Forms.TextBox txtEscaner,

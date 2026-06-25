@@ -195,9 +195,10 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
             if (_cacheImagenes.TryGetValue(ruta, out var img)) return img;
             try
             {
-                if (System.IO.File.Exists(ruta))
+                string absoluta = AlmacenImagenes.Resolver(ruta);
+                if (absoluta != null)
                 {
-                    using var bmp = new Bitmap(ruta);
+                    using var bmp = new Bitmap(absoluta);
                     img = new Bitmap(bmp);
                     _cacheImagenes[ruta] = img;
                     return img;

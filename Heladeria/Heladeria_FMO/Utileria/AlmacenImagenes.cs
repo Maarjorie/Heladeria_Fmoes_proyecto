@@ -1,5 +1,8 @@
 using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 
 namespace Heladeria_FMO.Utileria
 {
@@ -11,6 +14,8 @@ namespace Heladeria_FMO.Utileria
     {
         // Subcarpetas estándar.
         public const string Empleados = "Imagenes/Empleados";
+        public const string Productos = "Imagenes/Productos";
+        public const string CodigosBarras = "Imagenes/CodigosBarras";
 
         // Carpeta raíz: junto al .exe de la aplicación.
         private static string Raiz => AppDomain.CurrentDomain.BaseDirectory;
@@ -36,6 +41,26 @@ namespace Heladeria_FMO.Utileria
             return Path.Combine(subcarpeta, nombreUnico).Replace('\\', '/');
         }
 
+        // Guarda una imagen generada por el sistema en una subcarpeta interna y
+        // devuelve la ruta relativa. Si se proporciona un nombre base, se reutiliza.
+        public static string GuardarBitmap(Bitmap imagen, string subcarpeta, string nombreBase)
+        {
+            if (imagen == null) return "";
+
+            string destinoDir = Path.Combine(Raiz, subcarpeta);
+            Directory.CreateDirectory(destinoDir);
+
+            string nombreLimpio = LimpiarNombreArchivo(nombreBase);
+            if (string.IsNullOrWhiteSpace(nombreLimpio))
+                nombreLimpio = Guid.NewGuid().ToString("N");
+
+            string nombreArchivo = nombreLimpio + ".png";
+            string destino = Path.Combine(destinoDir, nombreArchivo);
+            imagen.Save(destino, ImageFormat.Png);
+
+            return Path.Combine(subcarpeta, nombreArchivo).Replace('\\', '/');
+        }
+
         // Convierte una ruta guardada (relativa o absoluta) en una ruta absoluta
         // existente lista para abrir. Devuelve null si el archivo no existe.
         public static string Resolver(string rutaGuardada)
@@ -57,6 +82,19 @@ namespace Heladeria_FMO.Utileria
             return !string.IsNullOrWhiteSpace(ruta)
                 && Path.IsPathRooted(ruta)
                 && File.Exists(ruta);
+        }
+
+        private static string LimpiarNombreArchivo(string nombre)
+        {
+            if (string.IsNullOrWhiteSpace(nombre)) return "";
+
+            char[] invalidos = Path.GetInvalidFileNameChars();
+            string limpio = new string(nombre
+                .Trim()
+                .Select(c => invalidos.Contains(c) ? '_' : c)
+                .ToArray());
+
+            return limpio.Length > 80 ? limpio.Substring(0, 80) : limpio;
         }
     }
 }
