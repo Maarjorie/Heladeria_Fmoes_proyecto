@@ -199,11 +199,13 @@ namespace Heladeria_FMO.Intefaz.Vendedores.Dialogos
         }
 
         // Carga la imagen en el preview sin bloquear el archivo en disco.
+        // Acepta tanto rutas relativas (guardadas) como absolutas (recién elegidas).
         private void CargarPreviewFoto(string ruta)
         {
             picFoto.Image?.Dispose();
-            if (!string.IsNullOrWhiteSpace(ruta) && System.IO.File.Exists(ruta))
-                using (var bmp = new Bitmap(ruta)) picFoto.Image = new Bitmap(bmp);
+            string absoluta = AlmacenImagenes.Resolver(ruta);
+            if (absoluta != null)
+                using (var bmp = new Bitmap(absoluta)) picFoto.Image = new Bitmap(bmp);
             else
                 picFoto.Image = null;
         }
@@ -225,6 +227,12 @@ namespace Heladeria_FMO.Intefaz.Vendedores.Dialogos
         // ───────────────────────── Acciones ─────────────────────────
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            // Si el usuario eligió una imagen nueva (ruta absoluta externa), se
+            // copia al almacén interno y se persiste la ruta relativa resultante.
+            string fotoGuardar = _fotoRuta ?? "";
+            if (AlmacenImagenes.EsArchivoExterno(_fotoRuta))
+                fotoGuardar = AlmacenImagenes.Guardar(_fotoRuta, AlmacenImagenes.Empleados);
+
             var vendedor = new Vendedor
             {
                 IdVendedor = _idSeleccionado,
@@ -233,7 +241,7 @@ namespace Heladeria_FMO.Intefaz.Vendedores.Dialogos
                 Dui = txtDui.Text.Trim(),
                 Telefono = txtTelefono.Text.Trim(),
                 Direccion = txtDireccion.Text.Trim(),
-                Fotografia = _fotoRuta ?? ""
+                Fotografia = fotoGuardar
             };
 
             try

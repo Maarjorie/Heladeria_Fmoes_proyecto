@@ -88,11 +88,11 @@
             flowLayoutPanel1.Controls.Add(guna2Panel3);
             flowLayoutPanel1.Controls.Add(guna2Panel5);
             flowLayoutPanel1.Controls.Add(guna2Panel7);
-            flowLayoutPanel1.Controls.Add(guna2Panel2);
-            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.AutoScroll = true;
+            flowLayoutPanel1.Dock = DockStyle.Top;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1707, 686);
+            flowLayoutPanel1.Size = new Size(1707, 380);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // guna2Panel1
@@ -311,10 +311,12 @@
             // 
             guna2Panel2.Controls.Add(ucTarjetas_de_Inicio1);
             guna2Panel2.CustomizableEdges = customizableEdges17;
-            guna2Panel2.Location = new Point(3, 189);
+            guna2Panel2.Dock = DockStyle.Fill;
+            guna2Panel2.Location = new Point(0, 380);
             guna2Panel2.Name = "guna2Panel2";
+            guna2Panel2.Padding = new Padding(3);
             guna2Panel2.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            guna2Panel2.Size = new Size(840, 494);
+            guna2Panel2.Size = new Size(1707, 306);
             guna2Panel2.TabIndex = 4;
             // 
             // ucTarjetas_de_Inicio1
@@ -329,6 +331,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(guna2Panel2);
             Controls.Add(flowLayoutPanel1);
             Name = "ucInicio";
             Size = new Size(1707, 686);

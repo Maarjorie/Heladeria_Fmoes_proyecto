@@ -40,13 +40,6 @@ namespace Heladeria_FMO.Intefaz.ucMenuInicio
             _lblVentasRuta = AgregarTarjetaKpi("Ventas por ruta (hoy)", EstilosFmo.Arandano);
             _lblVentasMayoristas = AgregarTarjetaKpi("Ventas mayoristas (hoy)", EstilosFmo.Fresa);
             _lblProductoTop = AgregarTarjetaKpi("Producto top (hoy)", EstilosFmo.TextoFuerte);
-
-            // Forzar que "Ventas recientes" empiece en una fila propia, pegado al
-            // margen izquierdo (al par del sidebar), sin importar cómo envuelvan
-            // las tarjetas KPI según el ancho de la ventana.
-            int idx = flowLayoutPanel1.Controls.IndexOf(guna2Panel2);
-            if (idx > 0)
-                flowLayoutPanel1.SetFlowBreak(flowLayoutPanel1.Controls[idx - 1], true);
         }
 
         private Guna2HtmlLabel AgregarTarjetaKpi(string caption, Color acento)
@@ -85,8 +78,6 @@ namespace Heladeria_FMO.Intefaz.ucMenuInicio
             card.Controls.Add(lblVal);
 
             flowLayoutPanel1.Controls.Add(card);
-            // Mantener "Ventas recientes" (guna2Panel2) al final del flujo.
-            flowLayoutPanel1.Controls.SetChildIndex(card, flowLayoutPanel1.Controls.IndexOf(guna2Panel2));
             return lblVal;
         }
 
