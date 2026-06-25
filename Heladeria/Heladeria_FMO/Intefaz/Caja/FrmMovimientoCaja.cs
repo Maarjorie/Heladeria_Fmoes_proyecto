@@ -2,7 +2,6 @@ using System;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 using Heladeria_FMO.Servicio;
 using Heladeria_FMO.Utileria;
 
@@ -10,85 +9,35 @@ namespace Heladeria_FMO.Intefaz.Caja
 {
     // Registra un gasto (egreso) o ingreso extraordinario contra la caja
     // abierta en sesión. Usa CajaServicio.RegistrarMovimiento.
-    public class FrmMovimientoCaja : Form
+    public partial class FrmMovimientoCaja : Form
     {
-        private Guna2ComboBox cboTipo;
-        private Guna2TextBox txtConcepto;
-        private Guna2TextBox txtMonto;
-        private Guna2Button btnGuardar;
-
         public FrmMovimientoCaja()
         {
-            ConstruirInterfaz();
+            InitializeComponent();
+            AplicarTema();
+            cboTipo.SelectedIndex = 1; // por defecto egreso (gasto)
         }
 
-        private void ConstruirInterfaz()
+        // El Diseñador maneja el layout; aquí se aplica el tema oscuro de la app.
+        private void AplicarTema()
         {
-            Text = "Movimiento de caja";
-            StartPosition = FormStartPosition.CenterParent;
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            ClientSize = new Size(420, 360);
             BackColor = EstilosFmo.Fondo;
-
-            var tarjeta = new Guna2Panel { Size = new Size(380, 320), Location = new Point(20, 20) };
             EstilosFmo.Tarjeta(tarjeta);
 
-            var titulo = new Guna2HtmlLabel
-            {
-                Text = "Registrar movimiento",
-                Location = new Point(20, 18),
-                Size = new Size(340, 26),
-                Font = EstilosFmo.Fuente(13F, FontStyle.Bold),
-                ForeColor = EstilosFmo.TextoFuerte,
-                BackColor = Color.Transparent
-            };
+            titulo.Font = EstilosFmo.Fuente(13F, FontStyle.Bold);
+            titulo.ForeColor = EstilosFmo.TextoFuerte;
 
-            var lblTipo = Etiqueta("Tipo", new Point(20, 56));
-            cboTipo = new Guna2ComboBox { Location = new Point(20, 80), Size = new Size(340, 36) };
+            foreach (var lbl in new[] { lblTipo, lblConcepto, lblMonto })
+            {
+                lbl.Font = EstilosFmo.Fuente(9F);
+                lbl.ForeColor = EstilosFmo.TextoTenue;
+            }
+
             EstilosFmo.Combo(cboTipo);
-            cboTipo.Items.AddRange(new object[] { "Ingreso", "Egreso" });
-            cboTipo.SelectedIndex = 1; // por defecto egreso (gasto)
-
-            var lblConcepto = Etiqueta("Concepto", new Point(20, 124));
-            txtConcepto = new Guna2TextBox
-            {
-                PlaceholderText = "Ej. compra de hielo",
-                Location = new Point(20, 148),
-                Size = new Size(340, 36)
-            };
             EstilosFmo.CajaTexto(txtConcepto);
-
-            var lblMonto = Etiqueta("Monto ($)", new Point(20, 192));
-            txtMonto = new Guna2TextBox
-            {
-                PlaceholderText = "0.00",
-                Location = new Point(20, 216),
-                Size = new Size(340, 36)
-            };
             EstilosFmo.CajaTexto(txtMonto);
-
-            btnGuardar = new Guna2Button { Text = "Guardar", Location = new Point(20, 268), Size = new Size(340, 40) };
             EstilosFmo.BotonPrimario(btnGuardar);
-            btnGuardar.Click += BtnGuardar_Click;
-
-            tarjeta.Controls.AddRange(new Control[]
-            {
-                titulo, lblTipo, cboTipo, lblConcepto, txtConcepto, lblMonto, txtMonto, btnGuardar
-            });
-            Controls.Add(tarjeta);
         }
-
-        private Guna2HtmlLabel Etiqueta(string texto, Point ubicacion) => new()
-        {
-            Text = texto,
-            Location = ubicacion,
-            Size = new Size(200, 20),
-            Font = EstilosFmo.Fuente(9F),
-            ForeColor = EstilosFmo.TextoTenue,
-            BackColor = Color.Transparent
-        };
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {

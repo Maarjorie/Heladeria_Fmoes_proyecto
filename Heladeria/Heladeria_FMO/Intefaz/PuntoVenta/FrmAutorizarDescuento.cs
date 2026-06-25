@@ -2,7 +2,6 @@ using System;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 using Heladeria_FMO.Modelos;
 using Heladeria_FMO.Servicio;
 using Heladeria_FMO.Utileria;
@@ -12,15 +11,9 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
     // Autoriza un descuento en una venta de sucursal exigiendo las credenciales
     // de un supervisor o administrador EN EL MOMENTO (no es una cola de
     // aprobación). Calcula el monto del descuento sobre el subtotal recibido.
-    public class FrmAutorizarDescuento : Form
+    public partial class FrmAutorizarDescuento : Form
     {
         private readonly decimal _subtotal;
-
-        private Guna2TextBox txtUsuario;
-        private Guna2TextBox txtContrasena;
-        private Guna2ComboBox cboTipo;
-        private Guna2TextBox txtValor;
-        private Guna2Button btnAutorizar;
 
         // Resultados (válidos solo si DialogResult == OK).
         public decimal DescuentoMonto { get; private set; }
@@ -29,75 +22,31 @@ namespace Heladeria_FMO.Intefaz.PuntoVenta
         public FrmAutorizarDescuento(decimal subtotal)
         {
             _subtotal = subtotal;
-            ConstruirInterfaz();
+            InitializeComponent();
+            AplicarTema();
+            cboTipo.SelectedIndex = 0;
         }
 
-        private void ConstruirInterfaz()
+        // El Diseñador maneja el layout; aquí se aplica el tema oscuro de la app.
+        private void AplicarTema()
         {
-            Text = "Autorizar descuento";
-            StartPosition = FormStartPosition.CenterParent;
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            ClientSize = new Size(420, 400);
             BackColor = EstilosFmo.Fondo;
-
-            var tarjeta = new Guna2Panel { Size = new Size(380, 360), Location = new Point(20, 20) };
             EstilosFmo.Tarjeta(tarjeta);
 
-            var titulo = new Guna2HtmlLabel
+            titulo.Font = EstilosFmo.Fuente(12.5F, FontStyle.Bold);
+            titulo.ForeColor = EstilosFmo.TextoFuerte;
+
+            foreach (var lbl in new[] { lblUsuario, lblContra, lblTipo, lblValor })
             {
-                Text = "Descuento (requiere supervisor)",
-                Location = new Point(20, 16),
-                Size = new Size(340, 24),
-                Font = EstilosFmo.Fuente(12.5F, FontStyle.Bold),
-                ForeColor = EstilosFmo.TextoFuerte,
-                BackColor = Color.Transparent
-            };
+                lbl.Font = EstilosFmo.Fuente(9F);
+                lbl.ForeColor = EstilosFmo.TextoTenue;
+            }
 
-            var lblUsuario = Etiqueta("Usuario supervisor", new Point(20, 50));
-            txtUsuario = Caja("Usuario", new Point(20, 74));
-
-            var lblContra = Etiqueta("Contraseña", new Point(20, 118));
-            txtContrasena = Caja("Contraseña", new Point(20, 142));
-            txtContrasena.PasswordChar = '*';
-
-            var lblTipo = Etiqueta("Tipo de descuento", new Point(20, 186));
-            cboTipo = new Guna2ComboBox { Location = new Point(20, 210), Size = new Size(340, 36) };
+            EstilosFmo.CajaTexto(txtUsuario);
+            EstilosFmo.CajaTexto(txtContrasena);
             EstilosFmo.Combo(cboTipo);
-            cboTipo.Items.AddRange(new object[] { "Monto fijo ($)", "Porcentaje (%)" });
-            cboTipo.SelectedIndex = 0;
-
-            var lblValor = Etiqueta("Valor", new Point(20, 252));
-            txtValor = Caja("0.00", new Point(20, 276));
-
-            btnAutorizar = new Guna2Button { Text = "Autorizar", Location = new Point(20, 320), Size = new Size(340, 40) };
+            EstilosFmo.CajaTexto(txtValor);
             EstilosFmo.BotonPrimario(btnAutorizar);
-            btnAutorizar.Click += BtnAutorizar_Click;
-
-            tarjeta.Controls.AddRange(new Control[]
-            {
-                titulo, lblUsuario, txtUsuario, lblContra, txtContrasena,
-                lblTipo, cboTipo, lblValor, txtValor, btnAutorizar
-            });
-            Controls.Add(tarjeta);
-        }
-
-        private Guna2HtmlLabel Etiqueta(string texto, Point ubicacion) => new()
-        {
-            Text = texto,
-            Location = ubicacion,
-            Size = new Size(220, 20),
-            Font = EstilosFmo.Fuente(9F),
-            ForeColor = EstilosFmo.TextoTenue,
-            BackColor = Color.Transparent
-        };
-
-        private Guna2TextBox Caja(string placeholder, Point ubicacion)
-        {
-            var t = new Guna2TextBox { PlaceholderText = placeholder, Location = ubicacion, Size = new Size(340, 36) };
-            EstilosFmo.CajaTexto(t);
-            return t;
         }
 
         private void BtnAutorizar_Click(object sender, EventArgs e)
