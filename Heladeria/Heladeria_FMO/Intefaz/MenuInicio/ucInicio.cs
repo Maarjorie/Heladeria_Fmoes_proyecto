@@ -111,7 +111,7 @@ namespace Heladeria_FMO.Intefaz.ucMenuInicio
             guna2HtmlLabel10.ForeColor = EstilosFmo.Mango;       // próximos a vencer
             guna2HtmlLabel13.ForeColor = EstilosFmo.Arandano;    // stock bajo
             foreach (var val in new[] { guna2HtmlLabel2, guna2HtmlLabel8, guna2HtmlLabel10, guna2HtmlLabel13 })
-                val.Font = EstilosFmo.Fuente(22F, FontStyle.Bold);
+                val.Font = EstilosFmo.Fuente(18F, FontStyle.Bold);
 
             // Ocultamos el indicador de variación (no se calcula aún) y el UC placeholder.
             guna2HtmlLabel1.Visible = false;
