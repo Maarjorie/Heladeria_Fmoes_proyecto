@@ -15,12 +15,72 @@ namespace Heladeria_FMO.Intefaz.ucMenuInicio
     {
         private Guna2DataGridView _dgvRecientes;
 
+        // Valores de las tarjetas KPI gerenciales (creadas en código).
+        private Guna2HtmlLabel _lblUtilidadBruta, _lblUtilidadNeta, _lblComisiones,
+            _lblVentasRuta, _lblVentasMayoristas, _lblProductoTop;
+
         public ucInicio()
         {
             InitializeComponent();
             AplicarTema();
+            ConstruirTarjetasGerenciales();
             ConstruirVentasRecientes();
             CargarDatos();
+        }
+
+        // Tarjetas KPI gerenciales (utilidad, comisiones, ventas por canal, etc.).
+        // Se crean en código y se insertan en el flow antes de "Ventas recientes".
+        private void ConstruirTarjetasGerenciales()
+        {
+            flowLayoutPanel1.AutoScroll = true;
+
+            _lblUtilidadBruta = AgregarTarjetaKpi("Utilidad bruta (hoy)", EstilosFmo.MentaClaro);
+            _lblUtilidadNeta = AgregarTarjetaKpi("Utilidad neta (hoy)", EstilosFmo.Menta);
+            _lblComisiones = AgregarTarjetaKpi("Comisiones (hoy)", EstilosFmo.Mango);
+            _lblVentasRuta = AgregarTarjetaKpi("Ventas por ruta (hoy)", EstilosFmo.Arandano);
+            _lblVentasMayoristas = AgregarTarjetaKpi("Ventas mayoristas (hoy)", EstilosFmo.Fresa);
+            _lblProductoTop = AgregarTarjetaKpi("Producto top (hoy)", EstilosFmo.TextoFuerte);
+        }
+
+        private Guna2HtmlLabel AgregarTarjetaKpi(string caption, Color acento)
+        {
+            var card = new Guna2CustomGradientPanel
+            {
+                Size = new Size(270, 140),
+                Margin = new Padding(8),
+                FillColor = EstilosFmo.Superficie,
+                FillColor2 = EstilosFmo.SuperficieHundida,
+                BorderColor = EstilosFmo.Borde,
+                BorderRadius = 14
+            };
+
+            var lblCap = new Guna2HtmlLabel
+            {
+                Text = caption,
+                Location = new Point(18, 20),
+                Size = new Size(234, 22),
+                Font = EstilosFmo.Fuente(9.5F, FontStyle.Bold),
+                ForeColor = EstilosFmo.TextoTenue,
+                BackColor = Color.Transparent
+            };
+
+            var lblVal = new Guna2HtmlLabel
+            {
+                Text = "—",
+                Location = new Point(18, 64),
+                Size = new Size(234, 44),
+                Font = EstilosFmo.Fuente(20F, FontStyle.Bold),
+                ForeColor = acento,
+                BackColor = Color.Transparent
+            };
+
+            card.Controls.Add(lblCap);
+            card.Controls.Add(lblVal);
+
+            flowLayoutPanel1.Controls.Add(card);
+            // Mantener "Ventas recientes" (guna2Panel2) al final del flujo.
+            flowLayoutPanel1.Controls.SetChildIndex(card, flowLayoutPanel1.Controls.IndexOf(guna2Panel2));
+            return lblVal;
         }
 
         private void AplicarTema()
@@ -94,6 +154,36 @@ namespace Heladeria_FMO.Intefaz.ucMenuInicio
 
             try { guna2HtmlLabel13.Text = ProductoDAO.ProductoBajoStock().Count.ToString(); }
             catch (Exception) { guna2HtmlLabel13.Text = "—"; }
+
+            CargarIndicadoresGerenciales();
+        }
+
+        private void CargarIndicadoresGerenciales()
+        {
+            DateTime hoy = DateTime.Today;
+
+            try { _lblUtilidadBruta.Text = "$" + ReporteServicio.UtilidadBrutaDia(hoy).ToString("N2"); }
+            catch (Exception) { _lblUtilidadBruta.Text = "—"; }
+
+            try { _lblUtilidadNeta.Text = "$" + ReporteServicio.UtilidadNetaDia(hoy).ToString("N2"); }
+            catch (Exception) { _lblUtilidadNeta.Text = "—"; }
+
+            try { _lblComisiones.Text = "$" + ReporteServicio.ComisionesDia(hoy).ToString("N2"); }
+            catch (Exception) { _lblComisiones.Text = "—"; }
+
+            try { _lblVentasRuta.Text = "$" + ReporteServicio.VentasPorRutaDia(hoy).ToString("N2"); }
+            catch (Exception) { _lblVentasRuta.Text = "—"; }
+
+            try { _lblVentasMayoristas.Text = "$" + ReporteServicio.VentasMayoristasDia(hoy).ToString("N2"); }
+            catch (Exception) { _lblVentasMayoristas.Text = "—"; }
+
+            try
+            {
+                var top = ReporteServicio.ProductoTopDia(hoy);
+                _lblProductoTop.Text = top.unidades > 0 ? $"{top.nombre} ({top.unidades})" : "—";
+                _lblProductoTop.Font = EstilosFmo.Fuente(13F, FontStyle.Bold);
+            }
+            catch (Exception) { _lblProductoTop.Text = "—"; }
         }
 
         private void CargarIndicadoresVentas()
