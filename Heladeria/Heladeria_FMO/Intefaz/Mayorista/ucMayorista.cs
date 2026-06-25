@@ -16,60 +16,31 @@ namespace Heladeria_FMO.Intefaz.Mayorista
         // Nombre real de la columna que contiene el id del pedido en el DataTable.
         private string _colIdPedido;
         private string _colCodRetiro;
-        private Guna.UI2.WinForms.Guna2Button btnClientes;
-        private Guna.UI2.WinForms.Guna2TextBox txtCodigoEntrega;
 
         public ucMayorista()
         {
             InitializeComponent();
             AplicarTema();
-            CrearBotonClientes();
-            CrearControlEntrega();
-            CargarPedidos();
-        }
 
-        // Campo para validar la entrega: el cliente presenta su código de retiro
-        // (impreso/QR); se compara con el del pedido seleccionado antes de entregar.
-        private void CrearControlEntrega()
-        {
-            txtCodigoEntrega = new Guna.UI2.WinForms.Guna2TextBox
-            {
-                PlaceholderText = "Código de retiro…",
-                Anchor = AnchorStyles.Top | AnchorStyles.Right,
-                Location = new System.Drawing.Point(520, 12),
-                Size = new System.Drawing.Size(180, 42)
-            };
-            EstilosFmo.CajaTexto(txtCodigoEntrega);
-            pnlHeader.Controls.Add(txtCodigoEntrega);
-
-            // Permite escanear: el lector escribe el código y envía Enter.
+            // El lector de código de retiro escribe el código y envía Enter.
             txtCodigoEntrega.KeyDown += (s, e) =>
             {
                 if (e.KeyCode != Keys.Enter) return;
                 e.SuppressKeyPress = true;
                 IntentarEntregar(txtCodigoEntrega.Text.Trim());
             };
+
+            // Solo el administrador gestiona (alta/edición) de clientes mayoristas.
+            btnClientes.Visible = Sesion.EsAdministrador;
+
+            CargarPedidos();
         }
 
-        // Botón para abrir la gestión de clientes mayoristas (catálogo).
-        private void CrearBotonClientes()
+        // Abre la gestión de clientes mayoristas (catálogo).
+        private void btnClientes_Click(object sender, EventArgs e)
         {
-            btnClientes = new Guna.UI2.WinForms.Guna2Button
-            {
-                Text = "Clientes",
-                Anchor = AnchorStyles.Top | AnchorStyles.Right,
-                Location = new System.Drawing.Point(390, 12),
-                Size = new System.Drawing.Size(120, 42),
-                // Solo el administrador gestiona (alta/edición) de clientes mayoristas.
-                Visible = Sesion.EsAdministrador
-            };
-            EstilosFmo.BotonContorno(btnClientes);
-            btnClientes.Click += (s, e) =>
-            {
-                using var dialogo = new Dialogos.FrmClientes();
-                dialogo.ShowDialog(this.FindForm());
-            };
-            pnlHeader.Controls.Add(btnClientes);
+            using var dialogo = new Dialogos.FrmClientes();
+            dialogo.ShowDialog(this.FindForm());
         }
 
         private void AplicarTema()
@@ -86,6 +57,8 @@ namespace Heladeria_FMO.Intefaz.Mayorista
             EstilosFmo.BotonSecundario(btnConfirmar);
             EstilosFmo.BotonContorno(btnEntregar);
             EstilosFmo.BotonContorno(btnRefrescar);
+            EstilosFmo.BotonContorno(btnClientes);
+            EstilosFmo.CajaTexto(txtCodigoEntrega);
         }
 
         private void CargarPedidos()

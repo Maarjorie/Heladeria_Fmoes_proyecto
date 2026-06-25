@@ -236,11 +236,28 @@ namespace Heladeria_FMO.Intefaz.Inventario
             if (!TryDecimal(txtVenta.Text, out decimal venta) || venta <= 0) { Aviso("Precio de venta inválido (mayor que cero).", txtVenta); return null; }
             if (venta < compra) { Aviso("El precio de venta no debería ser menor que el de compra.", txtVenta); return null; }
 
+            // No se permite dar de alta un producto que ya venció o que vence hoy.
+            if (!_modoEdicion && dtpVence.Value.Date <= DateTime.Today)
+            {
+                Aviso("La fecha de vencimiento debe ser posterior a hoy.", dtpVence);
+                return null;
+            }
+
+            // Código de barras: si no se ingresa uno (p. ej. de fábrica), se genera
+            // uno interno único (prefijo EAN '2', reservado para uso interno) para
+            // que el producto siempre se pueda escanear en el punto de venta.
+            string barras = txtBarras.Text.Trim();
+            if (string.IsNullOrEmpty(barras))
+            {
+                barras = "2" + DateTime.Now.ToString("yyMMddHHmmss");
+                txtBarras.Text = barras;
+            }
+
             return new Producto
             {
                 IdProducto = _idProducto,
                 Codigo = txtCodigo.Text.Trim(),
-                CodigoBarras = txtBarras.Text.Trim(),
+                CodigoBarras = barras,
                 Nombre = txtNombre.Text.Trim(),
                 IdCategoria = idCategoria,
                 Presentacion = txtPresentacion.Text.Trim(),

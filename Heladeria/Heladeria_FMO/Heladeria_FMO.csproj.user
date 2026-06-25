@@ -8,8 +8,14 @@
     <Compile Update="Intefaz\Autorizaciones\ucAutorizaciones.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Intefaz\Caja\FrmMovimientoCaja.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Intefaz\Caja\ucCaja.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\FrmEstablecerContrasena.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Intefaz\FrmMenuPrincipal.cs">
       <SubType>Form</SubType>
@@ -47,6 +53,9 @@
     <Compile Update="Intefaz\Inventario\FrmAgregarProducto.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Intefaz\Inventario\FrmAjusteInventario.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Intefaz\Inventario\FrmProducto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +71,9 @@
     <Compile Update="Intefaz\Mayorista\Dialogos\FrmClientes.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Intefaz\Mayorista\Dialogos\FrmHistorialCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Intefaz\Mayorista\Dialogos\FrmNuevoPedido.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +85,12 @@
     </Compile>
     <Compile Update="Intefaz\MenuInicio\ucTarjetaVentas.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Intefaz\PuntoVenta\FrmAutorizarDescuento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Intefaz\PuntoVenta\FrmCobro.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Intefaz\PuntoVenta\ucPuntoVenta.cs">
       <SubType>UserControl</SubType>

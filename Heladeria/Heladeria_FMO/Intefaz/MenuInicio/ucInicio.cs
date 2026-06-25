@@ -40,13 +40,20 @@ namespace Heladeria_FMO.Intefaz.ucMenuInicio
             _lblVentasRuta = AgregarTarjetaKpi("Ventas por ruta (hoy)", EstilosFmo.Arandano);
             _lblVentasMayoristas = AgregarTarjetaKpi("Ventas mayoristas (hoy)", EstilosFmo.Fresa);
             _lblProductoTop = AgregarTarjetaKpi("Producto top (hoy)", EstilosFmo.TextoFuerte);
+
+            // Forzar que "Ventas recientes" empiece en una fila propia, pegado al
+            // margen izquierdo (al par del sidebar), sin importar cómo envuelvan
+            // las tarjetas KPI según el ancho de la ventana.
+            int idx = flowLayoutPanel1.Controls.IndexOf(guna2Panel2);
+            if (idx > 0)
+                flowLayoutPanel1.SetFlowBreak(flowLayoutPanel1.Controls[idx - 1], true);
         }
 
         private Guna2HtmlLabel AgregarTarjetaKpi(string caption, Color acento)
         {
             var card = new Guna2CustomGradientPanel
             {
-                Size = new Size(270, 140),
+                Size = new Size(200, 150),
                 Margin = new Padding(8),
                 FillColor = EstilosFmo.Superficie,
                 FillColor2 = EstilosFmo.SuperficieHundida,
@@ -57,8 +64,8 @@ namespace Heladeria_FMO.Intefaz.ucMenuInicio
             var lblCap = new Guna2HtmlLabel
             {
                 Text = caption,
-                Location = new Point(18, 20),
-                Size = new Size(234, 22),
+                Location = new Point(16, 16),
+                Size = new Size(168, 40),
                 Font = EstilosFmo.Fuente(9.5F, FontStyle.Bold),
                 ForeColor = EstilosFmo.TextoTenue,
                 BackColor = Color.Transparent
@@ -67,9 +74,9 @@ namespace Heladeria_FMO.Intefaz.ucMenuInicio
             var lblVal = new Guna2HtmlLabel
             {
                 Text = "—",
-                Location = new Point(18, 64),
-                Size = new Size(234, 44),
-                Font = EstilosFmo.Fuente(20F, FontStyle.Bold),
+                Location = new Point(16, 66),
+                Size = new Size(168, 50),
+                Font = EstilosFmo.Fuente(18F, FontStyle.Bold),
                 ForeColor = acento,
                 BackColor = Color.Transparent
             };
