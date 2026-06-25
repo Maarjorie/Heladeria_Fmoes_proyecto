@@ -214,8 +214,9 @@ namespace Heladeria_FMO.Intefaz.Inventario
         private void CargarPreview(string ruta)
         {
             picImagen.Image?.Dispose();
-            if (!string.IsNullOrWhiteSpace(ruta) && System.IO.File.Exists(ruta))
-                using (var bmp = new Bitmap(ruta)) picImagen.Image = new Bitmap(bmp);
+            string absoluta = AlmacenImagenes.Resolver(ruta);
+            if (absoluta != null)
+                using (var bmp = new Bitmap(absoluta)) picImagen.Image = new Bitmap(bmp);
             else
                 picImagen.Image = null;
         }
@@ -279,11 +280,25 @@ namespace Heladeria_FMO.Intefaz.Inventario
 
             try
             {
+                if (AlmacenImagenes.EsArchivoExterno(producto.ImagenRuta))
+                    producto.ImagenRuta = AlmacenImagenes.Guardar(producto.ImagenRuta, AlmacenImagenes.Productos);
+
                 bool ok = _modoEdicion
                     ? ProductoDAO.EditarProducto(producto)
                     : ProductoDAO.InsertarProducto(producto);
 
                 if (!ok) { MensajeFmo.Advertencia("No se guardó el producto.", "Producto"); return; }
+
+                try
+                {
+                    ImpresionFMO.GuardarCodigoBarras(producto.CodigoBarras, producto.Nombre);
+                }
+                catch (Exception ex)
+                {
+                    MensajeFmo.Advertencia(
+                        $"El producto se guardó, pero no se pudo generar la imagen del código de barras.\n{ex.Message}",
+                        "Código de barras");
+                }
 
                 MensajeFmo.Exito(_modoEdicion ? "Producto actualizado." : "Producto registrado.", "Producto");
                 DialogResult = DialogResult.OK;
