@@ -42,6 +42,7 @@
             btnEditar = new Guna.UI2.WinForms.Guna2Button();
             btnDesactivar = new Guna.UI2.WinForms.Guna2Button();
             btnPromos = new Guna.UI2.WinForms.Guna2Button();
+            btnAjustar = new Guna.UI2.WinForms.Guna2Button();
             guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             dgvProductos = new Guna.UI2.WinForms.Guna2DataGridView();
             guna2Panel1.SuspendLayout();
@@ -54,6 +55,7 @@
             guna2Panel1.Controls.Add(btnEditar);
             guna2Panel1.Controls.Add(btnDesactivar);
             guna2Panel1.Controls.Add(btnPromos);
+            guna2Panel1.Controls.Add(btnAjustar);
             guna2Panel1.Controls.Add(guna2TextBox1);
             guna2Panel1.CustomizableEdges = customizableEdges5;
             guna2Panel1.Dock = DockStyle.Top;
@@ -107,6 +109,15 @@
             btnPromos.TabIndex = 4;
             btnPromos.Text = "Promociones";
             btnPromos.Click += btnPromos_Click;
+            //
+            // btnAjustar
+            //
+            btnAjustar.Location = new Point(1042, 27);
+            btnAjustar.Name = "btnAjustar";
+            btnAjustar.Size = new Size(150, 56);
+            btnAjustar.TabIndex = 5;
+            btnAjustar.Text = "Ajustar stock";
+            btnAjustar.Click += btnAjustar_Click;
             //
             // guna2TextBox1
             // 
@@ -188,6 +199,7 @@
         private Guna.UI2.WinForms.Guna2Button btnEditar;
         private Guna.UI2.WinForms.Guna2Button btnDesactivar;
         private Guna.UI2.WinForms.Guna2Button btnPromos;
+        private Guna.UI2.WinForms.Guna2Button btnAjustar;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
         private Guna.UI2.WinForms.Guna2DataGridView dgvProductos;
     }

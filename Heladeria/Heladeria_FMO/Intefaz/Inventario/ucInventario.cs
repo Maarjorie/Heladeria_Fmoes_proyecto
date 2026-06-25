@@ -37,12 +37,28 @@ namespace Heladeria_FMO.Intefaz.Inventario
             EstilosFmo.BotonContorno(btnDesactivar);
             btnDesactivar.ForeColor = EstilosFmo.Cereza;
             EstilosFmo.BotonContorno(btnPromos);
+            EstilosFmo.BotonContorno(btnAjustar);
         }
 
         private void btnPromos_Click(object sender, EventArgs e)
         {
             using var d = new FrmPromociones();
             d.ShowDialog(this.FindForm());
+        }
+
+        private void btnAjustar_Click(object sender, EventArgs e)
+        {
+            var producto = ProductoSeleccionado();
+            if (producto == null)
+            {
+                MensajeFmo.Info("Selecciona un producto de la tabla.", "Inventario");
+                return;
+            }
+
+            using (var frm = new FrmAjusteInventario(producto))
+            {
+                frm.ShowDialog(this.FindForm());
+            }
         }
 
         private void CargarProductos()

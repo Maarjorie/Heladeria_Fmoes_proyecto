@@ -12,6 +12,36 @@ namespace Heladeria_FMO.Servicio
 {
     public static class InventarioServicio
     {
+        // ───────── Ajustes de inventario (requieren aprobación de supervisor) ─────────
+
+        // Solicita un ajuste de stock. Queda pendiente hasta que un supervisor
+        // lo apruebe. cantidad puede ser negativa (merma) o positiva (sobrante).
+        public static int SolicitarAjuste(int idProducto, int cantidad, string observacion, int idUsuario)
+        {
+            if (idProducto <= 0) throw new Exception("Producto inválido.");
+            if (cantidad == 0) throw new Exception("La cantidad del ajuste no puede ser cero.");
+            if (idUsuario <= 0) throw new Exception("No hay usuario activo.");
+
+            return Movimiento_inventarioDAO.SolicitarAjuste(idProducto, cantidad, observacion ?? "", idUsuario);
+        }
+
+        public static System.Data.DataTable ListarAjustesPendientes()
+        {
+            return Movimiento_inventarioDAO.ListarPendientes();
+        }
+
+        public static bool AprobarAjuste(int idMovimiento, int idAprobadoPor)
+        {
+            if (idAprobadoPor <= 0) throw new Exception("No se identificó al supervisor que aprueba.");
+            return Movimiento_inventarioDAO.AprobarAjuste(idMovimiento, idAprobadoPor);
+        }
+
+        public static bool RechazarAjuste(int idMovimiento, int idAprobadoPor)
+        {
+            if (idAprobadoPor <= 0) throw new Exception("No se identificó al supervisor que rechaza.");
+            return Movimiento_inventarioDAO.RechazarAjuste(idMovimiento, idAprobadoPor);
+        }
+
         //Revisa productos con stock por debajo del minimo y genera una notificacion pendiente por cada uno
         public static void DetectarBajoStock()
         {
