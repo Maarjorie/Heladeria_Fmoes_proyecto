@@ -14,5 +14,7 @@ namespace Heladeria_FMO.Servicio
         public static DataTable ProductosMasVendidos(DateTime inicio, DateTime fin) => ReporteDAO.ProductosMasVendidos(inicio, fin);
         public static DataTable ProductosDanados(DateTime inicio, DateTime fin) => ReporteDAO.ProductosDanados(inicio, fin);
         public static DataTable ComisionesVendedores(DateTime inicio, DateTime fin) => ReporteDAO.ComisionesVendedores(inicio, fin);
+        public static DataTable RankingVendedores(DateTime inicio, DateTime fin) => ReporteDAO.RankingVendedores(inicio, fin);
+        public static DataTable RentabilidadRuta(DateTime inicio, DateTime fin) => ReporteDAO.RentabilidadRuta(inicio, fin);
     }
 }

@@ -42,5 +42,7 @@ namespace Heladeria_FMO.Acceso_a_datos_db
         public static DataTable ProductosMasVendidos(DateTime inicio, DateTime fin) => EjecutarRango("p_reporte_productos_mas_vendidos", inicio, fin);
         public static DataTable ProductosDanados(DateTime inicio, DateTime fin) => EjecutarRango("p_reporte_productos_danados", inicio, fin);
         public static DataTable ComisionesVendedores(DateTime inicio, DateTime fin) => EjecutarRango("p_reporte_comisiones_vendedores", inicio, fin);
+        public static DataTable RankingVendedores(DateTime inicio, DateTime fin) => EjecutarRango("p_reporte_ranking_vendedores", inicio, fin);
+        public static DataTable RentabilidadRuta(DateTime inicio, DateTime fin) => EjecutarRango("p_reporte_rentabilidad_ruta", inicio, fin);
     }
 }
