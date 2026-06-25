@@ -10,6 +10,29 @@ namespace Heladeria_FMO.Acceso_a_datos_db
 {
     public static class Pedido_mayoristaDAO
     {
+        // Recupera los datos del comprobante de retiro (cliente, correo, código y
+        // total) de un pedido para enviarlo por correo. Devuelve null si no existe.
+        public static Comprobante_mayorista ObtenerComprobante(int idPedido)
+        {
+            using MySqlConnection conn = Conexion.ConexionDb();
+            conn.Open();
+
+            using MySqlCommand cmd = new MySqlCommand("CALL p_obtener_pedido_comprobante(@p_id_pedido)", conn);
+            cmd.Parameters.AddWithValue("@p_id_pedido", idPedido);
+
+            using MySqlDataReader reader = cmd.ExecuteReader();
+            if (!reader.Read()) return null;
+
+            return new Comprobante_mayorista
+            {
+                CodigoPedido = reader.IsDBNull(0) ? "" : reader.GetString(0),
+                CodigoRetiro = reader.IsDBNull(1) ? "" : reader.GetString(1),
+                Total = reader.IsDBNull(2) ? 0m : reader.GetDecimal(2),
+                Cliente = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                Correo = reader.IsDBNull(4) ? "" : reader.GetString(4)
+            };
+        }
+
         //Crea en la tabla pedido mayorista obteniendo el id del cliente para referenciar el pedido
         public static int CrearPedidoMayorista(Pedido_mayorista p)
         {

@@ -56,6 +56,39 @@ namespace Heladeria_FMO.Utileria
             </table>";
         }
 
+        // Comprobante de retiro para un cliente mayorista, con el código y el QR
+        // embebido (referenciado por cid). El cliente lo presenta al retirar.
+        public static string ComprobanteMayorista(string cliente, string codigoPedido,
+            string codigoRetiro, decimal total, string cidQr)
+        {
+            return $@"
+            <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background-color:#f1efe8; padding:24px;"">
+              <tr><td align=""center"">
+                <table width=""420"" cellpadding=""0"" cellspacing=""0"" style=""background-color:#ffffff; border-radius:8px; font-family:Arial,sans-serif;"">
+                  <tr><td style=""background-color:#e6f1fb; color:#0c447c; padding:16px 20px; font-size:16px; font-weight:bold;"">
+                    Helados FMO · Comprobante de retiro
+                  </td></tr>
+                  <tr><td style=""padding:20px;"">
+                    <p style=""font-size:15px; color:#2c2c2a; margin:0 0 12px;"">Hola <b>{cliente}</b>, tu pedido está confirmado y listo para retiro.</p>
+                    <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""font-size:14px; border-collapse:collapse;"">
+                      <tr><td style=""color:#888780; padding:6px 0; border-bottom:1px solid #eeeeee;"">Pedido</td>
+                          <td style=""text-align:right; padding:6px 0; border-bottom:1px solid #eeeeee; font-weight:bold;"">{codigoPedido}</td></tr>
+                      <tr><td style=""color:#888780; padding:6px 0; border-bottom:1px solid #eeeeee;"">Código de retiro</td>
+                          <td style=""text-align:right; padding:6px 0; border-bottom:1px solid #eeeeee; font-weight:bold;"">{codigoRetiro}</td></tr>
+                      <tr><td style=""color:#888780; padding:6px 0; border-bottom:1px solid #eeeeee;"">Total</td>
+                          <td style=""text-align:right; padding:6px 0; border-bottom:1px solid #eeeeee; font-weight:bold;"">${total:N2}</td></tr>
+                    </table>
+                    <div style=""text-align:center; margin:20px 0 8px;"">
+                      <img src=""cid:{cidQr}"" alt=""Código QR de retiro"" width=""180"" height=""180"" style=""border:1px solid #eeeeee; border-radius:8px;"" />
+                      <p style=""font-size:12px; color:#888780; margin:8px 0 0;"">Presenta este QR (o el código de retiro) al recoger tu pedido.</p>
+                    </div>
+                    <p style=""font-size:12px; color:#888780; margin-top:16px;"">Este es un mensaje automático del sistema de gestión.</p>
+                  </td></tr>
+                </table>
+              </td></tr>
+            </table>";
+        }
+
         private static (string fondo, string texto) ObtenerColores(TipoAlerta tipo) //metodo para asignar los colores dependiendo la alerta
         {
             switch (tipo)
