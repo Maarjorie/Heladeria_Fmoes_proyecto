@@ -29,7 +29,13 @@ namespace Heladeria_FMO.Servicio
             if (pedido.IdPedido <= 0)
                 throw new Exception("Debe seleccionar un pedido.");
 
-            return Pedido_mayoristaDAO.ConfirmarPedidoMayorista(pedido);
+            bool ok = Pedido_mayoristaDAO.ConfirmarPedidoMayorista(pedido);
+
+            // Pedido confirmado = listo para retiro: se notifica con su código.
+            if (ok)
+                NotificacionServicio.NotificarPedidoListo(pedido.IdPedido, pedido.CodigoRetiro);
+
+            return ok;
         }
 
         //Mantiene que no pase valores negativos o 0 al metodo de la clase statica pedido_mayorista

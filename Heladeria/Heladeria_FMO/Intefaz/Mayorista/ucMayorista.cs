@@ -107,7 +107,11 @@ namespace Heladeria_FMO.Intefaz.Mayorista
 
             try
             {
-                bool ok = PedidoMayoristaServicio.ConfirmarPedido(new Pedido_mayorista { IdPedido = id });
+                bool ok = PedidoMayoristaServicio.ConfirmarPedido(new Pedido_mayorista
+                {
+                    IdPedido = id,
+                    CodigoRetiro = CodigoRetiroSeleccionado()
+                });
                 if (ok) MensajeFmo.Exito("Pedido confirmado.", "Mayorista"); else MensajeFmo.Advertencia("No se pudo confirmar el pedido.", "Mayorista");
                 CargarPedidos();
             }
