@@ -36,7 +36,7 @@ namespace Heladeria_FMO.Intefaz
             tarjeta.Controls.Add(btnCancelar);
             tarjeta.Location = new System.Drawing.Point(20, 20);
             tarjeta.Name = "tarjeta";
-            tarjeta.Size = new System.Drawing.Size(380, 220);
+            tarjeta.Size = new System.Drawing.Size(380, 256);
             tarjeta.TabIndex = 0;
             //
             // titulo
@@ -87,7 +87,7 @@ namespace Heladeria_FMO.Intefaz
             //
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(420, 260);
+            ClientSize = new System.Drawing.Size(420, 296);
             Controls.Add(tarjeta);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             MaximizeBox = false;
