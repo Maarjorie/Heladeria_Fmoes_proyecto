@@ -84,5 +84,15 @@ namespace Heladeria_FMO.Intefaz.Caja
                 MensajeFmo.Error(ex.Message, "Caja");
             }
         }
+
+        private void txtMonto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.SoloDecimal(e, txtMonto);
+        }
+
+        private void txtMonto_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -222,5 +222,15 @@ namespace Heladeria_FMO.Intefaz.Autorizaciones
                 MensajeFmo.Error(ex.Message, "Usuarios");
             }
         }
+
+        private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.SoloLetras(e);
+        }
+
+        private void txtCorreo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.CorreoValido(txtCorreo.Text);
+        }
     }
 }

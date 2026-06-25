@@ -17,6 +17,16 @@ namespace Heladeria_FMO.Intefaz.Caja
 
         private void InitializeComponent()
         {
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             tarjeta = new Guna.UI2.WinForms.Guna2Panel();
             titulo = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblTipo = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -28,9 +38,9 @@ namespace Heladeria_FMO.Intefaz.Caja
             btnGuardar = new Guna.UI2.WinForms.Guna2Button();
             tarjeta.SuspendLayout();
             SuspendLayout();
-            //
+            // 
             // tarjeta
-            //
+            // 
             tarjeta.Controls.Add(titulo);
             tarjeta.Controls.Add(lblTipo);
             tarjeta.Controls.Add(cboTipo);
@@ -39,93 +49,121 @@ namespace Heladeria_FMO.Intefaz.Caja
             tarjeta.Controls.Add(lblMonto);
             tarjeta.Controls.Add(txtMonto);
             tarjeta.Controls.Add(btnGuardar);
-            tarjeta.Location = new System.Drawing.Point(20, 20);
+            tarjeta.CustomizableEdges = customizableEdges9;
+            tarjeta.Location = new Point(20, 20);
             tarjeta.Name = "tarjeta";
-            tarjeta.Size = new System.Drawing.Size(380, 320);
+            tarjeta.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            tarjeta.Size = new Size(380, 320);
             tarjeta.TabIndex = 0;
-            //
+            // 
             // titulo
-            //
-            titulo.BackColor = System.Drawing.Color.Transparent;
-            titulo.Location = new System.Drawing.Point(20, 18);
+            // 
+            titulo.BackColor = Color.Transparent;
+            titulo.Location = new Point(20, 18);
             titulo.Name = "titulo";
-            titulo.Size = new System.Drawing.Size(340, 26);
+            titulo.Size = new Size(117, 17);
             titulo.TabIndex = 0;
             titulo.Text = "Registrar movimiento";
-            //
+            // 
             // lblTipo
-            //
-            lblTipo.BackColor = System.Drawing.Color.Transparent;
-            lblTipo.Location = new System.Drawing.Point(20, 56);
+            // 
+            lblTipo.BackColor = Color.Transparent;
+            lblTipo.Location = new Point(20, 56);
             lblTipo.Name = "lblTipo";
-            lblTipo.Size = new System.Drawing.Size(200, 20);
+            lblTipo.Size = new Size(27, 17);
             lblTipo.TabIndex = 1;
             lblTipo.Text = "Tipo";
-            //
+            // 
             // cboTipo
-            //
-            cboTipo.Location = new System.Drawing.Point(20, 80);
-            cboTipo.Name = "cboTipo";
-            cboTipo.Size = new System.Drawing.Size(340, 36);
-            cboTipo.TabIndex = 2;
+            // 
+            cboTipo.BackColor = Color.Transparent;
+            cboTipo.CustomizableEdges = customizableEdges1;
+            cboTipo.DrawMode = DrawMode.OwnerDrawFixed;
+            cboTipo.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboTipo.FocusedColor = Color.Empty;
+            cboTipo.Font = new Font("Segoe UI", 10F);
+            cboTipo.ForeColor = Color.FromArgb(68, 88, 112);
+            cboTipo.ItemHeight = 30;
             cboTipo.Items.AddRange(new object[] { "Ingreso", "Egreso" });
-            //
+            cboTipo.Location = new Point(20, 80);
+            cboTipo.Name = "cboTipo";
+            cboTipo.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            cboTipo.Size = new Size(340, 36);
+            cboTipo.TabIndex = 2;
+            // 
             // lblConcepto
-            //
-            lblConcepto.BackColor = System.Drawing.Color.Transparent;
-            lblConcepto.Location = new System.Drawing.Point(20, 124);
+            // 
+            lblConcepto.BackColor = Color.Transparent;
+            lblConcepto.Location = new Point(20, 124);
             lblConcepto.Name = "lblConcepto";
-            lblConcepto.Size = new System.Drawing.Size(200, 20);
+            lblConcepto.Size = new Size(55, 17);
             lblConcepto.TabIndex = 3;
             lblConcepto.Text = "Concepto";
-            //
+            // 
             // txtConcepto
-            //
-            txtConcepto.Location = new System.Drawing.Point(20, 148);
+            // 
+            txtConcepto.CustomizableEdges = customizableEdges3;
+            txtConcepto.DefaultText = "";
+            txtConcepto.Font = new Font("Segoe UI", 9F);
+            txtConcepto.Location = new Point(20, 148);
             txtConcepto.Name = "txtConcepto";
             txtConcepto.PlaceholderText = "Ej. compra de hielo";
-            txtConcepto.Size = new System.Drawing.Size(340, 36);
+            txtConcepto.SelectedText = "";
+            txtConcepto.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            txtConcepto.Size = new Size(340, 36);
             txtConcepto.TabIndex = 4;
-            //
+            // 
             // lblMonto
-            //
-            lblMonto.BackColor = System.Drawing.Color.Transparent;
-            lblMonto.Location = new System.Drawing.Point(20, 192);
+            // 
+            lblMonto.BackColor = Color.Transparent;
+            lblMonto.Location = new Point(20, 192);
             lblMonto.Name = "lblMonto";
-            lblMonto.Size = new System.Drawing.Size(200, 20);
+            lblMonto.Size = new Size(56, 17);
             lblMonto.TabIndex = 5;
             lblMonto.Text = "Monto ($)";
-            //
+            // 
             // txtMonto
-            //
-            txtMonto.Location = new System.Drawing.Point(20, 216);
+            // 
+            txtMonto.CustomizableEdges = customizableEdges5;
+            txtMonto.DefaultText = "";
+            txtMonto.Font = new Font("Segoe UI", 9F);
+            txtMonto.Location = new Point(20, 216);
             txtMonto.Name = "txtMonto";
             txtMonto.PlaceholderText = "0.00";
-            txtMonto.Size = new System.Drawing.Size(340, 36);
+            txtMonto.SelectedText = "";
+            txtMonto.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            txtMonto.Size = new Size(340, 36);
             txtMonto.TabIndex = 6;
-            //
+            txtMonto.TextChanged += txtMonto_TextChanged;
+            txtMonto.KeyPress += txtMonto_KeyPress;
+            // 
             // btnGuardar
-            //
-            btnGuardar.Location = new System.Drawing.Point(20, 268);
+            // 
+            btnGuardar.CustomizableEdges = customizableEdges7;
+            btnGuardar.Font = new Font("Segoe UI", 9F);
+            btnGuardar.ForeColor = Color.White;
+            btnGuardar.Location = new Point(20, 268);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new System.Drawing.Size(340, 40);
+            btnGuardar.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnGuardar.Size = new Size(340, 40);
             btnGuardar.TabIndex = 7;
             btnGuardar.Text = "Guardar";
             btnGuardar.Click += BtnGuardar_Click;
-            //
+            // 
             // FrmMovimientoCaja
-            //
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(420, 360);
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(420, 360);
             Controls.Add(tarjeta);
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FrmMovimientoCaja";
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Movimiento de caja";
             tarjeta.ResumeLayout(false);
+            tarjeta.PerformLayout();
             ResumeLayout(false);
         }
 
