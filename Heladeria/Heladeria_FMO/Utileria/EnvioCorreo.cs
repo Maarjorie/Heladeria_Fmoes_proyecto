@@ -47,12 +47,14 @@ namespace Heladeria_FMO.Utileria
                 var vista = AlternateView.CreateAlternateViewFromString(
                     cuerpoHtml, null, MediaTypeNames.Text.Html);
 
-                var recurso = new LinkedResource(new MemoryStream(imagenPng), "image/png")
+                // El recurso se incrusta como inline (no como adjunto). Asignarle un
+                // "Name" haría que Gmail lo tratara como archivo y rompería el cid.
+                var recurso = new LinkedResource(new MemoryStream(imagenPng), new ContentType("image/png"))
                 {
                     ContentId = idImagen,
-                    TransferEncoding = TransferEncoding.Base64,
-                    ContentType = { Name = idImagen + ".png" }
+                    TransferEncoding = TransferEncoding.Base64
                 };
+                recurso.ContentLink = new System.Uri("cid:" + idImagen);
                 vista.LinkedResources.Add(recurso);
                 mensaje.AlternateViews.Add(vista);
 
